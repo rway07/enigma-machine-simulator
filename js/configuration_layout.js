@@ -66,6 +66,29 @@ function create_rotors_hole_layout(parent)
 }
 
 /*
+ * 		Crea il layout per il contenitore dei rotori
+ */
+function create_rotors_container_layout(parent)
+{
+	var rotors_container = document.createElement('div');
+	var rotor_one = document.createElement('div');
+	var rotor_two = document.createElement('div');
+	var rotor_three = document.createElement('div');
+	rotors_container.id = "rotors_container";
+	rotor_one.id = "rotor_one";
+	rotor_two.id = "rotor_two";
+	rotor_three.id = "rotor_three";
+	rotor_one.className = "rotor";
+	rotor_two.className = "rotor";
+	rotor_three.className = "rotor";
+	
+	parent.appendChild(rotors_container);
+	rotors_container.appendChild(rotor_one);
+	rotors_container.appendChild(rotor_two);
+	rotors_container.appendChild(rotor_three);
+}
+
+/*
  * 		Distrugge il contenuto della pagina e genera il layout della pagina di configurazione
  */
 function show_configuration()
@@ -81,15 +104,20 @@ function show_configuration()
 function create_configuration_layout()
 {
 	var content = create_content();
-	var rotors_div = document.createElement('div');
+	var rotors_hole_div = document.createElement('div');
+	var rotors_container_div = document.createElement('div');
 	var plugs_div = document.createElement('div');
-	rotors_div.id = "rotors_div";
+	
+	rotors_hole_div.id = "rotors_hole_div";
+	rotors_container_div.id = "rotors_container_div";
 	plugs_div.id = "plugs_div";
 	
-	content.appendChild(rotors_div);
+	content.appendChild(rotors_hole_div);
+	content.appendChild(rotors_container_div);
 	content.appendChild(plugs_div);
 	
-	create_rotors_hole_layout(rotors_div);
+	create_rotors_hole_layout(rotors_hole_div);
+	create_rotors_container_layout(rotors_container_div);
 	create_plugs_layout(plugs_div);
 }
 
@@ -98,12 +126,15 @@ function create_configuration_layout()
  */
 function locate_configuration_elements()
 {
+	var rotors_container = document.getElementById('rotors_container');
 	var rotors_hole = document.getElementById('rotors_hole');
 	var plugs = document.getElementById('plugs');
 	var width = document.getElementById('content').offsetWidth;
-	var current_margin = ((width - 400) / 2);
+	var margin_big = ((width - 400) / 2);
+	var margin_small = ((width - 150) / 2);
 	if (width <= 400) current_margin = 0;
 	
-	plugs.setAttribute("style", "margin-left: " + current_margin + "px");
-	rotors_hole.setAttribute("style", "margin-left: " + current_margin + "px");
+	plugs.setAttribute("style", "margin-left: " + margin_big + "px");
+	rotors_hole.setAttribute("style", "margin-left: " + margin_big + "px");
+	rotors_container.setAttribute("style", "margin-left: " + margin_small + "px");
 }
