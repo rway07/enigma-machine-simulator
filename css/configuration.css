@@ -1,3 +1,14 @@
+/*
+ * 		Sezione spine
+ */
+div#plugs_div{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 200px;
+	/*margin-top: 15px;*/	
+}
+
 div#plugs{
 	width: 400px;
 	height: 160px;
@@ -21,19 +32,14 @@ div#plugs{
 	float: left;	
 }
 
-div#plugs_div{
-	position: relative;
-	float: left;
-	width: 100%;
-	height: 200px;
-	margin-top: 15px;	
-}
-
+/*
+ * 		Sezione alloggiamento rotori
+ */
 div#rotors_hole_div{
 	position: relative;
 	width: 100%;
 	height: 200px;
-	margin-top: 15px;
+	/*margin-top: 15px;*/
 }
 
 div#rotors_hole{
@@ -43,6 +49,9 @@ div#rotors_hole{
 	background: url(../images/rotors_hole.png);
 }
 
+/*
+ * 		Sezione contenitore rotori
+ */
 div#rotors_container_div{
 	position: relative;
 	width: 100%;

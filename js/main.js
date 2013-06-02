@@ -15,7 +15,7 @@ function locate_elements()
 		locate_machine();
 	} else
 	{
-		current_div = document.getElementById('rotors_div');
+		current_div = document.getElementById('rotors_hole_div');
 		if (current_div != undefined)
 		{
 			locate_configuration_elements();

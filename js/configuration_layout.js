@@ -132,7 +132,11 @@ function locate_configuration_elements()
 	var width = document.getElementById('content').offsetWidth;
 	var margin_big = ((width - 400) / 2);
 	var margin_small = ((width - 150) / 2);
-	if (width <= 400) current_margin = 0;
+	if (width <= 400) 
+	{
+		margin_big = 0;
+		margin_small = 125;
+	}
 	
 	plugs.setAttribute("style", "margin-left: " + margin_big + "px");
 	rotors_hole.setAttribute("style", "margin-left: " + margin_big + "px");
