@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">	
+<html>	
+	<head>
+		<title> Enigma Machine Prototype</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15">
+		<meta http-equiv="Content-Script-Type" content="text/javascript">
+		<style type="text/css">
+			@import url('css/main.css');
+			@import url('css/machine.css');
+			@import url('css/plugs.css');
+			@import url('css/configuration.css');
+		</style>
+		<script type="text/javascript" src="js/main.js"> </script>
+		<script type="text/javascript" src="js/machine_layout.js" > </script>
+		<script type="text/javascript" src="js/configuration_layout.js" ></script>
+		<script type="text/javascript" src="js/archive_layout.js" ></script>
+	</head>
+	<body>
+		<div id="left">
+			<h1 class="left_bar_text"> Enigma Fucking Machine Simulator </h1>
+			<h4 class="left_bar_text"> This is a virtual reproduction of the Enigma Machine used by German Army during the WW2. Enjoy!! </h4>
+			<div id="center">	
+				<ul>
+					<li> <a href="#" onclick="show_configuration();"> Configuration </a> </li>
+					<li> <a href="#" onclick="show_machine();"> Use machine </a> </li>
+					<li> <a href="#" onclick="show_archive();"> View messages </a> </li>
+				</ul>
+			</div>
+			<p class="footer">
+				<a href="http://validator.w3.org/check?uri=referer">
+					<img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01 Strict" height="31" width="88">
+				</a>
+    			<a href="http://jigsaw.w3.org/css-validator/check/referer">
+        	    	<img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss-blue"
+            			alt="Valid CSS!" >
+    			</a>
+			</p>
+		</div>
+		<div id="status_bar"> 
+			<h4 class="status_bar_text"> Welcome stranger!! This is the main status bar. </h4>	
+		</div>
+		<div id="container">
+			<!-- temp -->
+			<div id="content">
+				<div id="rotors_div">
+					
+				</div>
+				<div id="plugs_div">
+					
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

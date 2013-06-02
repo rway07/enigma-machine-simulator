@@ -1,0 +1,178 @@
+/*
+ * 	Disegna la parte superiore dei rotori della macchina Enigma
+ */
+function create_rotor_place(parent, i)
+{
+	var rotor_place = document.createElement('div');
+	var img = document.createElement('img');
+	rotor_place.className = "rotor_place";
+	rotor_place.id = "rotor_place_" + i;
+	if (i == 1) rotor_place.setAttribute('style', 'margin-left: 90px');
+	parent.appendChild(rotor_place);
+	img.setAttribute('src','images/base_rotore.png');
+	img.setAttribute('alt','rotor_' + i);
+	rotor_place.appendChild(img);
+}
+
+/*
+ * 	Disegna le luci della macchina Enigma
+ */
+function create_light(parent, key, i)
+{
+	var light = document.createElement('div');
+	var img = document.createElement('img');
+	light.className = "button_place";
+	light.id = "button_" + key;
+	if ((i == 0) && (key == "A"))
+	{
+		light.setAttribute('style','margin-left: 40px');
+	} else if (i == 0) 
+	{
+		light.setAttribute('style','margin-left: 20px');
+	}
+	parent.appendChild(light);	
+	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_off.png');
+	img.setAttribute('alt',key.toLowerCase() + '_key');
+	img.className = "button";
+	light.appendChild(img);
+}
+
+/*
+ * 	Disegna i tasti della macchina Enigma
+ */
+function create_keys(parent, key, i)
+{
+	var button = document.createElement('div');
+	var img = document.createElement('img');
+	button.className = "button_place";
+	button.id = "button_" + key;
+	if ((i == 0) && (key == "A"))
+	{
+		button.setAttribute('style','margin-left: 40px');
+	} else if (i == 0) 
+	{
+		button.setAttribute('style','margin-left: 20px');
+	}
+	parent.appendChild(button);	
+	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_key_normal.png');
+	img.setAttribute('alt',key.toLowerCase() + '_key');
+	img.className = "button";
+	button.appendChild(img);
+}
+
+/*
+ * 	Disegna il layout della macchina Enigma
+ */
+function create_machine_layout()
+{
+	var board = document.getElementById('board');
+	var machine = document.createElement('div');
+	var top_machine = document.createElement('div');
+	var middle_machine = document.createElement('div');
+	var bottom_machine = document.createElement('div');
+	
+	machine.id = "machine";
+	top_machine.id = "top_machine";
+	middle_machine.id = "middle_machine";
+	bottom_machine.id = "bottom_machine";
+	
+	board.appendChild(machine);			
+	machine.appendChild(top_machine);
+	machine.appendChild(middle_machine);
+	machine.appendChild(bottom_machine);	
+	
+	for (var i = 0; i < 3; i++)
+	{
+		create_rotor_place(top_machine, i+1);	
+	}
+	
+	var keys = new Array("Q", "W", "E", "R", "T", "Z", "U", "I", "O");
+	for (var i = 0; i < 9; i++)
+	{
+		create_light(middle_machine, keys[i], i);
+		create_keys(bottom_machine, keys[i], i);
+	}
+	
+	keys = ["A", "S", "D", "F", "G", "H", "J", "K"];
+	for (var i = 0; i < 8; i++)
+	{
+		create_light(middle_machine, keys[i], i);
+		create_keys(bottom_machine, keys[i], i);
+	}
+	
+	keys = ["P", "Y", "X", "C", "V", "B", "N", "M", "L"];
+	for (var i = 0; i < 9; i++)
+	{
+		create_light(middle_machine, keys[i], i);
+		create_keys(bottom_machine, keys[i], i);
+	}
+	
+}
+
+function create_screen()
+{
+	var screen_div = document.getElementById('screen');
+	var p = document.createElement('p');
+	var clear_textbox = document.createElement('input');
+	var cypher_textbox = document.createElement('input');
+	
+	clear_textbox.setAttribute("type", "text");
+	clear_textbox.setAttribute("name","clear_textbox");
+	cypher_textbox.setAttribute("type", "text");
+	cypher_textbox.setAttribute("name", "cypher_textbox");
+	cypher_textbox.disabled = true;
+	p.className = "screen_text";
+	
+	screen_div.appendChild(p);
+	var text = document.createTextNode("clear text: ");
+	p.appendChild(text);
+	p.appendChild(clear_textbox);
+	var br = document.createElement('br');
+	p.appendChild(br);
+	text = document.createTextNode("cypher text: ");
+	p.appendChild(text);
+	p.appendChild(cypher_textbox);
+}
+
+/*
+ *	Crea il layout di base  
+ */
+function create_main_layout()
+{
+	var content = create_content();
+	var board = document.createElement('div');
+	var screen_div = document.createElement('div');
+	content.id = "content";
+	board.id = "board";
+	screen_div.id = "screen";
+	
+	container.appendChild(content);
+	content.appendChild(board);
+	content.appendChild(screen_div); 
+	
+	create_machine_layout()
+	create_screen();
+	locate_machine();
+}
+
+/*
+ * 		Posiziona la macchina al centro dello schermo
+ */
+function locate_machine()
+{
+	var machine = document.getElementById('machine');
+	var width = document.getElementById('content').offsetWidth;
+	var current_margin = ((width - 400) / 2);
+	if (width <= 400) current_margin = 0;
+	
+	machine.setAttribute("style", "margin-left: " + current_margin + "px");
+}
+
+/*
+ * 		Distrugge il contenuto di content e genera il layout riguardante la macchina
+ */
+function show_machine()
+{
+	destroy_content();
+	create_main_layout();
+}

@@ -1,0 +1,64 @@
+/**
+ *	main.js
+ *  inizializza i vari componenti grafici e la configurazione di default
+ * 
+ */
+
+/*
+ * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra
+ */
+function locate_elements()
+{
+	var current_div = document.getElementById('machine');
+	if (current_div != undefined)
+	{
+		locate_machine();
+	} else
+	{
+		current_div = document.getElementById('rotors_div');
+		if (current_div != undefined)
+		{
+			locate_configuration_elements();
+		}
+	}
+	
+}
+
+/*
+ * 	Distrugge tutti gli elementi all'interno di content
+ */
+function destroy_content()
+{
+	var content = document.getElementById('content');
+	var parent = content.parentNode;
+	parent.removeChild(content);	
+}
+
+/*
+ * 	Genera il div content 
+ */
+function create_content()
+{
+	var container = document.getElementById('container');
+	var content = document.createElement('div');
+	content.id = "content";	
+	
+	container.appendChild(content);
+	
+	return content;
+}
+
+window.onload = function()
+{
+	//create_main_layout();
+}
+
+window.onunload = function()
+{
+	
+}
+
+window.onresize = function()
+{
+	locate_elements();
+}
