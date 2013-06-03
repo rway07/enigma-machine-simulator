@@ -22,7 +22,7 @@ function create_light(parent, key, i)
 	var light = document.createElement('div');
 	var img = document.createElement('img');
 	light.className = "button_place";
-	light.id = "button_" + key;
+	light.id = "light_" + key;
 	if ((i == 0) && (key == "A"))
 	{
 		light.setAttribute('style','margin-left: 40px');
@@ -30,7 +30,8 @@ function create_light(parent, key, i)
 	{
 		light.setAttribute('style','margin-left: 20px');
 	}
-	parent.appendChild(light);	
+	parent.appendChild(light);
+	img.id = "light_image_" + key;	
 	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_off.png');
 	img.setAttribute('alt',key.toLowerCase() + '_key');
 	img.className = "button";
@@ -56,6 +57,10 @@ function create_keys(parent, key, i)
 	parent.appendChild(button);	
 	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_key_normal.png');
 	img.setAttribute('alt',key.toLowerCase() + '_key');
+	//img.setAttribute('onclick','key_handler(light_image_' + key + ', "' + key + '");');
+	img.setAttribute('onmousedown','light_on(light_image_' + key + ', "' + key + '");');
+	img.setAttribute('onmouseup','light_off(light_image_' + key + ', "' + key + '");');
+	img.setAttribute('onmouseout','light_off(light_image_' + key + ', "' + key + '");');
 	img.className = "button";
 	button.appendChild(img);
 }

@@ -1,3 +1,5 @@
+
+
 function enigmaConfiguration()
 {
 	this.rotor = new Array[3];
@@ -20,9 +22,4 @@ enigmaConfiguration.prototype.set_rotor = function(place, rotor)
 enigmaConfiguration.prototype.set_rotor_letter = function(rotor, letter)
 {
 	this.rotor_letter[rotor] = letter;
-}
-
-function crypt_key(key)
-{
-	
 }

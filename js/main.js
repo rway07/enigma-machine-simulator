@@ -4,6 +4,16 @@
  * 
  */
 
+function light_on(parent, key)
+{
+	parent.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_on.png');
+}
+
+function light_off(parent, key)
+{
+	parent.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_off.png');
+}
+
 /*
  * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra
  */
@@ -30,8 +40,12 @@ function locate_elements()
 function destroy_content()
 {
 	var content = document.getElementById('content');
-	var parent = content.parentNode;
-	parent.removeChild(content);	
+	if (content != null)
+	{
+		var parent = content.parentNode;
+		parent.removeChild(content);
+	}
+		
 }
 
 /*

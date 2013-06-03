@@ -13,5 +13,10 @@ function show_archive()
 function create_archive_layout()
 {
 	var content = create_content();
+	var h1 = document.createElement('h1');
+	var title = document.createTextNode("View messages archive");
+	h1.className = "left_bar_text";
+	content.appendChild(h1);
+	h1.appendChild(title);
 
 }
