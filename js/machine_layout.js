@@ -58,7 +58,7 @@ function create_keys(parent, key, i)
 	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_key_normal.png');
 	img.setAttribute('alt',key.toLowerCase() + '_key');
 	//img.setAttribute('onclick','key_handler(light_image_' + key + ', "' + key + '");');
-	img.setAttribute('onmousedown','light_on(light_image_' + key + ', "' + key + '");');
+	img.setAttribute('onmousedown','key_handler(light_image_' + key + ', "' + key + '");');
 	img.setAttribute('onmouseup','light_off(light_image_' + key + ', "' + key + '");');
 	img.setAttribute('onmouseout','light_off(light_image_' + key + ', "' + key + '");');
 	img.className = "button";
@@ -122,9 +122,9 @@ function create_screen()
 	var cypher_textbox = document.createElement('input');
 	
 	clear_textbox.setAttribute("type", "text");
-	clear_textbox.setAttribute("name","clear_textbox");
+	clear_textbox.setAttribute("id","clear_textbox");
 	cypher_textbox.setAttribute("type", "text");
-	cypher_textbox.setAttribute("name", "cypher_textbox");
+	cypher_textbox.setAttribute("id", "cypher_textbox");
 	cypher_textbox.disabled = true;
 	p.className = "screen_text";
 	
