@@ -31,12 +31,26 @@ div#board{
 	margin-top: 15px;
 }
 
-div#screen
-{
+div#screen{
 	position: relative;
 	float: left;
 	width: 100%;
+	text-align: center;
+	font-family: "Lucida Grande", monospace;
+	font-size: 12px;	
 	/*height: 150px;*/
+}
+
+div#screen_clear{
+	position:relative;
+	float: left;
+	width: 50%;
+}
+
+div#screen_cypher{
+	position:relative;
+	float: left;
+	width: 50%;
 }
 
 .button{
@@ -56,6 +70,13 @@ div#screen
 	height: 50px;
 	position: relative;
 	float: left;	
+}
+
+textarea{
+	margin-left: 5px;
+	margin-right: 5px;
+	width: 85%;
+	resize: none; 	
 }
 
 .rotor{

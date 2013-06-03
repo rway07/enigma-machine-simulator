@@ -117,26 +117,32 @@ function create_machine_layout()
 function create_screen()
 {
 	var screen_div = document.getElementById('screen');
-	var p = document.createElement('p');
-	var clear_textbox = document.createElement('input');
-	var cypher_textbox = document.createElement('input');
-	
-	clear_textbox.setAttribute("type", "text");
-	clear_textbox.setAttribute("id","clear_textbox");
-	cypher_textbox.setAttribute("type", "text");
-	cypher_textbox.setAttribute("id", "cypher_textbox");
-	cypher_textbox.disabled = true;
-	p.className = "screen_text";
-	
-	screen_div.appendChild(p);
-	var text = document.createTextNode("clear text: ");
-	p.appendChild(text);
-	p.appendChild(clear_textbox);
+	var clear_div = document.createElement('div');
+	var cypher_div = document.createElement('div');
+	var clear_textbox = document.createElement('textarea');
+	var cypher_textbox = document.createElement('textarea');
 	var br = document.createElement('br');
-	p.appendChild(br);
+
+	clear_div.id = "screen_clear";
+	cypher_div.id = "screen_cypher";
+	clear_textbox.setAttribute("rows", 3);
+	clear_textbox.setAttribute("id","clear_textbox");
+	clear_textbox.setAttribute("maxLenght", 256);
+	cypher_textbox.setAttribute("rows", 3);
+	cypher_textbox.setAttribute("id", "cypher_textbox");
+	cypher_textbox.setAttribute("maxLenght", 256);
+	cypher_textbox.disabled = true;
+	
+	screen_div.appendChild(clear_div);
+	screen_div.appendChild(cypher_div);
+	
+	var text = document.createTextNode("clear text: ");
+	clear_div.appendChild(text);
+	clear_div.appendChild(clear_textbox);
+	
 	text = document.createTextNode("cypher text: ");
-	p.appendChild(text);
-	p.appendChild(cypher_textbox);
+	cypher_div.appendChild(text);
+	cypher_div.appendChild(cypher_textbox);
 }
 
 /*
@@ -168,6 +174,7 @@ function locate_machine()
 	var machine = document.getElementById('machine');
 	var width = document.getElementById('content').offsetWidth;
 	var current_margin = ((width - 400) / 2);
+	
 	if (width <= 400) current_margin = 0;
 	
 	machine.setAttribute("style", "margin-left: " + current_margin + "px");
