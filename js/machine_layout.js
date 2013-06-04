@@ -117,28 +117,40 @@ function create_machine_layout()
 function create_screen()
 {
 	var screen_div = document.getElementById('screen');
+	var input_div = document.createElement('div');
 	var clear_div = document.createElement('div');
 	var cypher_div = document.createElement('div');
+	var input_textbox = document.createElement('textarea');
 	var clear_textbox = document.createElement('textarea');
 	var cypher_textbox = document.createElement('textarea');
 	var br = document.createElement('br');
 
+	input_div.id = "screen_input";
 	clear_div.id = "screen_clear";
 	cypher_div.id = "screen_cypher";
+	input_textbox.setAttribute("rows", 3);
+	input_textbox.setAttribute("id","input_textbox");
+	input_textbox.setAttribute("cols", 16);
+	input_textbox.onkeyup = textbox_up_handler;
+	input_textbox.onkeydown = textbox_down_handler;	
 	clear_textbox.setAttribute("rows", 3);
 	clear_textbox.setAttribute("id","clear_textbox");
-	clear_textbox.setAttribute("maxLenght", 256);
-	clear_textbox.onkeyup = textbox_up_handler;
-	clear_textbox.onkeydown = textbox_down_handler;
+	clear_textbox.setAttribute("cols", 16);
+	//clear_textbox.disabled = true;
 	cypher_textbox.setAttribute("rows", 3);
 	cypher_textbox.setAttribute("id", "cypher_textbox");
-	cypher_textbox.setAttribute("maxLenght", 256);
-	cypher_textbox.disabled = true;
+	cypher_textbox.setAttribute("cols", 16);
+	//cypher_textbox.setAttribute("disabled", true);
 	
+	screen_div.appendChild(input_div);
 	screen_div.appendChild(clear_div);
 	screen_div.appendChild(cypher_div);
 	
-	var text = document.createTextNode("clear text: ");
+	var text = document.createTextNode("input here: ")
+	input_div.appendChild(text);
+	input_div.appendChild(input_textbox);
+	
+	text = document.createTextNode("clear text: ");
 	clear_div.appendChild(text);
 	clear_div.appendChild(clear_textbox);
 	

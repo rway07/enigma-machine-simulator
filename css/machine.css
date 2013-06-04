@@ -41,16 +41,22 @@ div#screen{
 	/*height: 150px;*/
 }
 
+div#screen_input{
+	position: relative;
+	float: left;
+	width: 33%;
+}
+
 div#screen_clear{
 	position:relative;
 	float: left;
-	width: 50%;
+	width: 33%;
 }
 
 div#screen_cypher{
 	position:relative;
 	float: left;
-	width: 50%;
+	width: 33%;
 }
 
 .button{

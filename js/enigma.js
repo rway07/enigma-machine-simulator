@@ -33,6 +33,7 @@ function write_key(key)
 function textbox_down_handler(e)
 {
 	e = (!e) ? window.event : e;
+	var clear_textbox = document.getElementById("clear_textbox");
 	var cypher_textbox = document.getElementById("cypher_textbox");
 	var c = e.keyCode;
 	
@@ -44,7 +45,13 @@ function textbox_down_handler(e)
 	
 		key_down(key_node, key);
 		light_on(light_node, key);	
-		cypher_textbox.value = cypher_textbox.value + key;	
+		clear_textbox.value = clear_textbox.value + key;
+		cypher_textbox.value = cypher_textbox.value + key; // TODO: crypt	
+	}
+	else 
+	{
+		var length = clear_textbox.length;
+		
 	}
 	
 }
