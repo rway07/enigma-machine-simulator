@@ -55,12 +55,12 @@ function create_keys(parent, key, i)
 		button.setAttribute('style','margin-left: 20px');
 	}
 	parent.appendChild(button);	
+	img.id = "key_image_" + key;	
 	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_key_normal.png');
 	img.setAttribute('alt',key.toLowerCase() + '_key');
-	//img.setAttribute('onclick','key_handler(light_image_' + key + ', "' + key + '");');
-	img.setAttribute('onmousedown','key_handler(light_image_' + key + ', "' + key + '");');
-	img.setAttribute('onmouseup','light_off(light_image_' + key + ', "' + key + '");');
-	img.setAttribute('onmouseout','light_off(light_image_' + key + ', "' + key + '");');
+	img.setAttribute('onmousedown','key_down_handler("' + key + '");');
+	img.setAttribute('onmouseup','key_up_handler("' + key + '");');
+	img.setAttribute('onmouseout','key_up_handler("' + key + '");');
 	img.className = "button";
 	button.appendChild(img);
 }
@@ -128,6 +128,8 @@ function create_screen()
 	clear_textbox.setAttribute("rows", 3);
 	clear_textbox.setAttribute("id","clear_textbox");
 	clear_textbox.setAttribute("maxLenght", 256);
+	clear_textbox.onkeyup = textbox_up_handler;
+	clear_textbox.onkeydown = textbox_down_handler;
 	cypher_textbox.setAttribute("rows", 3);
 	cypher_textbox.setAttribute("id", "cypher_textbox");
 	cypher_textbox.setAttribute("maxLenght", 256);

@@ -4,29 +4,6 @@
  * 
  */
 
-function write_key(key)
-{
-	var clear_textbox = document.getElementById("clear_textbox");
-	var cypher_textbox = document.getElementById("cypher_textbox");
-	clear_textbox.value = clear_textbox.value + key;
-	cypher_textbox.value = cypher_textbox.value + key;
-}
-
-function key_handler(parent, key)
-{
-	light_on(parent, key);
-	write_key(key);
-}
-
-function light_on(parent, key)
-{
-	parent.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_on.png');
-}
-
-function light_off(parent, key)
-{
-	parent.setAttribute('src','images/keys/' + key.toLowerCase() + '_light_off.png');
-}
 
 /*
  * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra

@@ -18,5 +18,4 @@ function create_archive_layout()
 	h1.className = "left_bar_text";
 	content.appendChild(h1);
 	h1.appendChild(title);
-
 }
