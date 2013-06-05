@@ -1,33 +1,86 @@
-function enigmaConfiguration()
-{
-	this.rotor = new Array[3];
-	this.rotor_letter = new Array[3];
 
-	this.rotor[0] = 0;
-	this.rotor[1] = 1;
-	this.rotor[2] = 2;
+
+function enigma()
+{
+	this.rotor = new Array(3);
+	this.rotor_inv = new Array(3);
+	this.rotor_letter = new Array(3);
+	this.rotor_conf = new Array(5);
+	this.rotor_conf_inv = new Array(5);
 	
-	this.rotor_letter[0] = 0;
-	this.rotor_letter[1] = 1;
-	this.rotor_letter[2] = 2;
+	this.input = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","S","T","U","V","W","X","Y","Z"];
+	this.rotor_conf[0] = ["E","K","M","F","L","G","D","Q","V","Z","N","T","O","W","Y","H","X","U","S","P","A","I","B","R","C","J"];
+	this.rotor_conf_inv[0] = ["U","W","Y","G","A","D","F","P","V","Z","B","E","C","K","M","T","H","X","S","L","R","I","N","Q","O","J"];
+	this.rotor_conf[1] = ["A","J","D","K","S","I","R","U","X","B","L","H","W","T","M","C","Q","G","Z","N","P","Y","F","V","O","E"];
+	this.rotor_conf_inv[1] = ["A","J","P","C","Z","W","R","L","F","B","D","K","O","T","Y","U","Q","G","E","N","H","X","M","I","V","S"];
+	this.rotor_conf[2] = ["B","D","F","H","J","L","C","P","R","T","X","V","Z","N","Y","E","I","W","G","A","K","M","U","S","Q","O"];
+	this.rotor_conf_inv[2] = ["T","A","G","B","P","C","S","D","Q","E","U","F","V","N","Z","H","Y","I","X","J","W","L","R","K","O","M"];
+	this.rotor_conf[3] = ["E","S","O","V","P","Z","J","A","Y","Q","U","I","R","H","X","L","N","F","T","G","K","D","C","M","W","B"];
+	this.rotor_conf_inv[3] = ["H","Z","W","V","A","R","T","N","L","G","U","P","X","Q","C","E","J","M","B","S","K","D","Y","O","I","F"];
+	this.rotor_conf[4] = ["V","Z","B","R","G","I","T","Y","U","P","S","D","N","H","L","X","A","W","M","J","Q","O","F","E","C","K"];
+	this.rotor_conf_inv[4] = ["Q","C","Y","L","X","W","E","N","F","T","Z","O","S","M","V","J","U","D","K","G","I","A","R","P","H","B"];
+	this.reflector = ["Y","R","U","H","Q","S","L","D","P","X","N","G","O","K","M","I","E","B","F","Z","C","W","V","J","A","T"];
+	
+	
+	for (var i = 0; i < 3; i++)
+	{
+		this.rotor[i] = this.rotor_conf[i];
+		this.rotor_inv[i] = this.rotor_conf_inv[i];
+		this.rotor_letter[i] = 0;	
+	}
+	
 }
 
-enigmaConfiguration.prototype.set_rotor = function(place, rotor)
+enigma.prototype.set_rotor = function(place, rotor)
 {
-	this.rotor[place] = rotor;
+	this.rotor[place] = this.rotor_conf[rotor];
+	this.rotor_inv[place] = this.rotor_conf_inf[rotor];
 }
 
-enigmaConfiguration.prototype.set_rotor_letter = function(rotor, letter)
+enigma.prototype.set_rotor_letter = function(rotor, letter)
 {
 	this.rotor_letter[rotor] = letter;
+}
+
+enigma.prototype.encrypt = function(key)
+{
+	var index = String.charCodeAt(key) - 65;
+	var shift;
+	var step_char;
+	
+	for (var i = 0; i < 3; i++)
+	{
+		index = (index + this.rotor_letter[i]) % 25;
+		step_char = this.rotor[i][index];
+		index = String.charCodeAt(step_char) - 65;
+	}
+
+	step_char = this.reflector[index];
+	index = String.charCodeAt(step_char) - 65;
+	
+	for (var i = 2; i >=0; i--)
+	{
+		index = (index + this.rotor_letter[i]) % 25;
+		step_char = this.rotor_inv[i][index];
+		index = String.charCodeAt(step_char) - 65;
+	}
+	
+	return step_char;
 }
 
 function write_key(key)
 {
 	var clear_textbox = document.getElementById("clear_textbox");
 	var cypher_textbox = document.getElementById("cypher_textbox");
+	var encrypted_key = machine.encrypt(key);
+	var key_node = document.getElementById('key_image_' + key);
+	var light_node = document.getElementById('light_image_' + encrypted_key);
+		
+	key_down(key_node, key);
+	light_on(light_node, encrypted_key);	
+
 	clear_textbox.value = clear_textbox.value + key;
-	cypher_textbox.value = cypher_textbox.value + key;
+	cypher_textbox.value = cypher_textbox.value + encrypted_key;
 }
 
 function textbox_down_handler(e)
@@ -40,20 +93,8 @@ function textbox_down_handler(e)
 	if ((c >= 65) && (c <= 90))
 	{
 		var key = String.fromCharCode(c);
-		var key_node = document.getElementById('key_image_' + key);
-		var light_node = document.getElementById('light_image_' + key);
-	
-		key_down(key_node, key);
-		light_on(light_node, key);	
-		clear_textbox.value = clear_textbox.value + key;
-		cypher_textbox.value = cypher_textbox.value + key; // TODO: crypt	
+		write_key(key);
 	}
-	else 
-	{
-		var length = clear_textbox.length;
-		
-	}
-	
 }
 
 function textbox_up_handler(e)
@@ -64,30 +105,33 @@ function textbox_up_handler(e)
 	if ((c >= 65) && (c <= 90))
 	{
 		var key = String.fromCharCode(c);
+		var encrypted_key = machine.encrypt(key);
 		var key_node = document.getElementById('key_image_' + key);
-		var light_node = document.getElementById('light_image_' + key);
+		var light_node = document.getElementById('light_image_' + encrypted_key);
 	
 		key_up(key_node, key);
-		light_off(light_node, key);
+		light_off(light_node, encrypted_key);
 	}
 }
 function key_down_handler(key)
 {
+	var encrypted_key = machine.encrypt(key);
 	var key_node = document.getElementById('key_image_' + key);
-	var light_node = document.getElementById('light_image_' + key);
+	var light_node = document.getElementById('light_image_' + encrypted_key);
 	
-	key_down(key_node, key);
-	light_on(light_node, key);
+	//key_down(key_node, key);
+	//light_on(light_node, key);
 	write_key(key);
 }
 
 function key_up_handler(key)
 {
 	var key_node = document.getElementById('key_image_' + key);
-	var light_node = document.getElementById('light_image_' + key);
+	var encrypted_key = machine.encrypt(key);
+	var light_node = document.getElementById('light_image_' + encrypted_key);
 	
 	key_up(key_node, key);
-	light_off(light_node, key);		
+	light_off(light_node, encrypted_key);		
 }
 
 function key_down(parent, key)

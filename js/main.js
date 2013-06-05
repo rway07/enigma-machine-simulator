@@ -4,6 +4,7 @@
  * 
  */
 
+var machine;
 
 /*
  * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra
@@ -56,6 +57,8 @@ function create_content()
 window.onload = function()
 {
 	//create_main_layout();
+	// For now load enima machine core at window load
+	machine = new enigma();
 }
 
 window.onunload = function()
