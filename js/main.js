@@ -59,6 +59,7 @@ window.onload = function()
 	//create_main_layout();
 	// For now load enima machine core at window load
 	machine = new enigma();
+	machine.precalculate_keys();
 }
 
 window.onunload = function()
