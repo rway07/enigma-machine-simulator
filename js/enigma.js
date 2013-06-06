@@ -1,5 +1,3 @@
-
-
 function enigma()
 {
 	this.rotor = new Array(3);
@@ -52,7 +50,7 @@ enigma.prototype.get_encrypted_key = function(key)
 enigma.prototype.precalculate_keys = function()
 {
 	var key;
-	for (var i = 0; i < 25; i++)
+	for (var i = 0; i < 26; i++)
 	{
 		key = this.input[i];
 		this.crypt_table[i] = this.encrypt(key);	

@@ -111,7 +111,6 @@ function create_machine_layout()
 		create_light(middle_machine, keys[i], i);
 		create_keys(bottom_machine, keys[i], i);
 	}
-	
 }
 
 function create_screen()
@@ -133,14 +132,15 @@ function create_screen()
 	input_textbox.setAttribute("cols", 16);
 	input_textbox.onkeyup = textbox_up_handler;
 	input_textbox.onkeydown = textbox_down_handler;	
+	input_textbox.onblur = textbox_up_handler;
 	clear_textbox.setAttribute("rows", 3);
 	clear_textbox.setAttribute("id","clear_textbox");
 	clear_textbox.setAttribute("cols", 16);
-	//clear_textbox.disabled = true;
+	clear_textbox.disabled = true;
 	cypher_textbox.setAttribute("rows", 3);
 	cypher_textbox.setAttribute("id", "cypher_textbox");
 	cypher_textbox.setAttribute("cols", 16);
-	//cypher_textbox.setAttribute("disabled", true);
+	cypher_textbox.disabled = true;
 	
 	screen_div.appendChild(input_div);
 	screen_div.appendChild(clear_div);
