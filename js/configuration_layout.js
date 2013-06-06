@@ -30,7 +30,6 @@ function create_plug(parent, class_name, key, i)
  */
 function create_plugs_layout(parent)
 {
-	//var board = document.getElementById('board');
 	var plugs = document.createElement('div');
 	plugs.id = "plugs";
 	
@@ -74,18 +73,40 @@ function create_rotors_container_layout(parent)
 	var rotor_one = document.createElement('div');
 	var rotor_two = document.createElement('div');
 	var rotor_three = document.createElement('div');
+	var rotor_four = document.createElement('div');
+	var rotor_five = document.createElement('div');
+	
 	rotors_container.id = "rotors_container";
 	rotor_one.id = "rotor_one";
 	rotor_two.id = "rotor_two";
 	rotor_three.id = "rotor_three";
-	rotor_one.className = "rotor";
-	rotor_two.className = "rotor";
-	rotor_three.className = "rotor";
+	rotor_four.id = "rotor_four";
+	rotor_five.id = "rotor_five";
 	
 	parent.appendChild(rotors_container);
 	rotors_container.appendChild(rotor_one);
 	rotors_container.appendChild(rotor_two);
 	rotors_container.appendChild(rotor_three);
+	rotors_container.appendChild(rotor_four);
+	rotors_container.appendChild(rotor_five);
+}
+
+
+function create_rotors_conf_layout(parent)
+{
+	var rotors_hole_div = document.createElement('div');
+	var rotors_container_div = document.createElement('div');
+	rotors_hole_div.id = "rotors_hole_div";
+	rotors_container_div.id = "rotors_container_div";
+	
+	var rotors_hole = document.createElement('div');
+	rotors_hole.id = "rotors_hole";
+	
+	parent.appendChild(rotors_hole_div);
+	parent.appendChild(rotors_container_div);	
+
+	create_rotors_hole_layout(rotors_hole_div);
+	create_rotors_container_layout(rotors_container_div);
 }
 
 /*
@@ -95,7 +116,7 @@ function show_configuration()
 {
 	destroy_content();
 	create_configuration_layout();	
-	locate_configuration_elements();
+	locate_phase_one_elements();
 }
 
 /*
@@ -104,7 +125,23 @@ function show_configuration()
 function create_configuration_layout()
 {
 	var content = create_content();
-	var rotors_hole_div = document.createElement('div');
+	var istr_div = document.createElement('div');
+	var conf_div = document.createElement('div');
+	var title = document.createElement('h2');
+	var text;
+	istr_div.id = "istructions_div";
+	conf_div.id = "configuration_div"; 
+	
+	content.appendChild(istr_div);
+	content.appendChild(conf_div);
+	
+	text = document.createTextNode("Phase 1: Walzenlage");
+	istr_div.appendChild(title);
+	title.appendChild(text);
+	
+	create_rotors_conf_layout(conf_div);
+	
+	/*var rotors_hole_div = document.createElement('div');
 	var rotors_container_div = document.createElement('div');
 	var plugs_div = document.createElement('div');
 	
@@ -118,27 +155,30 @@ function create_configuration_layout()
 	
 	create_rotors_hole_layout(rotors_hole_div);
 	create_rotors_container_layout(rotors_container_div);
-	create_plugs_layout(plugs_div);
+	create_plugs_layout(plugs_div);*/
 }
 
 /*
  * 		Posiziona gli elementi della pagina a seconda della dimensione della finestra
  */
-function locate_configuration_elements()
+function locate_phase_one_elements()
 {
 	var rotors_container = document.getElementById('rotors_container');
 	var rotors_hole = document.getElementById('rotors_hole');
-	var plugs = document.getElementById('plugs');
-	var width = document.getElementById('content').offsetWidth;
-	var margin_big = ((width - 400) / 2);
-	var margin_small = ((width - 150) / 2);
-	if (width <= 400) 
+	var rotors_container_parent = document.getElementById('rotors_container_div');
+	var rotors_hole_parent = document.getElementById('rotors_hole_div');
+	
+	var hole_width = rotors_hole_parent.offsetWidth;
+	var container_width = rotors_container_parent.offsetWidth;
+	var margin_hole = ((hole_width - 400) / 2);
+	var margin_container = ((container_width - 250) / 2);
+	
+	if (document.getElementById('content').offsetWidth <= 400) 
 	{
-		margin_big = 0;
-		margin_small = 125;
+		margin_hole = 0;
+		margin_container = 125;
 	}
 	
-	plugs.setAttribute("style", "margin-left: " + margin_big + "px");
-	rotors_hole.setAttribute("style", "margin-left: " + margin_big + "px");
-	rotors_container.setAttribute("style", "margin-left: " + margin_small + "px");
+	rotors_hole.setAttribute("style", "margin-left: " + margin_hole + "px");
+	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
 }

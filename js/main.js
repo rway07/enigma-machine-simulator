@@ -20,7 +20,7 @@ function locate_elements()
 		current_div = document.getElementById('rotors_hole_div');
 		if (current_div != undefined)
 		{
-			locate_configuration_elements();
+			locate_phase_one_elements();
 		}
 	}
 	

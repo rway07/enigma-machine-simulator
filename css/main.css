@@ -31,7 +31,7 @@ div#status_bar{
 	width: auto;
 	height: 60px;
 	overflow: hidden;
-	background-color: red;
+	background-color: black;
 	color: white;
 }
 
@@ -50,6 +50,10 @@ div#content, div#container{
 	bottom: 0;
 	overflow: auto; 
 	background:#FFFFFF;
+}
+
+div#content{
+	#background: url(../images/back.jpg);
 }
 
 .header{

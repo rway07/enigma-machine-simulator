@@ -1,3 +1,20 @@
+
+div#istructions_div{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 200px;
+	text-align: center;
+	font-family: "Lucida Grande", monospace;
+}
+
+div#configuration_div{
+	position: relative;
+	float: left;
+	width: 100%;
+	height: 400px;
+}
+
 /*
  * 		Sezione spine
  */
@@ -37,9 +54,10 @@ div#plugs{
  */
 div#rotors_hole_div{
 	position: relative;
+	float: left;
 	width: 100%;
 	height: 200px;
-	margin-top: 15px;
+	/*margin-top: 15px;*/
 }
 
 div#rotors_hole{
@@ -54,6 +72,7 @@ div#rotors_hole{
  */
 div#rotors_container_div{
 	position: relative;
+	float: left;
 	width: 100%;
 	height: 200px;
 }
@@ -63,15 +82,51 @@ div#rotors_container
 	position:relative;
 	float: left;
 	height: 100px;
-	width: 150px;	
+	width: 250px;	
 	margin-top: 50px;
 }
 
-.rotor{
+div#rotor_one{
 	position: relative;
 	float: left;
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
-	background: url(../images/rotore.png)
+	background: url(../images/rotor_1.png);
+}
+
+div#rotor_two{
+	position: relative;
+	float: left;
+	width: 40px;
+	height: 100px;
+	margin-left: 10px;
+	background: url(../images/rotor_2.png);
+}
+
+div#rotor_three{
+	position: relative;
+	float: left;
+	width: 40px;
+	height: 100px;
+	margin-left: 10px;
+	background: url(../images/rotor_3.png);
+}
+
+div#rotor_four{
+	position: relative;
+	float: left;
+	width: 40px;
+	height: 100px;
+	margin-left: 10px;
+	background: url(../images/rotor_4.png);
+}
+
+div#rotor_five{
+	position: relative;
+	float: left;
+	width: 40px;
+	height: 100px;
+	margin-left: 10px;
+	background: url(../images/rotor_5.png);
 }
