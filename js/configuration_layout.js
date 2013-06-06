@@ -139,6 +139,7 @@ function create_configuration_layout()
 	istr_div.appendChild(title);
 	title.appendChild(text);
 	
+	get_phase_data(istr_div, 1);
 	create_rotors_conf_layout(conf_div);
 	
 	/*var rotors_hole_div = document.createElement('div');
@@ -156,6 +157,32 @@ function create_configuration_layout()
 	create_rotors_hole_layout(rotors_hole_div);
 	create_rotors_container_layout(rotors_container_div);
 	create_plugs_layout(plugs_div);*/
+}
+
+function get_phase_data(parent, phase)
+{
+	var xmlhttp;
+	var data;
+	
+	if (window.XMLHttpRequest)
+  	{
+  		xmlhttp=new XMLHttpRequest();
+  	}
+	else
+  	{
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+	xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    	{
+    		data = xmlhttp.responseText;
+       		text = document.createTextNode(data);
+       		parent.appendChild(text);
+       	}
+  	}
+	xmlhttp.open("GET","phase.php?p=" + phase, true);
+	xmlhttp.send();
 }
 
 /*
