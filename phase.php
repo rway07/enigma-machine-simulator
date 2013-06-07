@@ -13,7 +13,7 @@
 	switch ($phase)
 	{
 		case 1:
-			$data = mysql_query("SELECT walzenlage_1,walzenlage_2,walzenlage_3 FROM configuration WHERE ID='1'") or die(mysql_error());
+			$data = mysql_query("SELECT walzenlage_1, walzenlage_2, walzenlage_3 FROM configuration WHERE ID='$day'") or die(mysql_error());
 			
 			while($info = mysql_fetch_array( $data )) 
  			{	
@@ -24,10 +24,18 @@
 			
 			break;
 		case 2:
-			$data = mysql_query("SELECT walzenlage_1,walzenlage_2,walzenlage_3 FROM configuration WHERE ID='1'") or die(mysql_error());
+			$data = mysql_query("SELECT ringstellung_1, ringstellung_2, ringstellung_3 FROM configuration WHERE ID='$day'") or die(mysql_error());
+			
+			while($info = mysql_fetch_array( $data )) 
+ 			{	
+				echo $info['ringstellung_1'] . " ";
+				echo $info['ringstellung_2'] . " ";
+				echo $info['ringstellung_3'];
+			}
+			
 			break;
 		case 3:
-			$data = mysql_query("SELECT walzenlage_1,walzenlage_2,walzenlage_3 FROM configuration WHERE ID='1'") or die(mysql_error());
+			$data = mysql_query("SELECT walzenlage_1,walzenlage_2,walzenlage_3 FROM configuration WHERE ID='$day'") or die(mysql_error());
 			break;
 	}
  	 
