@@ -1,3 +1,9 @@
+var mouse_x = 0;
+var mouse_y = 0;
+var rotor_x = 0;
+var rotor_y = 0;
+var current_rotor = null;
+
 /*
  * 	Disegna una spina
  */
@@ -78,10 +84,15 @@ function create_rotors_container_layout(parent)
 	
 	rotors_container.id = "rotors_container";
 	rotor_one.id = "rotor_one";
+	rotor_one.setAttribute("onmousedown","move_rotor(this);");
 	rotor_two.id = "rotor_two";
+	rotor_two.setAttribute("onmousedown","move_rotor(this);");
 	rotor_three.id = "rotor_three";
+	rotor_three.setAttribute("onmousedown","move_rotor(this);");
 	rotor_four.id = "rotor_four";
+	rotor_four.setAttribute("onmousedown","move_rotor(this);");
 	rotor_five.id = "rotor_five";
+	rotor_five.setAttribute("onmousedown","move_rotor(this);");
 	
 	parent.appendChild(rotors_container);
 	rotors_container.appendChild(rotor_one);
@@ -125,6 +136,8 @@ function show_configuration()
 function create_configuration_layout()
 {
 	var content = create_content();
+	content.onmousemove = move;
+	content.onmouseup = stop;
 	var istr_div = document.createElement('div');
 	var conf_div = document.createElement('div');
 	var title = document.createElement('h2');
@@ -159,6 +172,9 @@ function create_configuration_layout()
 	create_plugs_layout(plugs_div);*/
 }
 
+/*
+ * 	
+ */
 function get_phase_data(parent, phase)
 {
 	var xmlhttp;
@@ -177,7 +193,7 @@ function get_phase_data(parent, phase)
   		if (xmlhttp.readyState==4 && xmlhttp.status==200)
     	{
     		data = xmlhttp.responseText;
-       		text = document.createTextNode(data);
+       		text = document.createTextNode("Today rotors configuration: " + data);
        		parent.appendChild(text);
        	}
   	}
@@ -208,4 +224,31 @@ function locate_phase_one_elements()
 	
 	rotors_hole.setAttribute("style", "margin-left: " + margin_hole + "px");
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
+}
+
+/*
+ * 		Drag and drop
+ */
+function stop()
+{
+	current_rotor = null;
+}
+
+function move(e)
+{
+	 mouse_x = document.all ? window.event.clientX : e.pageX;
+     mouse_y = document.all ? window.event.clientY : e.pageY;
+     
+     if(current_rotor != null)
+     {
+     	current_rotor.style.left = (mouse_x - rotor_x) + "px";
+     	current_rotor.style.top = (mouse_y - rotor_y) + "px";
+     }
+}
+
+function move_rotor(rotor)
+{
+	current_rotor = rotor;
+	rotor_x = mouse_x - current_rotor.offsetLeft;
+    rotor_y = mouse_y - current_rotor.offsetTop;
 }
