@@ -2,7 +2,11 @@ var mouse_x = 0;
 var mouse_y = 0;
 var rotor_x = 0;
 var rotor_y = 0;
-var current_rotor = null;
+var current_rotor = null
+var current_rotor_num = 0;
+var current_rotor_hole = -1;
+var holes = new Array(3);
+
 
 /*
  * 	Disegna una spina
@@ -65,9 +69,18 @@ function create_plugs_layout(parent)
 function create_rotors_hole_layout(parent)
 {
 	var rotors_hole = document.createElement('div');
+	var rotor_hole_1 = document.createElement('div');
+	var rotor_hole_2 = document.createElement('div');
+	var rotor_hole_3 = document.createElement('div');
 	rotors_hole.id = "rotors_hole";
+	rotor_hole_1.id = "rotor_hole_1";
+	rotor_hole_2.id = "rotor_hole_2";
+	rotor_hole_3.id = "rotor_hole_3";
 	
 	parent.appendChild(rotors_hole);
+	rotors_hole.appendChild(rotor_hole_1);
+	rotors_hole.appendChild(rotor_hole_2);
+	rotors_hole.appendChild(rotor_hole_3);
 }
 
 /*
@@ -76,30 +89,46 @@ function create_rotors_hole_layout(parent)
 function create_rotors_container_layout(parent)
 {
 	var rotors_container = document.createElement('div');
-	var rotor_one = document.createElement('div');
-	var rotor_two = document.createElement('div');
-	var rotor_three = document.createElement('div');
-	var rotor_four = document.createElement('div');
-	var rotor_five = document.createElement('div');
+	var rotor_1_cont = document.createElement('div');
+	var rotor_2_cont = document.createElement('div');
+	var rotor_3_cont = document.createElement('div');
+	var rotor_4_cont = document.createElement('div');
+	var rotor_5_cont = document.createElement('div');
+	var rotor_1 = document.createElement('div');
+	var rotor_2 = document.createElement('div');
+	var rotor_3 = document.createElement('div');
+	var rotor_4 = document.createElement('div');
+	var rotor_5 = document.createElement('div');
+	
 	
 	rotors_container.id = "rotors_container";
-	rotor_one.id = "rotor_one";
-	rotor_one.setAttribute("onmousedown","move_rotor(this);");
-	rotor_two.id = "rotor_two";
-	rotor_two.setAttribute("onmousedown","move_rotor(this);");
-	rotor_three.id = "rotor_three";
-	rotor_three.setAttribute("onmousedown","move_rotor(this);");
-	rotor_four.id = "rotor_four";
-	rotor_four.setAttribute("onmousedown","move_rotor(this);");
-	rotor_five.id = "rotor_five";
-	rotor_five.setAttribute("onmousedown","move_rotor(this);");
+	rotor_1_cont.id = "rotor_1_container";
+	rotor_1.id = "rotor_1";
+	rotor_1.setAttribute("onmousedown","move_rotor(this);");
+	rotor_2_cont.id = "rotor_2_container";
+	rotor_2.id = "rotor_2";
+	rotor_2.setAttribute("onmousedown","move_rotor(this);");
+	rotor_3_cont.id = "rotor_3_container";
+	rotor_3.id = "rotor_3";
+	rotor_3.setAttribute("onmousedown","move_rotor(this);");
+	rotor_4_cont.id = "rotor_4_container";
+	rotor_4.id = "rotor_4";
+	rotor_4.setAttribute("onmousedown","move_rotor(this);");
+	rotor_5_cont.id = "rotor_5_container";
+	rotor_5.id = "rotor_5";
+	rotor_5.setAttribute("onmousedown","move_rotor(this);");
 	
 	parent.appendChild(rotors_container);
-	rotors_container.appendChild(rotor_one);
-	rotors_container.appendChild(rotor_two);
-	rotors_container.appendChild(rotor_three);
-	rotors_container.appendChild(rotor_four);
-	rotors_container.appendChild(rotor_five);
+	rotors_container.appendChild(rotor_1_cont);
+	rotors_container.appendChild(rotor_2_cont);
+	rotors_container.appendChild(rotor_3_cont);
+	rotors_container.appendChild(rotor_4_cont);
+	rotors_container.appendChild(rotor_5_cont);
+	rotor_1_cont.appendChild(rotor_1);
+	rotor_2_cont.appendChild(rotor_2);
+	rotor_3_cont.appendChild(rotor_3);
+	rotor_4_cont.appendChild(rotor_4);
+	rotor_5_cont.appendChild(rotor_5);
 }
 
 
@@ -155,21 +184,11 @@ function create_configuration_layout()
 	get_phase_data(istr_div, 1);
 	create_rotors_conf_layout(conf_div);
 	
-	/*var rotors_hole_div = document.createElement('div');
-	var rotors_container_div = document.createElement('div');
-	var plugs_div = document.createElement('div');
-	
-	rotors_hole_div.id = "rotors_hole_div";
-	rotors_container_div.id = "rotors_container_div";
-	plugs_div.id = "plugs_div";
-	
-	content.appendChild(rotors_hole_div);
-	content.appendChild(rotors_container_div);
-	content.appendChild(plugs_div);
-	
-	create_rotors_hole_layout(rotors_hole_div);
-	create_rotors_container_layout(rotors_container_div);
-	create_plugs_layout(plugs_div);*/
+	for (var i = 0; i < 5; i++)
+	{
+		holes[i] = new hole();
+		holes[i].set_rotor(0);
+	}
 }
 
 /*
@@ -226,29 +245,129 @@ function locate_phase_one_elements()
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
 }
 
+function phase_one_done()
+{
+	for (var i = 0; i < 3; i++)
+	{
+		machine.set_rotor(i, holes[i].get_rotor());
+	}
+}
+
+function check_phase_one_done()
+{
+	for (var i = 0; i < 3; i++)
+	{
+		if (holes[i].get_rotor() == 0) return false;
+	}
+	
+	return true;
+}
+
+function hole()
+{
+	this.rotor = 0;	
+}
+
+hole.prototype.set_rotor = function(num)
+{
+	this.rotor = num;
+}
+
+hole.prototype.get_rotor = function()
+{
+	return this.rotor;
+}
+
 /*
  * 		Drag and drop
  */
 function stop()
 {
+	var rotor_hole_1 = document.getElementById("rotor_hole_1");
+	var rotor_hole_2 = document.getElementById("rotor_hole_2");
+	var rotor_hole_3 = document.getElementById("rotor_hole_3");
+	var margin_1_left_min = document.getElementById("rotors_hole").offsetLeft + 290;
+	var margin_1_left_max = margin_1_left_min + 50;
+	var margin_top_min = 285;
+	var margin_top_max = margin_top_min + 110;
+	var margin_2_left_min = margin_1_left_max;
+	var margin_2_left_max = margin_2_left_min + 50;
+	var margin_3_left_min = margin_2_left_max;
+	var margin_3_left_max = margin_3_left_min + 50;
+		
+	var parent = current_rotor.parentNode;
+	
+	if (((mouse_x >= margin_1_left_min) && (mouse_x <= margin_1_left_max)) && 
+		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[0].get_rotor() == 0)
+	{
+			current_rotor.style.left = margin_1_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[0].set_rotor(current_rotor_num);
+	} 
+	else if (((mouse_x >= margin_2_left_min) && (mouse_x <= margin_2_left_max)) && 
+		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[1].get_rotor() == 0)
+	{	
+			current_rotor.style.left = margin_2_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[1].set_rotor(current_rotor_num);
+	} 
+	else if (((mouse_x >= margin_3_left_min) && (mouse_x <= margin_3_left_max)) && 
+		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[2].get_rotor() == 0)
+	{
+			current_rotor.style.left = margin_3_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[2].set_rotor(current_rotor_num);
+	}
+	else
+	{
+		var base_div = document.getElementById(current_rotor.id + "_container");
+		if (current_rotor_hole >= 0)
+		{
+			holes[current_rotor_hole].set_rotor(0);
+		}
+		current_rotor.style.left = base_div.style.left;
+		current_rotor.style.top = base_div.style.top;	
+	}
+		
 	current_rotor = null;
 }
 
 function move(e)
-{
+{	
 	 mouse_x = document.all ? window.event.clientX : e.pageX;
      mouse_y = document.all ? window.event.clientY : e.pageY;
      
      if(current_rotor != null)
      {
+     	if (mouse_x <= 220) mouse_x = 200;
+     	if (mouse_y <= 65) mouse_y = 60;
+     	
      	current_rotor.style.left = (mouse_x - rotor_x) + "px";
      	current_rotor.style.top = (mouse_y - rotor_y) + "px";
      }
 }
 
+function get_rotor_number(rotor)
+{
+	var str = rotor.id;
+	
+	return str.slice(-1);
+}
+
 function move_rotor(rotor)
 {
 	current_rotor = rotor;
+	current_rotor_num = get_rotor_number(current_rotor);
+	
+	for (var i = 0; i < 3; i++)
+	{
+		var num = holes[i].get_rotor();
+		if (num == current_rotor_num)
+		{
+			current_rotor_hole = i;
+		}	
+	}
+	
 	rotor_x = mouse_x - current_rotor.offsetLeft;
     rotor_y = mouse_y - current_rotor.offsetTop;
 }
