@@ -2,10 +2,44 @@ var mouse_x = 0;
 var mouse_y = 0;
 var rotor_x = 0;
 var rotor_y = 0;
-var current_rotor = null
+var current_rotor = null;
 var current_rotor_num = 0;
 var current_rotor_hole = -1;
 var holes = new Array(3);
+
+var margin_top_min = 285;
+var margin_top_max = margin_top_min + 110;
+/*var margin_1_left_min = 0;
+var margin_1_left_max = 0;
+var margin_2_left_min = 0;
+var margin_2_left_max = 0;
+var margin_3_left_min = 0;
+var margin_3_left_max = 0;
+*/
+
+/*
+ * 		Oggetto che rappresenta uno degli alloggiamenti dei rotori
+ */
+function hole()
+{
+	this.rotor = 0;	
+}
+
+/*
+ * 		Settaggio rotore numero num nell'alloggiamento
+ */
+hole.prototype.set_rotor = function(num)
+{
+	this.rotor = num;
+}
+
+/*
+ * 		Ottiene il numero del rotore nell'alloggiamento
+ */
+hole.prototype.get_rotor = function()
+{
+	return this.rotor;
+}
 
 
 /*
@@ -131,7 +165,9 @@ function create_rotors_container_layout(parent)
 	rotor_5_cont.appendChild(rotor_5);
 }
 
-
+/*
+ * 		Crea il layout di configurazione dei rotori
+ */
 function create_rotors_conf_layout(parent)
 {
 	var rotors_hole_div = document.createElement('div');
@@ -147,6 +183,7 @@ function create_rotors_conf_layout(parent)
 
 	create_rotors_hole_layout(rotors_hole_div);
 	create_rotors_container_layout(rotors_container_div);
+
 }
 
 /*
@@ -192,7 +229,7 @@ function create_configuration_layout()
 }
 
 /*
- * 	
+ * 		Ottieni i dati di configurazione riguardanti la fase 1
  */
 function get_phase_data(parent, phase)
 {
@@ -245,6 +282,9 @@ function locate_phase_one_elements()
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
 }
 
+/*
+ * 		Aggiorna la configurazione della macchina una volta conclusa la fase 1
+ */
 function phase_one_done()
 {
 	for (var i = 0; i < 3; i++)
@@ -253,6 +293,9 @@ function phase_one_done()
 	}
 }
 
+/*
+ * 		Controlla se la fase 1 è stata completata
+ */
 function check_phase_one_done()
 {
 	for (var i = 0; i < 3; i++)
@@ -263,82 +306,101 @@ function check_phase_one_done()
 	return true;
 }
 
-function hole()
-{
-	this.rotor = 0;	
-}
-
-hole.prototype.set_rotor = function(num)
-{
-	this.rotor = num;
-}
-
-hole.prototype.get_rotor = function()
-{
-	return this.rotor;
-}
-
 /*
- * 		Drag and drop
+ * 		Crea il link per il passaggio alla fase 2
  */
-function stop()
+function check_phase_two()
 {
-	var rotor_hole_1 = document.getElementById("rotor_hole_1");
-	var rotor_hole_2 = document.getElementById("rotor_hole_2");
-	var rotor_hole_3 = document.getElementById("rotor_hole_3");
-	var margin_1_left_min = document.getElementById("rotors_hole").offsetLeft + 290;
-	var margin_1_left_max = margin_1_left_min + 50;
-	var margin_top_min = 285;
-	var margin_top_max = margin_top_min + 110;
-	var margin_2_left_min = margin_1_left_max;
-	var margin_2_left_max = margin_2_left_min + 50;
-	var margin_3_left_min = margin_2_left_max;
-	var margin_3_left_max = margin_3_left_min + 50;
-		
-	var parent = current_rotor.parentNode;
-	
-	if (((mouse_x >= margin_1_left_min) && (mouse_x <= margin_1_left_max)) && 
-		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[0].get_rotor() == 0)
+	if (check_phase_one_done())
 	{
-			current_rotor.style.left = margin_1_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[0].set_rotor(current_rotor_num);
-	} 
-	else if (((mouse_x >= margin_2_left_min) && (mouse_x <= margin_2_left_max)) && 
-		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[1].get_rotor() == 0)
-	{	
-			current_rotor.style.left = margin_2_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[1].set_rotor(current_rotor_num);
-	} 
-	else if (((mouse_x >= margin_3_left_min) && (mouse_x <= margin_3_left_max)) && 
-		((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[2].get_rotor() == 0)
-	{
-			current_rotor.style.left = margin_3_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[2].set_rotor(current_rotor_num);
+		// Enable phase two pass
+		var phase_two_link = document.createElement("a");
+		phase_two_link.id = "phase_two_link";
+		phase_two_link.setAttribute("href","#");
+		phase_two_link.setAttribute("onclick","create_phase_two_layout();");
+		phase_two_link.appendChild(document.createTextNode("go to phase 2"));
+		var div = document.getElementById("istructions_div");
+		div.appendChild(document.createElement("br"));
+		div.appendChild(phase_two_link);
 	}
 	else
 	{
-		var base_div = document.getElementById(current_rotor.id + "_container");
-		if (current_rotor_hole >= 0)
+		// Disable always
+		link = document.getElementById("phase_two_link");
+		if (link != null)
 		{
-			holes[current_rotor_hole].set_rotor(0);
+			document.getElementById("istructions_div").removeChild(link);
 		}
-		current_rotor.style.left = base_div.style.left;
-		current_rotor.style.top = base_div.style.top;	
 	}
-		
-	current_rotor = null;
 }
 
+/*
+ * 		Crea il layout per la fase 2
+ */
+function create_phase_two_layout()
+{
+	phase_one_done();
+}
+
+/*
+ * 		Funzione richimamata nell'evento mouseUp durante il trascinamento del rotore
+ */
+function stop()
+{
+	if (current_rotor != null)
+	{
+		// LE RENDIAMO GLOBALI???
+		var margin_1_left_min = document.getElementById("rotors_hole").offsetLeft + 290;
+		var margin_1_left_max = margin_1_left_min + 50;
+		var margin_2_left_min = margin_1_left_max;
+		var margin_2_left_max = margin_2_left_min + 50;
+		var margin_3_left_min = margin_2_left_max;
+		var margin_3_left_max = margin_3_left_min + 50;
+		
+		if (((mouse_x >= margin_1_left_min) && (mouse_x <= margin_1_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[0].get_rotor() == 0) 
+		{
+			current_rotor.style.left = margin_1_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[0].set_rotor(current_rotor_num);
+		} 
+		else if (((mouse_x >= margin_2_left_min) && (mouse_x <= margin_2_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[1].get_rotor() == 0) 
+		{
+			current_rotor.style.left = margin_2_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[1].set_rotor(current_rotor_num);
+		} 
+		else if (((mouse_x >= margin_3_left_min) && (mouse_x <= margin_3_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[2].get_rotor() == 0) 
+		{
+			current_rotor.style.left = margin_3_left_min;
+			current_rotor.style.top = margin_top_min;
+			holes[2].set_rotor(current_rotor_num);
+		} 
+		else 
+		{
+			var base_div = document.getElementById(current_rotor.id + "_container");
+			if (current_rotor_hole >= 0) 
+			{
+				holes[current_rotor_hole].set_rotor(0);
+			}
+			current_rotor.style.left = base_div.style.left;
+			current_rotor.style.top = base_div.style.top;
+		}
+
+		current_rotor = null;
+		check_phase_two(); 
+	}
+}
+
+/*
+ * 		Funzione richiamata durante il movimento del rotore
+ */
 function move(e)
 {	
 	 mouse_x = document.all ? window.event.clientX : e.pageX;
      mouse_y = document.all ? window.event.clientY : e.pageY;
-     
+     	
      if(current_rotor != null)
-     {
+     {	
      	if (mouse_x <= 220) mouse_x = 200;
      	if (mouse_y <= 65) mouse_y = 60;
      	
@@ -347,6 +409,9 @@ function move(e)
      }
 }
 
+/*
+ * 		Ottiene il numero del rotore a seconda del nome dell'id del div
+ */
 function get_rotor_number(rotor)
 {
 	var str = rotor.id;
@@ -354,6 +419,9 @@ function get_rotor_number(rotor)
 	return str.slice(-1);
 }
 
+/*
+ * 		Inizializza il drag and drop
+ */
 function move_rotor(rotor)
 {
 	current_rotor = rotor;
