@@ -70,7 +70,7 @@ div#rotors_hole{
 div#rotor_hole_1{
 	position: relative;
 	float: left;
-	width: 45px;
+	width: 47.5px;
 	height: 100px;
 	margin-left: 90px;
 	margin-top: 25px;
@@ -79,7 +79,7 @@ div#rotor_hole_1{
 div#rotor_hole_2{
 	position: relative;
 	float: left;
-	width: 45px;
+	width: 47.5px;
 	height: 100px;
 	margin-top: 25px;
 }
@@ -87,7 +87,7 @@ div#rotor_hole_2{
 div#rotor_hole_3{
 	position: relative;
 	float: left;
-	width: 45px;
+	width: 47.5px;
 	height: 100px;
 	margin-top: 25px;
 }
@@ -107,8 +107,9 @@ div#rotors_container
 	position:relative;
 	float: left;
 	height: 100px;
-	width: 250px;	
+	width: 260px;	
 	margin-top: 50px;
+	border: 1px dotted red;
 }
 
 div#rotor_1_container{
@@ -117,6 +118,7 @@ div#rotor_1_container{
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
+	border: 1px dotted black;
 }
 
 div#rotor_1{
@@ -124,6 +126,7 @@ div#rotor_1{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_1.png);
+	#background: #000080;
 }
 
 div#rotor_2_container{
@@ -132,6 +135,7 @@ div#rotor_2_container{
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
+	border: 1px dotted black;
 }
 
 div#rotor_2{
@@ -139,6 +143,7 @@ div#rotor_2{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_2.png);
+	#background: #000080;
 }
 
 div#rotor_3_container{
@@ -147,6 +152,7 @@ div#rotor_3_container{
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
+	border: 1px dotted black;
 }
 
 div#rotor_3{
@@ -154,6 +160,7 @@ div#rotor_3{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_3.png);
+	#background: #000080;
 }
 
 div#rotor_4_container{
@@ -162,6 +169,7 @@ div#rotor_4_container{
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
+	border: 1px dotted black;
 }
 
 div#rotor_4{
@@ -169,6 +177,7 @@ div#rotor_4{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_4.png);
+	#background: #000080;
 }
 
 div#rotor_5_container{
@@ -177,6 +186,7 @@ div#rotor_5_container{
 	width: 40px;
 	height: 100px;
 	margin-left: 10px;
+	border: 1px dotted black;
 }
 
 div#rotor_5{
@@ -184,4 +194,5 @@ div#rotor_5{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_5.png);
+	#background: #000080;
 }

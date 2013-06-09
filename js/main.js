@@ -37,7 +37,6 @@ function destroy_content()
 		var parent = content.parentNode;
 		parent.removeChild(content);
 	}
-		
 }
 
 /*
@@ -56,8 +55,7 @@ function create_content()
 
 window.onload = function()
 {
-	//create_main_layout();
-	// For now load enima machine core at window load
+	// For now load enigma machine core at window load
 	machine = new enigma();
 	machine.precalculate_keys();
 }

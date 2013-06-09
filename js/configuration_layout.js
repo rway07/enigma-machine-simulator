@@ -6,16 +6,24 @@ var current_rotor = null;
 var current_rotor_num = 0;
 var current_rotor_hole = -1;
 var holes = new Array(3);
+var current_hole = 0;
 
-var margin_top_min = 285;
-var margin_top_max = margin_top_min + 110;
-/*var margin_1_left_min = 0;
-var margin_1_left_max = 0;
-var margin_2_left_min = 0;
-var margin_2_left_max = 0;
-var margin_3_left_min = 0;
-var margin_3_left_max = 0;
-*/
+function reset_phase_one_var()
+{
+	mouse_x = 0;
+	mouse_y = 0;
+	rotor_x = 0;
+	rotor_y = 0;
+	current_rotor = null;
+	current_rotor_num = 0;
+	current_rotor_hole = -1;
+		
+	for (var i = 0; i < 5; i++)
+	{
+		holes[i] = new hole();
+		holes[i].set_rotor(0);
+	}	
+}
 
 /*
  * 		Oggetto che rappresenta uno degli alloggiamenti dei rotori
@@ -72,7 +80,7 @@ function create_plug(parent, class_name, key, i)
 /*
  * 	Crea il layout delle spine
  */
-function create_plugs_layout(parent)
+function phase_three_layout(parent)
 {
 	var plugs = document.createElement('div');
 	plugs.id = "plugs";
@@ -97,6 +105,16 @@ function create_plugs_layout(parent)
 	}
 }
 
+function holeMouseOver(obj)
+{
+	obj.setAttribute("style","background: green;");
+}
+
+function holeMouseOut(obj)
+{
+	obj.setAttribute("style","background: white;");
+}
+
 /*
  * 		Crea il layout di configurazione dei rotori
  */
@@ -108,8 +126,14 @@ function create_rotors_hole_layout(parent)
 	var rotor_hole_3 = document.createElement('div');
 	rotors_hole.id = "rotors_hole";
 	rotor_hole_1.id = "rotor_hole_1";
+	rotor_hole_1.setAttribute("onmouseover","holeMouseOver(this);");
+	rotor_hole_1.setAttribute("onmouseout","holeMouseOut(this);");
 	rotor_hole_2.id = "rotor_hole_2";
+	rotor_hole_2.setAttribute("onmouseover","holeMouseOver(this);");
+	rotor_hole_2.setAttribute("onmouseout","holeMouseOut(this);");
 	rotor_hole_3.id = "rotor_hole_3";
+	rotor_hole_3.setAttribute("onmouseover","holeMouseOver(this);");
+	rotor_hole_3.setAttribute("onmouseout","holeMouseOut(this);");
 	
 	parent.appendChild(rotors_hole);
 	rotors_hole.appendChild(rotor_hole_1);
@@ -221,11 +245,7 @@ function create_configuration_layout()
 	get_phase_data(istr_div, 1);
 	create_rotors_conf_layout(conf_div);
 	
-	for (var i = 0; i < 5; i++)
-	{
-		holes[i] = new hole();
-		holes[i].set_rotor(0);
-	}
+	reset_phase_one_var();
 }
 
 /*
@@ -251,6 +271,7 @@ function get_phase_data(parent, phase)
     		data = xmlhttp.responseText;
        		text = document.createTextNode("Today rotors configuration: " + data);
        		parent.appendChild(text);
+       		parent.appendChild(document.createElement("br"));
        	}
   	}
 	xmlhttp.open("GET","phase.php?p=" + phase, true);
@@ -319,9 +340,7 @@ function check_phase_two()
 		phase_two_link.setAttribute("href","#");
 		phase_two_link.setAttribute("onclick","create_phase_two_layout();");
 		phase_two_link.appendChild(document.createTextNode("go to phase 2"));
-		var div = document.getElementById("istructions_div");
-		div.appendChild(document.createElement("br"));
-		div.appendChild(phase_two_link);
+		document.getElementById("istructions_div").appendChild(phase_two_link);
 	}
 	else
 	{
@@ -340,6 +359,49 @@ function check_phase_two()
 function create_phase_two_layout()
 {
 	phase_one_done();
+	destroy_content();
+}
+function place_rotor(rotor, place)
+{
+	var parent = rotor.parentNode;
+	var new_rotor = document.createElement("div");
+	
+	parent.removeChild(rotor);
+	new_rotor.id = rotor.id;
+	new_rotor.setAttribute("onmousedown", "move_rotor(this);")
+	document.getElementById("rotor_hole_" + place).appendChild(new_rotor); 
+}
+
+function remove_rotor(parent_number, rotor)
+{
+	var parent = rotor.parentNode;
+	var new_rotor = document.createElement("div");
+	parent.removeChild(rotor);
+	new_rotor.id = current_rotor.id;
+	new_rotor.setAttribute("onmousedown", "move_rotor(this);");
+	document.getElementById("rotor_" + parent_number + "_container").appendChild(new_rotor); 
+}
+
+function check_hole(hole, rotor_num)
+{
+	for (var i = 0; i < 3; i++)
+	{
+		if (holes[i].get_rotor() == rotor_num)
+			holes[i].set_rotor(0);
+	}
+	
+	holes[hole].set_rotor(rotor_num);
+}
+
+function getOffset( el ) {
+    var _x = 0;
+    var _y = 0;
+    while( el && !isNaN( el.offsetLeft ) && !isNaN( el.offsetTop ) ) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return { top: _y, left: _x };
 }
 
 /*
@@ -349,44 +411,57 @@ function stop()
 {
 	if (current_rotor != null)
 	{
-		// LE RENDIAMO GLOBALI???
-		var margin_1_left_min = document.getElementById("rotors_hole").offsetLeft + 290;
+		var hole_1 = document.getElementById("rotor_hole_1");
+		var margin_top_min = getOffset(hole_1).top;
+		var margin_top_max = margin_top_min + 110;
+		var margin_1_left_min = getOffset(hole_1).left;
 		var margin_1_left_max = margin_1_left_min + 50;
 		var margin_2_left_min = margin_1_left_max;
 		var margin_2_left_max = margin_2_left_min + 50;
 		var margin_3_left_min = margin_2_left_max;
 		var margin_3_left_max = margin_3_left_min + 50;
 		
+		var parent = current_rotor.parentNode;
+		
 		if (((mouse_x >= margin_1_left_min) && (mouse_x <= margin_1_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[0].get_rotor() == 0) 
 		{
-			current_rotor.style.left = margin_1_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[0].set_rotor(current_rotor_num);
+			//current_rotor.style.left = hole_1.style.left;
+			//current_rotor.style.top = hole_1.style.top;
+			place_rotor(current_rotor, 1);
+			check_hole(0, current_rotor_num);
 		} 
 		else if (((mouse_x >= margin_2_left_min) && (mouse_x <= margin_2_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[1].get_rotor() == 0) 
 		{
-			current_rotor.style.left = margin_2_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[1].set_rotor(current_rotor_num);
+			//current_rotor.style.left = margin_2_left_min;
+			//current_rotor.style.top = margin_top_min;
+			place_rotor(current_rotor, 2);
+			check_hole(1, current_rotor_num);
 		} 
 		else if (((mouse_x >= margin_3_left_min) && (mouse_x <= margin_3_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[2].get_rotor() == 0) 
 		{
-			current_rotor.style.left = margin_3_left_min;
-			current_rotor.style.top = margin_top_min;
-			holes[2].set_rotor(current_rotor_num);
+			//current_rotor.style.left = margin_3_left_min;
+			//current_rotor.style.top = margin_top_min;
+			place_rotor(current_rotor, 3);
+			check_hole(2, current_rotor_num);
 		} 
 		else 
 		{
 			var base_div = document.getElementById(current_rotor.id + "_container");
 			if (current_rotor_hole >= 0) 
 			{
+				remove_rotor(current_rotor_hole+1, current_rotor);
 				holes[current_rotor_hole].set_rotor(0);
 			}
-			current_rotor.style.left = base_div.style.left;
-			current_rotor.style.top = base_div.style.top;
+			else
+			{
+				current_rotor.style.left = base_div.style.left;
+				current_rotor.style.top = base_div.style.top;
+			}
 		}
 
 		current_rotor = null;
+		document.body.onmousemove = null;
+		document.body.onmouseup = null;
 		check_phase_two(); 
 	}
 }
@@ -438,4 +513,7 @@ function move_rotor(rotor)
 	
 	rotor_x = mouse_x - current_rotor.offsetLeft;
     rotor_y = mouse_y - current_rotor.offsetTop;
+
+	document.body.onmousemove = move;
+	document.body.onmouseup = stop;
 }

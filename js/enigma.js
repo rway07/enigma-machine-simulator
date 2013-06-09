@@ -32,7 +32,7 @@ function enigma()
 enigma.prototype.set_rotor = function(place, rotor)
 {
 	this.rotor[place] = this.rotor_conf[rotor];
-	this.rotor_inv[place] = this.rotor_conf_inf[rotor];
+	this.rotor_inv[place] = this.rotor_conf_inv[rotor];
 }
 
 enigma.prototype.set_rotor_letter = function(rotor, letter)
