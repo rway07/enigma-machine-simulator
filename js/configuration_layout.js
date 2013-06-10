@@ -1,3 +1,4 @@
+// Phase one variables
 var mouse_x = 0;
 var mouse_y = 0;
 var rotor_x = 0;
@@ -6,7 +7,30 @@ var current_rotor = null;
 var current_rotor_num = 0;
 var current_rotor_hole = -1;
 var holes = new Array(3);
-var current_hole = 0;
+var in_hole = false;
+var margin_top_min = 0;
+var margin_top_max = 0;
+var margin_1_left_min = 0;
+var margin_1_left_max = 0;
+var margin_2_left_min = 0;
+var margin_2_left_max = 0;
+var margin_3_left_min = 0;
+var margin_3_left_max = 0; 
+
+// Phase one functions
+
+function update_holes_coords()
+{
+	var hole_1 = document.getElementById("rotor_hole_1");
+	margin_top_min = getOffset(hole_1).top;
+	margin_top_max = margin_top_min + 110;
+	margin_1_left_min = getOffset(hole_1).left;
+	margin_1_left_max = margin_1_left_min + 50;
+	margin_2_left_min = margin_1_left_max;
+	margin_2_left_max = margin_2_left_min + 50;
+	margin_3_left_min = margin_2_left_max;
+	margin_3_left_max = margin_3_left_min + 50; 
+}
 
 function reset_phase_one_var()
 {
@@ -105,14 +129,21 @@ function phase_three_layout(parent)
 	}
 }
 
-function holeMouseOver(obj)
+function hole_mouse_over(obj)
 {
 	obj.setAttribute("style","background: green;");
 }
 
-function holeMouseOut(obj)
+function hole_mouse_out(obj)
 {
 	obj.setAttribute("style","background: white;");
+}
+
+function check_position(l_min, l_max, t_min, t_max)
+{
+	if (((mouse_x >= l_min) && (mouse_x <= l_max)) && ((mouse_y >= t_min) && (mouse_y <= t_max))) return true;
+
+	return false;
 }
 
 /*
@@ -126,14 +157,8 @@ function create_rotors_hole_layout(parent)
 	var rotor_hole_3 = document.createElement('div');
 	rotors_hole.id = "rotors_hole";
 	rotor_hole_1.id = "rotor_hole_1";
-	rotor_hole_1.setAttribute("onmouseover","holeMouseOver(this);");
-	rotor_hole_1.setAttribute("onmouseout","holeMouseOut(this);");
 	rotor_hole_2.id = "rotor_hole_2";
-	rotor_hole_2.setAttribute("onmouseover","holeMouseOver(this);");
-	rotor_hole_2.setAttribute("onmouseout","holeMouseOut(this);");
 	rotor_hole_3.id = "rotor_hole_3";
-	rotor_hole_3.setAttribute("onmouseover","holeMouseOver(this);");
-	rotor_hole_3.setAttribute("onmouseout","holeMouseOut(this);");
 	
 	parent.appendChild(rotors_hole);
 	rotors_hole.appendChild(rotor_hole_1);
@@ -162,19 +187,19 @@ function create_rotors_container_layout(parent)
 	rotors_container.id = "rotors_container";
 	rotor_1_cont.id = "rotor_1_container";
 	rotor_1.id = "rotor_1";
-	rotor_1.setAttribute("onmousedown","move_rotor(this);");
+	rotor_1.setAttribute("onmousedown","move_rotor(event, this);");
 	rotor_2_cont.id = "rotor_2_container";
 	rotor_2.id = "rotor_2";
-	rotor_2.setAttribute("onmousedown","move_rotor(this);");
+	rotor_2.setAttribute("onmousedown","move_rotor(event, this);");
 	rotor_3_cont.id = "rotor_3_container";
 	rotor_3.id = "rotor_3";
-	rotor_3.setAttribute("onmousedown","move_rotor(this);");
+	rotor_3.setAttribute("onmousedown","move_rotor(event, this);");
 	rotor_4_cont.id = "rotor_4_container";
 	rotor_4.id = "rotor_4";
-	rotor_4.setAttribute("onmousedown","move_rotor(this);");
+	rotor_4.setAttribute("onmousedown","move_rotor(event, this);");
 	rotor_5_cont.id = "rotor_5_container";
 	rotor_5.id = "rotor_5";
-	rotor_5.setAttribute("onmousedown","move_rotor(this);");
+	rotor_5.setAttribute("onmousedown","move_rotor(event, this);");
 	
 	parent.appendChild(rotors_container);
 	rotors_container.appendChild(rotor_1_cont);
@@ -207,7 +232,6 @@ function create_rotors_conf_layout(parent)
 
 	create_rotors_hole_layout(rotors_hole_div);
 	create_rotors_container_layout(rotors_container_div);
-
 }
 
 /*
@@ -246,10 +270,11 @@ function create_configuration_layout()
 	create_rotors_conf_layout(conf_div);
 	
 	reset_phase_one_var();
+	update_holes_coords();
 }
 
 /*
- * 		Ottieni i dati di configurazione riguardanti la fase 1
+ * 		Ottieni i dati di configurazione riguardanti la fase x
  */
 function get_phase_data(parent, phase)
 {
@@ -301,6 +326,7 @@ function locate_phase_one_elements()
 	
 	rotors_hole.setAttribute("style", "margin-left: " + margin_hole + "px");
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
+	update_holes_coords();
 }
 
 /*
@@ -334,17 +360,18 @@ function check_phase_two()
 {
 	if (check_phase_one_done())
 	{
-		// Enable phase two pass
-		var phase_two_link = document.createElement("a");
-		phase_two_link.id = "phase_two_link";
-		phase_two_link.setAttribute("href","#");
-		phase_two_link.setAttribute("onclick","create_phase_two_layout();");
-		phase_two_link.appendChild(document.createTextNode("go to phase 2"));
-		document.getElementById("istructions_div").appendChild(phase_two_link);
+		if (document.getElementById("phase_two_link") == null)
+		{
+			var phase_two_link = document.createElement("a");
+			phase_two_link.id = "phase_two_link";
+			phase_two_link.setAttribute("href", "#");
+			phase_two_link.setAttribute("onclick", "create_phase_two_layout();");
+			phase_two_link.appendChild(document.createTextNode("go to phase 2"));
+			document.getElementById("istructions_div").appendChild(phase_two_link); 
+		}
 	}
 	else
 	{
-		// Disable always
 		link = document.getElementById("phase_two_link");
 		if (link != null)
 		{
@@ -353,14 +380,6 @@ function check_phase_two()
 	}
 }
 
-/*
- * 		Crea il layout per la fase 2
- */
-function create_phase_two_layout()
-{
-	phase_one_done();
-	destroy_content();
-}
 function place_rotor(rotor, place)
 {
 	var parent = rotor.parentNode;
@@ -368,7 +387,7 @@ function place_rotor(rotor, place)
 	
 	parent.removeChild(rotor);
 	new_rotor.id = rotor.id;
-	new_rotor.setAttribute("onmousedown", "move_rotor(this);")
+	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
 	document.getElementById("rotor_hole_" + place).appendChild(new_rotor); 
 }
 
@@ -378,7 +397,7 @@ function remove_rotor(parent_number, rotor)
 	var new_rotor = document.createElement("div");
 	parent.removeChild(rotor);
 	new_rotor.id = current_rotor.id;
-	new_rotor.setAttribute("onmousedown", "move_rotor(this);");
+	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);");
 	document.getElementById("rotor_" + parent_number + "_container").appendChild(new_rotor); 
 }
 
@@ -411,42 +430,29 @@ function stop()
 {
 	if (current_rotor != null)
 	{
-		var hole_1 = document.getElementById("rotor_hole_1");
-		var margin_top_min = getOffset(hole_1).top;
-		var margin_top_max = margin_top_min + 110;
-		var margin_1_left_min = getOffset(hole_1).left;
-		var margin_1_left_max = margin_1_left_min + 50;
-		var margin_2_left_min = margin_1_left_max;
-		var margin_2_left_max = margin_2_left_min + 50;
-		var margin_3_left_min = margin_2_left_max;
-		var margin_3_left_max = margin_3_left_min + 50;
-		
 		var parent = current_rotor.parentNode;
 		
 		if (((mouse_x >= margin_1_left_min) && (mouse_x <= margin_1_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[0].get_rotor() == 0) 
 		{
-			//current_rotor.style.left = hole_1.style.left;
-			//current_rotor.style.top = hole_1.style.top;
 			place_rotor(current_rotor, 1);
 			check_hole(0, current_rotor_num);
+			hole_mouse_out(document.getElementById("rotor_hole_1"));
 		} 
 		else if (((mouse_x >= margin_2_left_min) && (mouse_x <= margin_2_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[1].get_rotor() == 0) 
 		{
-			//current_rotor.style.left = margin_2_left_min;
-			//current_rotor.style.top = margin_top_min;
 			place_rotor(current_rotor, 2);
 			check_hole(1, current_rotor_num);
+			hole_mouse_out(document.getElementById("rotor_hole_2"));
 		} 
 		else if (((mouse_x >= margin_3_left_min) && (mouse_x <= margin_3_left_max)) && ((mouse_y >= margin_top_min) && (mouse_y <= margin_top_max)) && holes[2].get_rotor() == 0) 
 		{
-			//current_rotor.style.left = margin_3_left_min;
-			//current_rotor.style.top = margin_top_min;
 			place_rotor(current_rotor, 3);
 			check_hole(2, current_rotor_num);
+     		hole_mouse_out(document.getElementById("rotor_hole_3"));
 		} 
 		else 
 		{
-			var base_div = document.getElementById(current_rotor.id + "_container");
+			//var base_div = document.getElementById(current_rotor.id + "_container");
 			if (current_rotor_hole >= 0) 
 			{
 				remove_rotor(current_rotor_hole+1, current_rotor);
@@ -454,14 +460,25 @@ function stop()
 			}
 			else
 			{
-				current_rotor.style.left = base_div.style.left;
-				current_rotor.style.top = base_div.style.top;
-			}
-		}
+				//current_rotor.style.left = base_div.style.left;
+				//current_rotor.style.top = base_div.style.top;
+				var new_rotor = document.createElement("div");
 
-		current_rotor = null;
+				parent.removeChild(current_rotor);
+				new_rotor.id = current_rotor.id;
+				new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
+				parent.appendChild(new_rotor);
+
+			}
+			
+			hole_mouse_out(document.getElementById("rotor_hole_1"));
+			hole_mouse_out(document.getElementById("rotor_hole_2"));
+			hole_mouse_out(document.getElementById("rotor_hole_3"));
+		}
+		
 		document.body.onmousemove = null;
 		document.body.onmouseup = null;
+		current_rotor = null;
 		check_phase_two(); 
 	}
 }
@@ -478,6 +495,37 @@ function move(e)
      {	
      	if (mouse_x <= 220) mouse_x = 200;
      	if (mouse_y <= 65) mouse_y = 60;
+     	
+     	if (check_position(margin_1_left_min, margin_1_left_max, margin_top_min, margin_top_max))
+     	{
+     		hole_mouse_over(document.getElementById("rotor_hole_1"));
+     		hole_mouse_out(document.getElementById("rotor_hole_2"));
+     		hole_mouse_out(document.getElementById("rotor_hole_3"));
+     		in_hole = true;
+     	}
+     	else if (check_position(margin_2_left_min, margin_2_left_max, margin_top_min, margin_top_max))
+     	{
+     		hole_mouse_over(document.getElementById("rotor_hole_2"));
+     		hole_mouse_out(document.getElementById("rotor_hole_1"));
+     		hole_mouse_out(document.getElementById("rotor_hole_3"));
+     		in_hole = true;
+     	}
+     	else if (check_position(margin_3_left_min, margin_3_left_max, margin_top_min, margin_top_max))
+     	{
+     		hole_mouse_over(document.getElementById("rotor_hole_3"));
+     		hole_mouse_out(document.getElementById("rotor_hole_1"));
+     		hole_mouse_out(document.getElementById("rotor_hole_2"));
+     		in_hole = true;
+     	}
+     	else
+     	{
+     		if (in_hole == true)
+     		{
+     			hole_mouse_out(document.getElementById("rotor_hole_1"));
+     			hole_mouse_out(document.getElementById("rotor_hole_2"));
+     			hole_mouse_out(document.getElementById("rotor_hole_3"));
+     		}
+     	}
      	
      	current_rotor.style.left = (mouse_x - rotor_x) + "px";
      	current_rotor.style.top = (mouse_y - rotor_y) + "px";
@@ -497,23 +545,47 @@ function get_rotor_number(rotor)
 /*
  * 		Inizializza il drag and drop
  */
-function move_rotor(rotor)
+function move_rotor(e, rotor)
 {
-	current_rotor = rotor;
-	current_rotor_num = get_rotor_number(current_rotor);
-	
-	for (var i = 0; i < 3; i++)
+	if (detect_left_button(e))
 	{
-		var num = holes[i].get_rotor();
-		if (num == current_rotor_num)
-		{
-			current_rotor_hole = i;
-		}	
-	}
-	
-	rotor_x = mouse_x - current_rotor.offsetLeft;
-    rotor_y = mouse_y - current_rotor.offsetTop;
+		current_rotor = rotor;
+		current_rotor_num = get_rotor_number(current_rotor);
+		current_rotor_hole = -1;
 
-	document.body.onmousemove = move;
-	document.body.onmouseup = stop;
+		for (var i = 0; i < 3; i++) 
+		{
+			var num = holes[i].get_rotor();
+			if (num == current_rotor_num) 
+			{
+				current_rotor_hole = i;
+			}
+		}
+
+		rotor_x = mouse_x - current_rotor.offsetLeft;
+		rotor_y = mouse_y - current_rotor.offsetTop;
+
+		document.body.onmousemove = move;
+		document.body.onmouseup = stop; 
+	}
 }
+
+//-------------------------------------------------------------
+// Phase two functions
+
+/*
+ * 		Crea il layout per la fase 2
+ */
+function create_phase_two_layout()
+{
+	phase_one_done();
+	destroy_content();
+}
+
+function locate_phase_two_elements()
+{
+	
+}
+
+function 
+

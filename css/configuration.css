@@ -109,7 +109,7 @@ div#rotors_container
 	height: 100px;
 	width: 260px;	
 	margin-top: 50px;
-	border: 1px dotted red;
+	border: 1px solid red;
 }
 
 div#rotor_1_container{
@@ -126,7 +126,7 @@ div#rotor_1{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_1.png);
-	#background: #000080;
+	z-index: 2;
 }
 
 div#rotor_2_container{
@@ -143,7 +143,7 @@ div#rotor_2{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_2.png);
-	#background: #000080;
+	z-index: 2;
 }
 
 div#rotor_3_container{
@@ -160,7 +160,7 @@ div#rotor_3{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_3.png);
-	#background: #000080;
+	z-index: 2;
 }
 
 div#rotor_4_container{
@@ -177,7 +177,7 @@ div#rotor_4{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_4.png);
-	#background: #000080;
+	z-index: 2;
 }
 
 div#rotor_5_container{
@@ -194,5 +194,5 @@ div#rotor_5{
 	width: 40px;
 	height: 100px;
 	background: url(../images/rotor_5.png);
-	#background: #000080;
+	z-index: 2;
 }

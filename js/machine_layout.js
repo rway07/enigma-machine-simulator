@@ -58,9 +58,9 @@ function create_keys(parent, key, i)
 	img.id = "key_image_" + key;	
 	img.setAttribute('src','images/keys/' + key.toLowerCase() + '_key_normal.png');
 	img.setAttribute('alt',key.toLowerCase() + '_key');
-	img.setAttribute('onmousedown','key_down_handler("' + key + '");');
-	img.setAttribute('onmouseup','key_up_handler("' + key + '");');
-	img.setAttribute('onmouseout','key_up_handler("' + key + '");');
+	img.setAttribute('onmousedown','key_down_handler(event, "' + key + '");');
+	img.setAttribute('onmouseup','key_up_handler(event, "' + key + '");');
+	img.setAttribute('onmouseout','key_up_handler(event, "' + key + '");');
 	img.className = "button";
 	button.appendChild(img);
 }

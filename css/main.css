@@ -52,10 +52,6 @@ div#content, div#container{
 	background:#FFFFFF;
 }
 
-div#content{
-	#background: url(../images/back.jpg);
-}
-
 .header{
 	position: absolute;
 	top: 0px;	

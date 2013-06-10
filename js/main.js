@@ -6,6 +6,13 @@
 
 var machine;
 
+function detect_left_button(e) 
+{
+    e = e || window.event;
+    var button = e.which || e.button;
+    return button == 1;
+}
+
 /*
  * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra
  */

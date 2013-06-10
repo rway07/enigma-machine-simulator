@@ -119,14 +119,14 @@ function textbox_up_handler(e)
 		key_release(key);
 	}
 }
-function key_down_handler(key)
+function key_down_handler(e, key)
 {
-	write_key(key);
+	if (detect_left_button(e)) write_key(key);
 }
 
-function key_up_handler(key)
+function key_up_handler(e, key)
 {
-	key_release(key);
+	if (detect_left_button(e)) key_release(key);
 }
 
 function key_press(key, encrypted_key)

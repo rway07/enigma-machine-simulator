@@ -234,9 +234,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="131.4121"
-     inkscape:cy="654.57555"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="303.04461"
+     inkscape:cy="563.44854"
      inkscape:document-units="px"
      inkscape:current-layer="layer4"
      showgrid="true"
@@ -4382,43 +4382,24 @@
       </g>
     </g>
     <g
-       id="g5692"
+       id="g4473"
        inkscape:export-filename="E:\web_code\enigma_machine\images\rotors_hole.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">
       <rect
-         y="442.36218"
+         y="-159.99998"
          x="0"
          height="150"
          width="400"
          id="rect4605"
-         style="display:inline;fill:#000000;fill-opacity:1;stroke-width:0.10000000000000001;stroke-miterlimit:4;stroke-dasharray:none"
-         transform="translate(0,-602.36217)" />
-      <g
-         id="g5686">
-        <rect
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-linejoin:bevel"
-           id="rect4823"
-           width="46.000061"
-           height="99.875015"
-           x="89.999969"
-           y="-133.87497" />
-        <rect
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-linejoin:bevel"
-           id="rect4823-7"
-           width="46.000061"
-           height="99.875092"
-           x="135.87497"
-           y="-133.87505" />
-        <rect
-           transform="translate(0,-602.36217)"
-           style="display:inline;fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:1.50000000000000000;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-           id="rect4823-74"
-           width="46.000061"
-           height="99.875092"
-           x="180.99997"
-           y="468.48712" />
-      </g>
+         style="fill:#000000;fill-opacity:1;stroke-width:0.1;stroke-miterlimit:4;stroke-dasharray:none;display:inline" />
+      <rect
+         y="-134.93384"
+         x="90.566055"
+         height="99.367836"
+         width="142.36784"
+         id="rect4823"
+         style="fill:#ffffff;fill-opacity:1;stroke:none" />
     </g>
     <g
        id="g4614"
