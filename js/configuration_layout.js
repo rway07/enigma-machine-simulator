@@ -19,8 +19,11 @@ var margin_2_left_max = 0;
 var margin_3_left_min = 0;
 var margin_3_left_max = 0; 
 
-// Phase two variabled
+// Phase two variables
 var letter = new Array(3);
+
+//Phase three variables
+
 
 // Phase one functions
 
@@ -95,16 +98,21 @@ function create_plug(parent, class_name, key, i)
 	if ((i == 0) && (key == "A"))
 	{
 		plug.setAttribute('style','margin-left: 52px');
-	} else if (i == 0) 
+	} 
+	else if (i == 0) 
 	{
-		plug.setAttribute('style','margin-left: 32px');
+		plug.setAttribute('style','margin-left: 34px');
+	} 
+	else if (key == "K")
+	{
+		plug.setAttribute("style","margin-right: 34px");
 	}
 	parent.appendChild(plug);
 	img.setAttribute('src','images/keys/plug.png');
 	img.setAttribute('alt',key.toLowerCase() + '_plug');
 	plug.appendChild(img);
 	
-	if (i != 8) parent.appendChild(space);
+	//if (i != 8) parent.appendChild(space);
 }
 
 /*
@@ -786,6 +794,22 @@ function create_phase_three_layout()
 	get_phase_data(istr_div, 3);
 	
 	//reset_phase_two_var();
-	//create_rotors_letter_conf_layout(conf_div);
-	//locate_phase_two_elements();
+	phase_three_layout(conf_div);
+	locate_phase_three_elements();
+}
+
+function locate_phase_three_elements()
+{
+	var parent = document.getElementById("configuration_div");
+	var child = document.getElementById("plugs");
+	
+	var width = parent.offsetWidth;
+	var margin = ((width - 400) / 2);
+		
+	if (document.getElementById('content').offsetWidth <= 400) 
+	{
+		margin = 0;
+	}
+	
+	child.setAttribute("style", "margin-left: " + margin + "px");
 }

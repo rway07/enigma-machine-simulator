@@ -33,7 +33,7 @@ function locate_elements()
 				locate_phase_two_elements();
 				break;
 			case 3:
-				//locate_phase_three_elements();
+				locate_phase_three_elements();
 				break;
 		}
 	}
@@ -71,7 +71,7 @@ window.onload = function()
 {
 	// For now load enigma machine core at window load
 	machine = new enigma();
-	//machine.precalculate_keys();
+	machine.precalculate_keys();
 }
 
 window.onunload = function()

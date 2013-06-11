@@ -178,7 +178,6 @@ function create_main_layout()
 	create_machine_layout()
 	create_screen();
 	locate_machine();
-	machine.precalculate_keys();
 }
 
 /*
