@@ -1,6 +1,3 @@
-// Global variables
-var phase = 1;
-// Phase one variables
 var mouse_x = 0;
 var mouse_y = 0;
 var rotor_x = 0;
@@ -18,14 +15,6 @@ var margin_2_left_min = 0;
 var margin_2_left_max = 0;
 var margin_3_left_min = 0;
 var margin_3_left_max = 0; 
-
-// Phase two variables
-var letter = new Array(3);
-
-//Phase three variables
-
-
-// Phase one functions
 
 function update_holes_coords()
 {
@@ -82,67 +71,6 @@ hole.prototype.get_rotor = function()
 	return this.rotor;
 }
 
-
-/*
- * 	Disegna una spina
- */
-function create_plug(parent, class_name, key, i)
-{
-	var plug = document.createElement('div');
-	var space = document.createElement('div');
-	var img = document.createElement('img');
-		
-	space.className = class_name;	
-	plug.className = class_name;
-	plug.id = "plug_" + key;
-	if ((i == 0) && (key == "A"))
-	{
-		plug.setAttribute('style','margin-left: 52px');
-	} 
-	else if (i == 0) 
-	{
-		plug.setAttribute('style','margin-left: 34px');
-	} 
-	else if (key == "K")
-	{
-		plug.setAttribute("style","margin-right: 34px");
-	}
-	parent.appendChild(plug);
-	img.setAttribute('src','images/keys/plug.png');
-	img.setAttribute('alt',key.toLowerCase() + '_plug');
-	plug.appendChild(img);
-	
-	//if (i != 8) parent.appendChild(space);
-}
-
-/*
- * 	Crea il layout delle spine
- */
-function phase_three_layout(parent)
-{
-	var plugs = document.createElement('div');
-	plugs.id = "plugs";
-	
-	parent.appendChild(plugs);
-	var keys = new Array("Q", "W", "E", "R", "T", "Z", "U", "I", "O");
-	for (var i = 0; i < 9; i++)
-	{
-		create_plug(plugs, "plug_place_top", keys[i], i);	
-	}
-	
-	keys = ["A", "S", "D", "F", "G", "H", "J", "K"];
-	for (var i = 0; i < 8; i++)
-	{
-		create_plug(plugs, "plug_place", keys[i], i);
-	}
-	
-	keys = ["P", "Y", "X", "C", "V", "B", "N", "M", "L"];
-	for (var i = 0; i < 9; i++)
-	{
-		create_plug(plugs, "plug_place", keys[i], i);
-	}
-}
-
 function hole_mouse_over(obj)
 {
 	obj.setAttribute("style","background: green;");
@@ -166,18 +94,16 @@ function check_position(l_min, l_max, t_min, t_max)
 function create_rotors_hole_layout(parent)
 {
 	var rotors_hole = document.createElement('div');
-	var rotor_hole_1 = document.createElement('div');
-	var rotor_hole_2 = document.createElement('div');
-	var rotor_hole_3 = document.createElement('div');
+	var rotor_hole = new Array(3);
 	rotors_hole.id = "rotors_hole";
-	rotor_hole_1.id = "rotor_hole_1";
-	rotor_hole_2.id = "rotor_hole_2";
-	rotor_hole_3.id = "rotor_hole_3";
-	
 	parent.appendChild(rotors_hole);
-	rotors_hole.appendChild(rotor_hole_1);
-	rotors_hole.appendChild(rotor_hole_2);
-	rotors_hole.appendChild(rotor_hole_3);
+
+	for (var i = 0; i < 3; i++)
+	{
+		rotor_hole[i] = document.createElement("div");
+		rotor_hole[i].id = "rotor_hole_" + (i+1);
+		rotors_hole.appendChild(rotor_hole[i]);
+	}	
 }
 
 /*
@@ -185,47 +111,24 @@ function create_rotors_hole_layout(parent)
  */
 function create_rotors_container_layout(parent)
 {
+	var j = 0;
 	var rotors_container = document.createElement('div');
-	var rotor_1_cont = document.createElement('div');
-	var rotor_2_cont = document.createElement('div');
-	var rotor_3_cont = document.createElement('div');
-	var rotor_4_cont = document.createElement('div');
-	var rotor_5_cont = document.createElement('div');
-	var rotor_1 = document.createElement('div');
-	var rotor_2 = document.createElement('div');
-	var rotor_3 = document.createElement('div');
-	var rotor_4 = document.createElement('div');
-	var rotor_5 = document.createElement('div');
-	
-	
+	var rotor_cont = new Array(5);
+	var rotor = new Array(5);
 	rotors_container.id = "rotors_container";
-	rotor_1_cont.id = "rotor_1_container";
-	rotor_1.id = "rotor_1";
-	rotor_1.setAttribute("onmousedown","move_rotor(event, this);");
-	rotor_2_cont.id = "rotor_2_container";
-	rotor_2.id = "rotor_2";
-	rotor_2.setAttribute("onmousedown","move_rotor(event, this);");
-	rotor_3_cont.id = "rotor_3_container";
-	rotor_3.id = "rotor_3";
-	rotor_3.setAttribute("onmousedown","move_rotor(event, this);");
-	rotor_4_cont.id = "rotor_4_container";
-	rotor_4.id = "rotor_4";
-	rotor_4.setAttribute("onmousedown","move_rotor(event, this);");
-	rotor_5_cont.id = "rotor_5_container";
-	rotor_5.id = "rotor_5";
-	rotor_5.setAttribute("onmousedown","move_rotor(event, this);");
-	
 	parent.appendChild(rotors_container);
-	rotors_container.appendChild(rotor_1_cont);
-	rotors_container.appendChild(rotor_2_cont);
-	rotors_container.appendChild(rotor_3_cont);
-	rotors_container.appendChild(rotor_4_cont);
-	rotors_container.appendChild(rotor_5_cont);
-	rotor_1_cont.appendChild(rotor_1);
-	rotor_2_cont.appendChild(rotor_2);
-	rotor_3_cont.appendChild(rotor_3);
-	rotor_4_cont.appendChild(rotor_4);
-	rotor_5_cont.appendChild(rotor_5);
+	
+	for (var i = 0; i < 5; i++)
+	{
+		j = i + 1; 
+		rotor_cont[i] = document.createElement("div");
+		rotor_cont[i].id = "rotor_container_" + j;
+		rotors_container.appendChild(rotor_cont[i]);
+		rotor[i] = document.createElement("div");
+		rotor[i].id = "rotor_" + j;
+		rotor[i].setAttribute("onmousedown","move_rotor(event, this);");
+		rotor_cont[i].appendChild(rotor[i]);
+	}
 }
 
 /*
@@ -254,7 +157,8 @@ function create_rotors_conf_layout(parent)
 function show_configuration()
 {
 	destroy_content();
-	create_configuration_layout();	
+	create_configuration_layout();
+	document.onscroll = update_holes_coords();	
 	locate_phase_one_elements();
 }
 
@@ -284,50 +188,6 @@ function create_configuration_layout()
 	create_rotors_conf_layout(conf_div);
 	
 	reset_phase_one_var();
-	update_holes_coords();
-}
-
-/*
- * 		Ottieni i dati di configurazione riguardanti la fase x
- */
-function get_phase_data(parent, phase)
-{
-	var xmlhttp;
-	var data;
-	
-	if (window.XMLHttpRequest)
-  	{
-  		xmlhttp=new XMLHttpRequest();
-  	}
-	else
-  	{
-  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  	}
-	xmlhttp.onreadystatechange=function()
-  	{
-  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    	{
-    		data = xmlhttp.responseText;
-    		switch (phase)
-    		{
-    			case 1:
-    				text = document.createTextNode("Today rotors configuration: " + data);
-    				break;
-    			case 2:
-    				text = document.createTextNode("Today rotors letter configuration: " + data);
-    				break;
-    			case 3:
-    				text = document.createTextNode("Today plugs configuration: " + data);
-    				break;
-    		}
-       		parent.appendChild(text);
-       		parent.appendChild(document.createElement("br"));
-       		if (phase != 1)
-       			create_phase_link(phase);
-       	}
-  	}
-	xmlhttp.open("GET","phase.php?p=" + phase, true);
-	xmlhttp.send();
 }
 
 /*
@@ -353,7 +213,7 @@ function locate_phase_one_elements()
 	
 	rotors_hole.setAttribute("style", "margin-left: " + margin_hole + "px");
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
-	update_holes_coords();
+	//update_holes_coords();
 }
 
 /*
@@ -510,6 +370,8 @@ function move(e)
 	 mouse_x = document.all ? window.event.clientX : e.pageX;
      mouse_y = document.all ? window.event.clientY : e.pageY;
      	
+     update_holes_coords();
+     
      if(current_rotor != null)
      {	
      	if (mouse_x <= 220) mouse_x = 200;
@@ -587,229 +449,4 @@ function move_rotor(e, rotor)
 		document.body.onmousemove = move;
 		document.body.onmouseup = stop; 
 	}
-}
-
-//-------------------------------------------------------------
-// Phase two functions
-
-function phase_two_done()
-{
-	for (var i = 0; i < 3; i++)
-	{
-		machine.set_rotor_letter(i, letter[i]);
-	}
-}
-
-function create_phase_link(phase)
-{
-	var phase_link = document.createElement("a");
-	phase_link.setAttribute("href", "#");
-	switch (phase)
-	{
-		case 1:
-			phase_link.id = "phase_two_link";
-			phase_link.setAttribute("onclick", "create_phase_two_layout();");
-			phase_link.appendChild(document.createTextNode("go to phase 2"));
-			break;
-		case 2:
-			phase_link.id = "phase_three_link";
-			phase_link.setAttribute("onclick", "create_phase_three_layout();");
-			phase_link.appendChild(document.createTextNode("go to phase 3"));
-			break;
-		case 3:
-			phase_link.id = "phase_done_link";
-			phase_link.setAttribute("onclick", "show_machine();");
-			phase_link.appendChild(document.createTextNode("use machine!!"));
-			break;
-	}
-	
-	document.getElementById("istructions_div").appendChild(phase_link); 
-}
-
-function reset_phase_two_var()
-{
-	for (var i = 0; i < 3; i++)
-	{
-		letter[i] = 0;
-	}
-}
-
-function create_rotors_letter_conf_layout(parent)
-{
-	var rotors_base = document.createElement("div");
-	rotors_base.id = "rotors_letter_base";
-	parent.appendChild(rotors_base);
-	
-	var arrow_up = new Array(3);
-	var arrow_down = new Array(3);
-	var num = new Array(3);
-	var text = new Array(3);
-	
-	for (var i = 0; i < 3; i++)
-	{
-		arrow_up[i] = document.createElement("div");
-		arrow_up[i].id = "rotor_letter_up_" + (i+1);
-		arrow_up[i].setAttribute("onclick","arrow_up_handler(" + i + ")");
-		arrow_up[i].setAttribute("onmousedown","arrow_up_press(" + (i+1) + ")");
-		arrow_up[i].setAttribute("onmouseup","arrow_up_release(" + (i+1) + ")");
-		rotors_base.appendChild(arrow_up[i]);
-	}
-	
-	for (var i = 0; i < 3; i++)
-	{
-		num[i] = document.createElement("div");
-		num[i].id = "rotor_letter_" + (i+1);
-		rotors_base.appendChild(num[i]);
-		text[i] = document.createElement("h2");
-		text[i].id = "text_" + (i+1);
-		text[i].setAttribute("class","letter_text");
-		text[i].appendChild(document.createTextNode(letter[i]));
-		num[i].appendChild(text[i]);
-			
-	}
-	
-	for (var i = 0; i < 3; i++)
-	{
-		arrow_down[i] = document.createElement("div");
-		arrow_down[i].id = "rotor_letter_down_" + (i+1);
-		arrow_down[i].setAttribute("onclick","arrow_down_handler(" + i + ")");
-		arrow_down[i].setAttribute("onmousedown","arrow_down_press(" + (i+1) + ")");
-		arrow_down[i].setAttribute("onmouseup","arrow_down_release(" + (i+1) + ")");
-		rotors_base.appendChild(arrow_down[i]);
-	}
-}
-
-/*
- * 		Crea il layout per la fase 2
- */
-function create_phase_two_layout()
-{
-	phase_one_done();
-	phase = 2;
-	destroy_content();
-
-	var content = create_content();
-	var istr_div = document.createElement('div');
-	var conf_div = document.createElement('div');
-	var title = document.createElement('h2');
-	var text = document.createTextNode("Phase 2: Ringstellung");
-	
-	istr_div.id = "istructions_div";
-	conf_div.id = "configuration_div"; 
-	content.appendChild(istr_div);
-	content.appendChild(conf_div);
-	
-	istr_div.appendChild(title);
-	title.appendChild(text);
-	
-	get_phase_data(istr_div, 2);
-	reset_phase_two_var();
-	create_rotors_letter_conf_layout(conf_div);
-	locate_phase_two_elements();
-}
-
-function locate_phase_two_elements()
-{
-	var parent = document.getElementById("configuration_div");
-	var child = document.getElementById("rotors_letter_base");
-	
-	var width = parent.offsetWidth;
-	var margin = ((width - 400) / 2);
-		
-	if (document.getElementById('content').offsetWidth <= 400) 
-	{
-		margin = 0;
-	}
-	
-	child.setAttribute("style", "margin-left: " + margin + "px");
-}
-
-function change_letter(i, num)
-{
-	var ele = document.getElementById("text_" + i);
-	var parent = document.getElementById("rotor_letter_" + i);
-	parent.removeChild(ele);
-	ele = document.createElement("h2");
-	ele.id = "text_" + i;
-	ele.setAttribute("class","letter_text");
-	parent.appendChild(ele);
-	ele.appendChild(document.createTextNode(num));
-}
-
-function arrow_up_handler(i)
-{
-	letter[i] = (letter[i] + 1) % 26;
-	change_letter(i+1, letter[i]);
-}
-
-function arrow_up_press(i)
-{
-	document.getElementById("rotor_letter_up_" + i).setAttribute("style","background: url(../images/letter_up_red.png)");
-}
-
-function arrow_up_release(i)
-{
-	document.getElementById("rotor_letter_up_" + i).setAttribute("style","background: url(../images/letter_up.png)");
-}
-
-function arrow_down_handler(i)
-{
-	letter[i] = ((letter[i] - 1) < 0) ? 25 : letter[i] - 1;
-	change_letter(i+1, letter[i]);
-}
-
-function arrow_down_press(i)
-{
-	document.getElementById("rotor_letter_down_" + i).setAttribute("style","background: url(../images/letter_down_red.png)");	
-}
-
-function arrow_down_release(i)
-{
-	document.getElementById("rotor_letter_down_" + i).setAttribute("style","background: url(../images/letter_down.png)");	
-}
-
-//------------------------------------------------
-// Phase three
-
-function create_phase_three_layout()
-{
-	phase_two_done();
-	phase = 3;
-	destroy_content();
-
-	var content = create_content();
-	var istr_div = document.createElement('div');
-	var conf_div = document.createElement('div');
-	var title = document.createElement('h2');
-	var text = document.createTextNode("Phase 3: Steckerverbindungen");
-	
-	istr_div.id = "istructions_div";
-	conf_div.id = "configuration_div"; 
-	content.appendChild(istr_div);
-	content.appendChild(conf_div);
-	
-	istr_div.appendChild(title);
-	title.appendChild(text);
-	
-	get_phase_data(istr_div, 3);
-	
-	//reset_phase_two_var();
-	phase_three_layout(conf_div);
-	locate_phase_three_elements();
-}
-
-function locate_phase_three_elements()
-{
-	var parent = document.getElementById("configuration_div");
-	var child = document.getElementById("plugs");
-	
-	var width = parent.offsetWidth;
-	var margin = ((width - 400) / 2);
-		
-	if (document.getElementById('content').offsetWidth <= 400) 
-	{
-		margin = 0;
-	}
-	
-	child.setAttribute("style", "margin-left: " + margin + "px");
 }

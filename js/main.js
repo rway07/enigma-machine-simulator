@@ -4,13 +4,57 @@
  * 
  */
 
-var machine;
+var machine = null;
+var phase = 1;
 
 function detect_left_button(e) 
 {
     e = e || window.event;
     var button = e.which || e.button;
     return button == 1;
+}
+
+/*
+ * 		Ottieni i dati di configurazione riguardanti la fase x
+ */
+function get_phase_data(parent, phase)
+{
+	var xmlhttp;
+	var data;
+	
+	if (window.XMLHttpRequest)
+  	{
+  		xmlhttp=new XMLHttpRequest();
+  	}
+	else
+  	{
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+	xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    	{
+    		data = xmlhttp.responseText;
+    		switch (phase)
+    		{
+    			case 1:
+    				text = document.createTextNode("Today rotors configuration: " + data);
+    				break;
+    			case 2:
+    				text = document.createTextNode("Today rotors letter configuration: " + data);
+    				break;
+    			case 3:
+    				text = document.createTextNode("Today plugs configuration: " + data);
+    				break;
+    		}
+       		parent.appendChild(text);
+       		parent.appendChild(document.createElement("br"));
+       		if (phase != 1)
+       			create_phase_link(phase);
+       	}
+  	}
+	xmlhttp.open("GET","phase.php?p=" + phase, true);
+	xmlhttp.send();
 }
 
 /*
