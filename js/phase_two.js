@@ -8,32 +8,6 @@ function phase_two_done()
 	}
 }
 
-function create_phase_link(phase)
-{
-	var phase_link = document.createElement("a");
-	phase_link.setAttribute("href", "#");
-	switch (phase)
-	{
-		case 1:
-			phase_link.id = "phase_two_link";
-			phase_link.setAttribute("onclick", "create_phase_two_layout();");
-			phase_link.appendChild(document.createTextNode("go to phase 2"));
-			break;
-		case 2:
-			phase_link.id = "phase_three_link";
-			phase_link.setAttribute("onclick", "create_phase_three_layout();");
-			phase_link.appendChild(document.createTextNode("go to phase 3"));
-			break;
-		case 3:
-			phase_link.id = "phase_done_link";
-			phase_link.setAttribute("onclick", "show_machine();");
-			phase_link.appendChild(document.createTextNode("use machine!!"));
-			break;
-	}
-	
-	document.getElementById("istructions_div").appendChild(phase_link); 
-}
-
 function reset_phase_two_var()
 {
 	for (var i = 0; i < 3; i++)

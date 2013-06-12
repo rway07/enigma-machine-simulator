@@ -1,4 +1,10 @@
-
+var switches = new Array(26);
+var exclusion = new Array(20);
+var color = null;
+var current_color = 0;
+var current_index = 0;
+var first = "";
+var second = "";
 
 /*
  * 	Disegna una spina
@@ -11,7 +17,7 @@ function create_plug(parent, class_name, key, i)
 		
 	space.className = class_name;	
 	plug.className = class_name;
-	plug.id = "plug_" + key;
+	
 	if ((i == 0) && (key == "A"))
 	{
 		plug.setAttribute('style','margin-left: 52px');
@@ -25,8 +31,10 @@ function create_plug(parent, class_name, key, i)
 		plug.setAttribute("style","margin-right: 34px");
 	}
 	parent.appendChild(plug);
-	img.setAttribute('src','images/keys/plug.png');
+	img.id = "plug_" + key;
+	img.setAttribute('src','images/plugs/plug.png');
 	img.setAttribute('alt',key.toLowerCase() + '_plug');
+	img.setAttribute("onclick",'plug_handler("' + key + '");');
 	plug.appendChild(img);
 	
 	//if (i != 8) parent.appendChild(space);
@@ -60,6 +68,16 @@ function create_plugs_layout(parent)
 	}
 }
 
+function reset_phase_three_var()
+{
+	for (var i = 0; i < 26; i++)
+	{
+		switches[i] = i;
+	}
+
+	color = new Array("red","yellow","blue","green","purple","orange","brown","gray","cyan","white");
+}
+
 /*
  * 		Passaggio dalla fase 2 alla fase 3
  */
@@ -85,7 +103,7 @@ function create_phase_three_layout()
 	
 	get_phase_data(istr_div, 3);
 	
-	//reset_phase_two_var();
+	reset_phase_three_var();
 	create_plugs_layout(conf_div);
 	locate_phase_three_elements();
 }
@@ -107,4 +125,73 @@ function locate_phase_three_elements()
 	}
 	
 	child.setAttribute("style", "margin-left: " + margin + "px");
+}
+
+function check_exclusion(key)
+{
+	for (var i = 0; i < switches.length; i++)
+	{
+		if (exclusion[i] == key) return false;
+	}	
+	
+	return true;
+}
+
+function add_exclusion(key)
+{
+	exclusion[current_index] = key;
+	current_index++;
+}
+
+function plug_handler(key)
+{
+	if ((current_color <= 9) && (check_exclusion(key)))
+	{
+		var img = document.getElementById("plug_" + key);
+
+		img.setAttribute("src", "images/plugs/plug_" + color[current_color] + ".png");
+		if (first == "") 
+		{
+			first = key;
+		}
+		else 
+		{
+			if (key == first)
+			{
+				first = "";
+				img.setAttribute("src", "images/plugs/plug.png");
+			}
+			else 
+			{
+				second = key;
+			}
+		}
+
+		if (second != "") 
+		{
+			current_color++;
+			switches[get_index(first)] = get_index(second); 
+			add_exclusion(first);
+			add_exclusion(second);
+			first = "";
+			second = "";
+		}
+	}
+}
+
+function commit_configuration()
+{
+	for (var i = 0; i < 26; i++)
+	{
+		machine.set_plug(i, switches[i]);
+	}
+	
+	machine.precalculate_keys();
+}
+
+function use_machine()
+{
+	commit_configuration();
+	destroy_content();
+	create_main_layout();
 }

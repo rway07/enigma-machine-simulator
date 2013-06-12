@@ -6,7 +6,7 @@ function enigma()
 	this.rotor_conf = new Array(5);
 	this.rotor_conf_inv = new Array(5);
 	this.crypt_table = new Array(26);
-	this.switches = new Array(10);
+	this.switches = new Array(26);
 
 	this.input = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 	this.rotor_conf[0] = ["E","K","M","F","L","G","D","Q","V","Z","N","T","O","W","Y","H","X","U","S","P","A","I","B","R","C","J"];
@@ -27,17 +27,28 @@ function enigma()
 		this.rotor_inv[i] = this.rotor_conf_inv[i];
 		this.rotor_letter[i] = 0;	
 	}
+	
+	for (var i = 0; i < 26; i++)
+	{
+		this.switches[i] = i;
+	} 
 }
 
 enigma.prototype.set_rotor = function(place, rotor)
 {
-	this.rotor[place] = this.rotor_conf[rotor];
-	this.rotor_inv[place] = this.rotor_conf_inv[rotor];
+	var index = get_number(rotor) - 1;
+	this.rotor[place] = this.rotor_conf[index];
+	this.rotor_inv[place] = this.rotor_conf_inv[index];
 }
 
 enigma.prototype.set_rotor_letter = function(rotor, letter)
 {
 	this.rotor_letter[rotor] = letter;
+}
+
+enigma.prototype.set_plug = function(key_source, key_dest)
+{
+	this.switches[key_source] = key_dest;
 }
 
 enigma.prototype.get_encrypted_key = function(key)
