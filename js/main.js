@@ -102,7 +102,8 @@ function locate_elements()
 	if (current_div != undefined)
 	{
 		locate_machine();
-	} else
+	} 
+	else if (document.getElementsById("istructions_div"))
 	{
 		switch (phase)
 		{
@@ -116,6 +117,10 @@ function locate_elements()
 				locate_phase_three_elements();
 				break;
 		}
+	}
+	else 
+	{
+		locate_table();
 	}
 	
 }
