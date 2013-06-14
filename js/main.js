@@ -10,6 +10,24 @@ var machine = null;
 var phase = 1;
 
 /*
+ * 		Aggiorna la status bar con il testo passato per parametro
+ */
+function update_status_bar(new_text)
+{
+	var status_bar = document.getElementById("status_bar");
+	
+	child = document.getElementById("status_text");
+	if (child != null) status_bar.removeChild(child);
+	
+	var element = document.createElement("h5");
+	element.id = "status_text";
+	element.className = "status_bar_text";
+	
+	element.appendChild(document.createTextNode(new_text));
+	status_bar.appendChild(element);
+}
+
+/*
  * 		Riconosce la pressione del tasto sinistro del mouse
  */
 function detect_left_button(e) 

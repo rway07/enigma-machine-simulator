@@ -221,6 +221,7 @@ function show_machine()
 {
 	destroy_content();
 	create_main_layout();
+	update_status_bar("Use mouse's pointer or textarea on the left to compose your message!");
 }
 
 /*

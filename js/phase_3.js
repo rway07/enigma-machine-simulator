@@ -1,3 +1,8 @@
+/*
+ * 		phase_3.js
+ * 		Gestisce la fase 3 della configurazione della macchina Enigma
+ */
+// Variabili globali
 var switches = new Array(26);
 var exclusion = new Array(20);
 var color = null;
@@ -35,9 +40,7 @@ function create_plug(parent, class_name, key, i)
 	img.setAttribute('src','images/plugs/plug.png');
 	img.setAttribute('alt',key.toLowerCase() + '_plug');
 	img.setAttribute("onclick",'plug_handler("' + key + '");');
-	plug.appendChild(img);
-	
-	//if (i != 8) parent.appendChild(space);
+	plug.appendChild(img);	
 }
 
 /*
@@ -68,6 +71,9 @@ function create_plugs_layout(parent)
 	}
 }
 
+/*
+ * 		Reset delle variabili riguardanti la fase 3
+ */
 function reset_phase_3_var()
 {
 	for (var i = 0; i < 26; i++)
@@ -90,7 +96,7 @@ function reset_phase_3_var()
  */
 function create_phase_3_layout()
 {
-	phase_two_done();
+	phase_2_done();
 	phase = 3;
 	destroy_content();
 
@@ -113,6 +119,7 @@ function create_phase_3_layout()
 	reset_phase_3_var();
 	create_plugs_layout(conf_div);
 	locate_phase_3_elements();
+	update_status_bar("Select the letters you want to switch, for a maximum of 10");
 }
 
 /*
@@ -134,6 +141,9 @@ function locate_phase_3_elements()
 	child.setAttribute("style", "margin-left: " + margin + "px");
 }
 
+/*
+ * 		Controlla se la spina è già stata selezionata
+ */
 function check_exclusion(key)
 {
 	for (var i = 0; i < switches.length; i++)
@@ -144,12 +154,18 @@ function check_exclusion(key)
 	return true;
 }
 
+/*
+ * 		Aggiunge la spina alla lista di quelle già selezionate
+ */
 function add_exclusion(key)
 {
 	exclusion[current_index] = key;
 	current_index++;
 }
 
+/*
+ * 		Gestisce l'evento onClick sulle spine
+ */
 function plug_handler(key)
 {
 	if ((current_color <= 9) && (check_exclusion(key)))
@@ -186,6 +202,10 @@ function plug_handler(key)
 	}
 }
 
+/*
+ * 		Aggiorna la configurazione delle spine e
+ * 		ricalcola i caratteri cifrati solo alla fine della configurazione
+ */
 function commit_configuration()
 {
 	for (var i = 0; i < 26; i++)
@@ -196,9 +216,11 @@ function commit_configuration()
 	machine.precalculate_keys();
 }
 
+/*
+ * 		Passaggio dalla fase 3 all'uso della macchina
+ */
 function use_machine()
 {
 	commit_configuration();
-	destroy_content();
-	create_main_layout();
+	show_machine();	
 }

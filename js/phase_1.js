@@ -179,8 +179,9 @@ function show_configuration()
 {
 	destroy_content();
 	create_configuration_layout();
-	document.onscroll = update_holes_coords();	
+	//document.onscroll = update_holes_coords();	
 	locate_phase_1_elements();
+	update_status_bar("Place the rotors in the holes at the center of the page, following the order reported in the istructions, if you want...");
 }
 
 /*

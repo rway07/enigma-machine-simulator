@@ -97,4 +97,5 @@ function create_archive_layout()
 	
 	get_messages(table_text);
 	content.appendChild(table_text);
+	update_status_bar("This section shows messages sent before with Enigma machine");
 }

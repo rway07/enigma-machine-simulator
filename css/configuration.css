@@ -18,19 +18,11 @@ div#configuration_div{
 /*
  * 		Sezione spine
  */
-/*div#plugs_div{
-	position: relative;
-	float: left;
-	width: 100%;
-	height: 200px;
-		
-}*/
 
 div#plugs{
 	width: 400px;
 	height: 160px;
 	position: relative;
-	#margin-left: 300px;
 	background: url(../images/base_spine.png) center;
 }
 
