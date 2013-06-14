@@ -2,7 +2,7 @@ function create_table(parent, data)
 {
 	var table = document.createElement("table");
 	table.id = "messages_table";
-	table.setAttribute("border","1");
+	//table.setAttribute("border","1");
 	table.setAttribute("align","center");
 	var title = new Array("DATE","CLEAR MESSAGE","CRYPTED MESSAGE","DECRYPTED MESSAGE SERVER","DECRYPTED MESSAGE CLIENT");
 	var rows_number = get_number(data[0]) + 1;
@@ -96,8 +96,7 @@ function create_archive_layout()
 	h1.className = "left_bar_text";
 	content.appendChild(h1);
 	h1.appendChild(title);
-	var h4 = document.createElement("h4");
-	h4.className = "left_bar_text";
-	get_messages(h4);
-	content.appendChild(h4);
+	var table_div = document.createElement("h5");
+	get_messages(table_div);
+	content.appendChild(table_div);
 }

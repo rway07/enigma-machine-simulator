@@ -122,7 +122,8 @@ function create_screen()
 	var input_textbox = document.createElement('textarea');
 	var clear_textbox = document.createElement('textarea');
 	var cypher_textbox = document.createElement('textarea');
-	var br = document.createElement('br');
+	//var br = document.createElement('br');
+	var button = document.createElement("button");
 
 	input_div.id = "screen_input";
 	clear_div.id = "screen_clear";
@@ -157,7 +158,20 @@ function create_screen()
 	text = document.createTextNode("cypher text: ");
 	cypher_div.appendChild(text);
 	cypher_div.appendChild(cypher_textbox);
+	
+	button.setAttribute("type","button");
+	button.setAttribute("value","invia");
+	button.setAttribute("onclick","send_message()");
+	button.appendChild(document.createTextNode("send!"));
+	screen_div.appendChild(button);
 }
+
+function send_message()
+{
+	//alert("nothing hurts my world, just affects the ones around me");
+	send_data();
+}
+
 
 /*
  *	Crea il layout di base  
@@ -201,4 +215,36 @@ function show_machine()
 {
 	destroy_content();
 	create_main_layout();
+}
+
+function send_data()
+{
+	var xmlhttp;
+	var data;
+	var clear_text = document.getElementById("clear_textbox").value;
+	var crypted_text = document.getElementById("cypher_textbox").value;
+	var params = "clear=" + clear_text + "&crypt=" + crypted_text;
+	
+	if (window.XMLHttpRequest)
+  	{
+  		xmlhttp=new XMLHttpRequest();
+  	}
+	else
+  	{
+  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  	}
+	xmlhttp.onreadystatechange=function()
+  	{
+  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    	{
+    	
+    	}
+  	}
+	xmlhttp.open("POST","message.php", true);
+	
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.setRequestHeader("Content-length", params.length);
+	xmlhttp.setRequestHeader("Connection", "close");
+	
+	xmlhttp.send(params);
 }

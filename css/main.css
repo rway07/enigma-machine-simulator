@@ -77,3 +77,20 @@ div#content, div#container{
 li{
 	font-family: "Lucida Grande", monospace;
 }
+
+h5{
+	text-align: center;
+	font-family: "Lucida Grande", monospace;	
+}
+
+table{
+	border: 1px solid black;
+	width: 100%;
+	table-layout: fixed;
+}
+
+td{
+	border: 1px solid black;
+	word-wrap:break-word;
+
+}

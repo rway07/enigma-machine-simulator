@@ -21,7 +21,7 @@ function get_index(key)
 
 function get_number(key)
 {
-	return key.charCodeAt() - 48;
+	return parseInt(key, 10);
 }
 
 function create_phase_link(phase)
@@ -103,7 +103,7 @@ function locate_elements()
 	{
 		locate_machine();
 	} 
-	else if (document.getElementsById("istructions_div"))
+	else if (document.getElementById("istructions_div"))
 	{
 		switch (phase)
 		{
