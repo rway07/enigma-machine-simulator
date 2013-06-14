@@ -67,10 +67,15 @@ enigma.prototype.precalculate_keys = function()
 		this.crypt_table[i] = this.encrypt(key);	
 	}	
 }
+function key_to_number(key)
+{
+	return String.charCodeAt(key) - 65;	
+}
 
 enigma.prototype.encrypt = function(key)
 {
-	var index = String.charCodeAt(key) - 65;
+	var index = this.switches[key_to_number(key)];
+	//var index = String.charCodeAt(current_key) - 65;
 	var step_char;
 	
 	for (var i = 0; i < 3; i++)

@@ -68,13 +68,20 @@ function create_plugs_layout(parent)
 	}
 }
 
-function reset_phase_three_var()
+function reset_phase_3_var()
 {
 	for (var i = 0; i < 26; i++)
 	{
 		switches[i] = i;
+		if (i < 20) exclusion[i] = "";
 	}
-
+	
+	color = null;
+	current_color = 0;
+	current_index = 0;
+	first = "";
+	second = "";
+	
 	color = new Array("red","yellow","blue","green","purple","orange","brown","gray","cyan","white");
 }
 
@@ -103,7 +110,7 @@ function create_phase_three_layout()
 	
 	get_phase_data(istr_div, 3);
 	
-	reset_phase_three_var();
+	reset_phase_3_var();
 	create_plugs_layout(conf_div);
 	locate_phase_three_elements();
 }
