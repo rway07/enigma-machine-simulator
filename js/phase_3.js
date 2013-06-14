@@ -88,7 +88,7 @@ function reset_phase_3_var()
 /*
  * 		Passaggio dalla fase 2 alla fase 3
  */
-function create_phase_three_layout()
+function create_phase_3_layout()
 {
 	phase_two_done();
 	phase = 3;
@@ -112,13 +112,13 @@ function create_phase_three_layout()
 	
 	reset_phase_3_var();
 	create_plugs_layout(conf_div);
-	locate_phase_three_elements();
+	locate_phase_3_elements();
 }
 
 /*
  * 		Posiziona gli elementi della fase 3
  */
-function locate_phase_three_elements()
+function locate_phase_3_elements()
 {
 	var parent = document.getElementById("configuration_div");
 	var child = document.getElementById("plugs");

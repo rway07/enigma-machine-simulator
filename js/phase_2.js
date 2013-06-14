@@ -1,6 +1,6 @@
 var letter = new Array(3);
 
-function phase_two_done()
+function phase_2_done()
 {
 	for (var i = 0; i < 3; i++)
 	{
@@ -8,7 +8,7 @@ function phase_two_done()
 	}
 }
 
-function reset_phase_two_var()
+function reset_phase_2_var()
 {
 	for (var i = 0; i < 3; i++)
 	{
@@ -64,7 +64,7 @@ function create_rotors_letter_conf_layout(parent)
 /*
  * 		Crea il layout per la fase 2
  */
-function create_phase_two_layout()
+function create_phase_2_layout()
 {
 	phase_one_done();
 	phase = 2;
@@ -85,12 +85,12 @@ function create_phase_two_layout()
 	title.appendChild(text);
 	
 	get_phase_data(istr_div, 2);
-	reset_phase_two_var();
+	reset_phase_2_var();
 	create_rotors_letter_conf_layout(conf_div);
-	locate_phase_two_elements();
+	locate_phase_2_elements();
 }
 
-function locate_phase_two_elements()
+function locate_phase_2_elements()
 {
 	var parent = document.getElementById("configuration_div");
 	var child = document.getElementById("rotors_letter_base");

@@ -69,7 +69,7 @@ div#rotor_letter_up_1{
 	margin-top: 20px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_up.png);
+	background: url(../images/arrows/letter_up.png);
 	
 }
 
@@ -79,7 +79,7 @@ div#rotor_letter_up_2{
 	margin-top: 20px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_up.png);
+	background: url(../images/arrows/letter_up.png);
 }
 
 div#rotor_letter_up_3{
@@ -89,7 +89,7 @@ div#rotor_letter_up_3{
 	margin-right: 167.5px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_up.png);
+	background: url(../images/arrows/letter_up.png);
 }
 
 div#rotor_letter_down_1{
@@ -99,7 +99,7 @@ div#rotor_letter_down_1{
 	margin-top: 10px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_down.png);
+	background: url(../images/arrows/letter_down.png);
 }
 
 div#rotor_letter_down_2{
@@ -108,7 +108,7 @@ div#rotor_letter_down_2{
 	margin-top: 10px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_down.png);
+	background: url(../images/arrows/letter_down.png);
 }
 
 div#rotor_letter_down_3{
@@ -117,7 +117,7 @@ div#rotor_letter_down_3{
 	margin-top: 10px;
 	height: 25px;
 	width: 47.5px;
-	background: url(../images/letter_down.png);
+	background: url(../images/arrows/letter_down.png);
 }
 
 div#rotor_letter_1{
@@ -224,7 +224,7 @@ div#rotor_1{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotor_1.png);
+	background: url(../images/rotors/rotor_1.png);
 	z-index: 2;
 }
 
@@ -241,7 +241,7 @@ div#rotor_2{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotor_2.png);
+	background: url(../images/rotors/rotor_2.png);
 	z-index: 2;
 }
 
@@ -258,7 +258,7 @@ div#rotor_3{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotor_3.png);
+	background: url(../images/rotors/rotor_3.png);
 	z-index: 2;
 }
 
@@ -275,7 +275,7 @@ div#rotor_4{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotor_4.png);
+	background: url(../images/rotors/rotor_4.png);
 	z-index: 2;
 }
 
@@ -292,7 +292,6 @@ div#rotor_5{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotor_5.png);
+	background: url(../images/rotors/rotor_5.png);
 	z-index: 2;
 }
-

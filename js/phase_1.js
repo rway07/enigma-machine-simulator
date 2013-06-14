@@ -1,3 +1,9 @@
+/*
+ * 		phase_1.js
+ * 		Gestise la fase 1 della configurazione della macchina Enigma
+ */
+
+// Variabili globali
 var mouse_x = 0;
 var mouse_y = 0;
 var rotor_x = 0;
@@ -16,6 +22,9 @@ var margin_2_left_max = 0;
 var margin_3_left_min = 0;
 var margin_3_left_max = 0; 
 
+/*
+ * 		Aggiorna le coordinate degli alloggiamenti dei rotori
+ */
 function update_holes_coords()
 {
 	var hole_1 = document.getElementById("rotor_hole_1");
@@ -29,7 +38,10 @@ function update_holes_coords()
 	margin_3_left_max = margin_3_left_min + 50; 
 }
 
-function reset_phase_one_var()
+/*
+ * 		Reset delle variabili riguardanti la fase 1 della configurazione
+ */
+function reset_phase_1_var()
 {
 	phase = 1;
 	mouse_x = 0;
@@ -71,16 +83,25 @@ hole.prototype.get_rotor = function()
 	return this.rotor;
 }
 
+/*
+ * 		Gestore dell'evento onMouseOver sull'alloggimanto del rotore
+ */
 function hole_mouse_over(obj)
 {
 	obj.setAttribute("style","background: green;");
 }
 
+/*
+ * 		Gestore dell'evento onMouseOut sull'alloggimento del rotore
+ */
 function hole_mouse_out(obj)
 {
 	obj.setAttribute("style","background: white;");
 }
 
+/*
+ * 		Controlla se il mouse si trova alle coordinate dell'alloggiamento indicato
+ */
 function check_position(l_min, l_max, t_min, t_max)
 {
 	if (((mouse_x >= l_min) && (mouse_x <= l_max)) && ((mouse_y >= t_min) && (mouse_y <= t_max))) return true;
@@ -159,7 +180,7 @@ function show_configuration()
 	destroy_content();
 	create_configuration_layout();
 	document.onscroll = update_holes_coords();	
-	locate_phase_one_elements();
+	locate_phase_1_elements();
 }
 
 /*
@@ -187,13 +208,13 @@ function create_configuration_layout()
 	get_phase_data(istr_div, 1);
 	create_rotors_conf_layout(conf_div);
 	
-	reset_phase_one_var();
+	reset_phase_1_var();
 }
 
 /*
  * 		Posiziona gli elementi della pagina a seconda della dimensione della finestra
  */
-function locate_phase_one_elements()
+function locate_phase_1_elements()
 {
 	var rotors_container = document.getElementById('rotors_container');
 	var rotors_hole = document.getElementById('rotors_hole');
@@ -219,7 +240,7 @@ function locate_phase_one_elements()
 /*
  * 		Aggiorna la configurazione della macchina una volta conclusa la fase 1
  */
-function phase_one_done()
+function phase_1_done()
 {
 	for (var i = 0; i < 3; i++)
 	{
@@ -230,7 +251,7 @@ function phase_one_done()
 /*
  * 		Controlla se la fase 1 è stata completata
  */
-function check_phase_one_done()
+function check_phase_1_done()
 {
 	for (var i = 0; i < 3; i++)
 	{
@@ -243,18 +264,18 @@ function check_phase_one_done()
 /*
  * 		Crea il link per il passaggio alla fase 2
  */
-function check_phase_two()
+function check_phase_2()
 {
-	if (check_phase_one_done())
+	if (check_phase_1_done())
 	{
-		if (document.getElementById("phase_two_link") == null)
+		if (document.getElementById("phase_2_link") == null)
 		{
 			create_phase_link(1);
 		}
 	}
 	else
 	{
-		link = document.getElementById("phase_two_link");
+		link = document.getElementById("phase_2_link");
 		if (link != null)
 		{
 			document.getElementById("istructions_div").removeChild(link);
@@ -262,6 +283,9 @@ function check_phase_two()
 	}
 }
 
+/*
+ * 		Posiziona il rotore nell'alloggiamento indicato
+ */
 function place_rotor(rotor, place)
 {
 	var parent = rotor.parentNode;
@@ -273,6 +297,9 @@ function place_rotor(rotor, place)
 	document.getElementById("rotor_hole_" + place).appendChild(new_rotor); 
 }
 
+/*
+ * 		Rimuove il rotore dall'alloggiamento indicato
+ */
 function remove_rotor(parent_number, rotor)
 {
 	var parent = rotor.parentNode;
@@ -283,6 +310,10 @@ function remove_rotor(parent_number, rotor)
 	document.getElementById("rotor_" + parent_number + "_container").appendChild(new_rotor); 
 }
 
+/*
+ * 		Controlla se il rotore passato come parametro è presente in un altro alloggiamento 
+ * 		e lo posiziona in quello indicato
+ */
 function check_hole(hole, rotor_num)
 {
 	for (var i = 0; i < 3; i++)
@@ -294,6 +325,10 @@ function check_hole(hole, rotor_num)
 	holes[hole].set_rotor(rotor_num);
 }
 
+/*
+ * 		Restituisce l'offset corrente dell'elemento passato come parametro 
+ * 		a seconda delle dimensioni della finestra e dalla posizione della scroll bar
+ */
 function getOffset( el ) {
     var _x = 0;
     var _y = 0;
@@ -358,7 +393,7 @@ function stop()
 		document.body.onmousemove = null;
 		document.body.onmouseup = null;
 		current_rotor = null;
-		check_phase_two(); 
+		check_phase_2(); 
 	}
 }
 

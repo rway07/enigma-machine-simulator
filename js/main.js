@@ -1,12 +1,17 @@
 /**
- *	main.js
- *  inizializza i vari componenti grafici e la configurazione di default
- * 
+ *		main.js
+ *  	Contiene le variabili globali e le funzioni di utilità
  */
 
-var machine = null;
+// Variabili globali
+// Oggetto rappresentante la macchina Enigma
+var machine = null;		
+// Fase corrente di configurazione
 var phase = 1;
 
+/*
+ * 		Riconosce la pressione del tasto sinistro del mouse
+ */
 function detect_left_button(e) 
 {
     e = e || window.event;
@@ -14,16 +19,25 @@ function detect_left_button(e)
     return button == 1;
 }
 
+/*
+ * 		Restituisce l'indice corrispondente ad un determinato tasto
+ */
 function get_index(key)
 {
 	return key.charCodeAt() - 65;
 }
 
+/*
+ * 		Restituisce il numero corrispondente ad un carattere
+ */
 function get_number(key)
 {
 	return parseInt(key, 10);
 }
 
+/*
+ * 		Crea i link per il passaggio alle varie fasi di configurazione
+ */
 function create_phase_link(phase)
 {
 	var phase_link = document.createElement("a");
@@ -31,13 +45,13 @@ function create_phase_link(phase)
 	switch (phase)
 	{
 		case 1:
-			phase_link.id = "phase_two_link";
-			phase_link.setAttribute("onclick", "create_phase_two_layout();");
+			phase_link.id = "phase_2_link";
+			phase_link.setAttribute("onclick", "create_phase_2_layout();");
 			phase_link.appendChild(document.createTextNode("go to phase 2"));
 			break;
 		case 2:
-			phase_link.id = "phase_three_link";
-			phase_link.setAttribute("onclick", "create_phase_three_layout();");
+			phase_link.id = "phase_3_link";
+			phase_link.setAttribute("onclick", "create_phase_3_layout();");
 			phase_link.appendChild(document.createTextNode("go to phase 3"));
 			break;
 		case 3:
@@ -51,7 +65,7 @@ function create_phase_link(phase)
 }
 
 /*
- * 		Ottieni i dati di configurazione riguardanti la fase x
+ * 		Ottieni i dati di configurazione riguardanti la fase indicata
  */
 function get_phase_data(parent, phase)
 {
@@ -89,7 +103,7 @@ function get_phase_data(parent, phase)
        			create_phase_link(phase);
        	}
   	}
-	xmlhttp.open("GET","phase.php?p=" + phase, true);
+	xmlhttp.open("GET","php/phase.php?p=" + phase, true);
 	xmlhttp.send();
 }
 
@@ -108,13 +122,13 @@ function locate_elements()
 		switch (phase)
 		{
 			case 1:
-				locate_phase_one_elements();
+				locate_phase_1_elements();
 				break;
 			case 2:
-				locate_phase_two_elements();
+				locate_phase_2_elements();
 				break;
 			case 3:
-				locate_phase_three_elements();
+				locate_phase_3_elements();
 				break;
 		}
 	}
@@ -139,7 +153,7 @@ function destroy_content()
 }
 
 /*
- * 	Genera il div content 
+ * 	Genera il div principale
  */
 function create_content()
 {
@@ -152,18 +166,19 @@ function create_content()
 	return content;
 }
 
+/*
+ * 		Gestore dell'evento onLoad
+ */
 window.onload = function()
 {
-	// For now load enigma machine core at window load
 	machine = new enigma();
 	machine.precalculate_keys();
+	show_machine();
 }
 
-window.onunload = function()
-{
-	
-}
-
+/*
+ * 		Gestore dell'evento onResize
+ */
 window.onresize = function()
 {
 	locate_elements();

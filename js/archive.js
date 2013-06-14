@@ -1,8 +1,15 @@
+/*
+ * 		archive.js
+ * 		Gestisce il recupero e la visualizzazione dei messaggi inviati al server
+ */
+
+/*
+ * 		Crea la tabella dove verranno visualizzati i messaggi
+ */
 function create_table(parent, data)
 {
 	var table = document.createElement("table");
 	table.id = "messages_table";
-	//table.setAttribute("border","1");
 	table.setAttribute("align","center");
 	var title = new Array("DATE","CLEAR MESSAGE","CRYPTED MESSAGE","DECRYPTED MESSAGE SERVER","DECRYPTED MESSAGE CLIENT");
 	var rows_number = get_number(data[0]) + 1;
@@ -34,22 +41,12 @@ function create_table(parent, data)
 		
 		table.appendChild(rows[i]);
 	}
-	
 	parent.appendChild(table);
 }
 
-function locate_table()
-{
-	var table = document.getElementById("messages_table");
-	var table_width = table.offsetWidth;
-	var content_width = document.getElementById("content").offsetWidth;
-	var current_margin = ((content_width - table_width) / 2);
-	
-	if (content_width <= table_width) current_margin = 0;
-	
-	table.setAttribute("style", "margin-left: " + current_margin + "px");
-}
-
+/*
+ * 		Riceve i messaggi dal server
+ */
 function get_messages(parent)
 {
 	var xmlhttp;
@@ -72,7 +69,7 @@ function get_messages(parent)
        		create_table(parent, elements);
        	}
   	}
-	xmlhttp.open("GET","archive.php", true);
+	xmlhttp.open("GET","php/archive.php", true);
 	xmlhttp.send();
 }
 
@@ -91,12 +88,13 @@ function show_archive()
 function create_archive_layout()
 {
 	var content = create_content();
-	var h1 = document.createElement('h1');
+	var title_text = document.createElement('h1');
 	var title = document.createTextNode("View messages archive");
-	h1.className = "left_bar_text";
-	content.appendChild(h1);
-	h1.appendChild(title);
-	var table_div = document.createElement("h5");
-	get_messages(table_div);
-	content.appendChild(table_div);
+	var table_text = document.createElement("h5");
+	title_text.className = "left_bar_text";
+	content.appendChild(title_text);
+	title_text.appendChild(title);
+	
+	get_messages(table_text);
+	content.appendChild(table_text);
 }

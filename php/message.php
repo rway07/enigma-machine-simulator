@@ -12,11 +12,13 @@
 	
 	$clear_text = $_POST["clear"];
 	$crypted_text = $_POST["crypt"];
+	$decrypted_text_client = $_POST["c_decrypt"];
+	
 	$temp = "TODO";
 		
 	$data = mysql_query("INSERT INTO `$database_name`.`$table_name` 
 			(`ID`, `date`, `clear_message`, `crypted_message`, `decrypted_message_server`, `decrypted_message_client`) 
-			VALUES ('$id', '$timestamp', '$clear_text', '$crypted_text', '$temp', '$temp');") or die(mysql_error());
+			VALUES ('$id', '$timestamp', '$clear_text', '$crypted_text', '$temp', '$decrypted_text_client');") or die(mysql_error());
 				
 	mysql_close($conn);
 ?>
