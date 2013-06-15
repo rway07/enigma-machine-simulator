@@ -97,7 +97,7 @@ enigma.prototype.encrypt = function(key)
 	
 	for (var i = 0; i < 3; i++)
 	{
-		index = (index + this.rotor_letter[i]) % 25;
+		index = (index + this.rotor_letter[i]) % 26;
 		step_char = this.rotor[i][index];
 		index = String.charCodeAt(step_char) - 65;
 	}
@@ -107,10 +107,10 @@ enigma.prototype.encrypt = function(key)
 	
 	for (var i = 2; i >=0; i--)
 	{
-		index = (index + this.rotor_letter[i]) % 25;
+		index = (index + this.rotor_letter[i]) % 26;
 		step_char = this.rotor_inv[i][index];
 		index = String.charCodeAt(step_char) - 65;
 	}
-	
+
 	return step_char;
 }

@@ -142,11 +142,11 @@ function create_screen()
 	clear_textbox.setAttribute("rows", 2);
 	clear_textbox.setAttribute("id","clear_textbox");
 	clear_textbox.setAttribute("cols", 16);
-	clear_textbox.disabled = true;
+	clear_textbox.setAttribute("disabled","disabled");
 	cypher_textbox.setAttribute("rows", 2);
 	cypher_textbox.setAttribute("id", "cypher_textbox");
 	cypher_textbox.setAttribute("cols", 16);
-	cypher_textbox.disabled = true;
+	cypher_textbox.setAttribute("disabled","disabled");
 	
 	screen_div.appendChild(input_div);
 	screen_div.appendChild(clear_div);
@@ -257,7 +257,7 @@ function send_message()
   	{
   		if (xmlhttp.readyState==4 && xmlhttp.status==200)
     	{
-    	
+    		
     	}
   	}
   	

@@ -84,6 +84,8 @@ h5{
 }
 
 table{
+	text-align: center;
+	font-family: "Lucida Grande", monospace;
 	border: 1px solid black;
 	width: 100%;
 	table-layout: fixed;
