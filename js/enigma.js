@@ -69,7 +69,8 @@ enigma.prototype.set_plug = function(key_source, key_dest)
  */
 enigma.prototype.get_encrypted_key = function(key)
 {
-	var index = String.charCodeAt(key) - 65;
+	//var index = String.charCodeAt(key) - 65;
+	var index = key.charCodeAt(0) - 65;
 	
 	return this.crypt_table[index];
 }
@@ -99,17 +100,20 @@ enigma.prototype.encrypt = function(key)
 	{
 		index = (index + this.rotor_letter[i]) % 26;
 		step_char = this.rotor[i][index];
-		index = String.charCodeAt(step_char) - 65;
+		//index = String.charCodeAt(step_char) - 65;
+		index = step_char.charCodeAt(0) - 65;
 	}
 
 	step_char = this.reflector[index];
-	index = String.charCodeAt(step_char) - 65;
-	
+	//index = String.charCodeAt(step_char) - 65;
+	index = step_char.charCodeAt(0) - 65;
+
 	for (var i = 2; i >=0; i--)
 	{
 		index = (index + this.rotor_letter[i]) % 26;
 		step_char = this.rotor_inv[i][index];
-		index = String.charCodeAt(step_char) - 65;
+		//index = String.charCodeAt(step_char) - 65;
+		index = step_char.charCodeAt(0) - 65;
 	}
 
 	return step_char;

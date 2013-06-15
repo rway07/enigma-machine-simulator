@@ -16,7 +16,7 @@ function truncate_text(text)
 	
 	if (len > 20)
 	{
-		while (end < len)
+		while ((end <= len) && (step > 0))
 		{
 			buffer = buffer + text.substring(start, end) + " ";
 			start = end;
@@ -104,7 +104,7 @@ function get_messages(parent)
        		create_table(parent, elements);
        	}
   	}
-	xmlhttp.open("GET","php/archive.php", true);
+	xmlhttp.open("GET","php/archive.php?timeid=" + (Math.random()*100000), true);
 	xmlhttp.send();
 }
 

@@ -189,7 +189,6 @@ function create_main_layout()
 	board.id = "board";
 	screen_div.id = "screen";
 	
-	container.appendChild(content);
 	content.appendChild(board);
 	content.appendChild(screen_div); 
 	
@@ -239,33 +238,32 @@ function reset_values()
  */
 function send_message()
 {
-	var xmlhttp;
-	var data;
 	var clear_text = document.getElementById("clear_textbox").value;
-	var crypted_text = document.getElementById("cypher_textbox").value;
-	var params = "clear=" + clear_text + "&crypt=" + crypted_text + "&c_decrypt=" + decrypted_message_client;
 	
-	if (window.XMLHttpRequest)
-  	{
-  		xmlhttp=new XMLHttpRequest();
-  	}
-	else
-  	{
-  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  	}
-	xmlhttp.onreadystatechange=function()
-  	{
-  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    	{
-    		
-    	}
-  	}
-  	
-	xmlhttp.open("POST","php/message.php", true);
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.setRequestHeader("Content-length", params.length);
-	xmlhttp.setRequestHeader("Connection", "close");
-	xmlhttp.send(params);
+	if (clear_text.length > 0)
+	{
+		var crypted_text = document.getElementById("cypher_textbox").value;
+		var params = "clear=" + clear_text + "&crypt=" + crypted_text + "&c_decrypt=" + decrypted_message_client;
+		var xmlhttp;
+		var data;
+
+		if (window.XMLHttpRequest) {
+			xmlhttp = new XMLHttpRequest();
+		} else {
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xmlhttp.onreadystatechange = function() {
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+			}
+		}
+
+		xmlhttp.open("POST", "php/message.php", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.setRequestHeader("Content-length", params.length);
+		xmlhttp.setRequestHeader("Connection", "close");
+		xmlhttp.send(params);
+	}
 }
 
 /*
@@ -273,7 +271,8 @@ function send_message()
  */
 function key_to_number(key)
 {
-	return String.charCodeAt(key) - 65;	
+	//return String.charCodeAt(key) - 65;	
+	return (key.charCodeAt(0) - 65);
 }
 
 /*

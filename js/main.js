@@ -130,8 +130,7 @@ function get_phase_data(parent, phase)
  */
 function locate_elements()
 {
-	var current_div = document.getElementById('machine');
-	if (current_div != undefined)
+	if (document.getElementById("machine"))
 	{
 		locate_machine();
 	} 
@@ -150,11 +149,6 @@ function locate_elements()
 				break;
 		}
 	}
-	else 
-	{
-		locate_table();
-	}
-	
 }
 
 /*
@@ -190,7 +184,6 @@ function create_content()
 window.onload = function()
 {
 	machine = new enigma();
-	//machine.encrypt("G");
 	machine.precalculate_keys();
 	show_machine();
 }
