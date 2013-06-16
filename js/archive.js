@@ -3,21 +3,31 @@
  * 		Gestisce il recupero e la visualizzazione dei messaggi inviati al server
  */
 
-
+/*
+ * 		Divide il testo in modo che possa essere visualizzato nelle celle della tabella
+ */
 function wrap_text(text)
 {
 	var data = text.split(" ");
 	var buffer = "";
+	var current_len = 0;
+	
 	for (var i = 0; i < data.length; i++)
 	{
-		if (data[i].length > 10) 
-			data[i] = truncate_text(data[i]);
+		current_len = current_len + data[i].length;
 		
 		buffer = buffer + data[i] + " ";
+		
+		if (current_len > 20) 
+		{	
+			buffer = truncate_text(buffer);
+			current_len = current_len - 20;
+		}
 	}
 	
 	return buffer;
 }
+
 /*
  * 		Aggiunge uno spazio ogni 20 caratteri al testo passato per parametro
  */
@@ -26,23 +36,23 @@ function truncate_text(text)
 	var len = text.length;
 	var buffer = "";
 	var start = 0;
-	var end = 10;
+	var end = 20;
 	var step = len;
 	
-	if (len > 10)
+	if (len > 20)
 	{
 		while ((end <= len) && (step > 0))
 		{
 			buffer = buffer + text.substring(start, end) + " ";
 			start = end;
-			step = step - 10;
-			if (step <= 10)
+			step = step - 20;
+			if (step <= 20)
 			{
 				end = end + step;	
 			}
 			else
 			{
-				end = end + 10;
+				end = end + 20;
 			}
 		}
 	}

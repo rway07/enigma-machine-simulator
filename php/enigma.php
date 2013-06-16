@@ -85,11 +85,11 @@ class enigma
 			{
 				$step = $this->rotor_letter[$i];
 				$step_char = $this->rotor_inv[$i][$index];
-				$index = ((ord($step_char) - 65) - step);
-				$index = ($index < 0) ? (26 + $index) : index;
+				$index = ((ord($step_char) - 65) - $step);
+				$index = ($index < 0) ? (26 + $index) : $index;
 			}
 			$step_char = $this->input[$index];
-			
+						
 			return $step_char;
 		}
 
@@ -97,11 +97,13 @@ class enigma
 		{
 			for ($i = 0; $i < 26; $i++)
 			{
-				$key = $input[$i];
-				$crypt_table[$i] = encrypt($key);
+				$key = $this->input[$i];
+				$this->crypt_table[$i] = $this->encrypt($key);
 			}
 		}
-	}
+}
+
+$machine = new enigma();
 
 function setup_machine()
 {
@@ -113,23 +115,34 @@ function setup_machine()
 	$info = mysql_fetch_array($data);
 	mysql_close($conn);
 	
-	$machine = new enigma();		
+	global $machine;		
+	
 	for ($i = 0; $i < 3; $i++)
 	{
 		$machine->set_rotor($i, intval($info['walzenlage_' . ($i+1)]));	
 		$machine->set_rotor_letter($i, intval($info['ringstellung_' . ($i+1)]));	
 	}
-	
+		
 	/*
 	for ($i = 0; $i < 10; $i++)
 	{
 		$machine->set_plug($key_source, $key_dest);
-	}*/	
+	}*/
+	
+	$machine->precalculate_keys();	
 }
 
 function decrypt_text($text)
 {
-	return "TODO";
+	global $machine;
+	$buffer = "";
+
+	for ($i = 0; $i < strlen($text); $i++)
+	{
+		$buffer = $buffer . $machine->get_encrypted_key($text[$i]);	
+	}
+	
+	return $buffer;
 }
 
 ?>
