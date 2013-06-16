@@ -194,6 +194,7 @@ function plug_handler(key)
 		{
 			current_color++;
 			switches[get_index(first)] = get_index(second); 
+			switches[get_index(second)] = get_index(first);
 			add_exclusion(first);
 			add_exclusion(second);
 			first = "";

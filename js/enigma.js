@@ -40,7 +40,9 @@ function enigma()
 	} 
 }
 
-
+/*
+ * 		Restituisce la configurazione dei rotori
+ */
 enigma.prototype.get_rotors_conf = function()
 {
 	var text = "";
@@ -53,6 +55,9 @@ enigma.prototype.get_rotors_conf = function()
 	return text;
 }
 
+/*
+ * 		Restituisce la configurazione delle lettere dei rotori
+ */
 enigma.prototype.get_rotors_letter_conf = function()
 {
 	var text = "";
@@ -65,6 +70,9 @@ enigma.prototype.get_rotors_letter_conf = function()
 	return text;
 }
 
+/*
+ * 		Restituisce la configurazione delle spine
+ */
 enigma.prototype.get_plugs_conf = function()
 {
 	var text = "";
@@ -72,7 +80,7 @@ enigma.prototype.get_plugs_conf = function()
 	for (var i = 0; i < 26; i++)
 	{
 		if (this.switches[i] != i)
-			text = text + this.input[i] + "<>" + this.input[this.switches[i]] + " ";
+			text = text + this.input[i] + ">" + this.input[this.switches[i]] + " ";
 	}
 	
 	if (text == "") 
@@ -113,7 +121,6 @@ enigma.prototype.set_plug = function(key_source, key_dest)
  */
 enigma.prototype.get_encrypted_key = function(key)
 {
-	//var index = String.charCodeAt(key) - 65;
 	var index = key.charCodeAt(0) - 65;
 	
 	return this.crypt_table[index];

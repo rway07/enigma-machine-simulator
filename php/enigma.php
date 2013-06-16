@@ -66,8 +66,7 @@ class enigma
 
 		public function encrypt($key)
 		{
-			//$index = $this->switches[$key];
-			$index = ord($key) - 65;
+			$index = $this->switches[ord($key) - 65];
 			$step_char;
 			$step = 0;
 			
@@ -123,11 +122,14 @@ function setup_machine()
 		$machine->set_rotor_letter($i, intval($info['ringstellung_' . ($i+1)]));	
 	}
 		
-	/*
 	for ($i = 0; $i < 10; $i++)
 	{
+		$temp = $info['steckerverbindungen_' . ($i+1)];
+		$key_source = intval($temp[0]);
+		$key_dest = intval($temp[1]);		
 		$machine->set_plug($key_source, $key_dest);
-	}*/
+		$machine->set_plug($key_dest, $key_source);
+	}
 	
 	$machine->precalculate_keys();	
 }
