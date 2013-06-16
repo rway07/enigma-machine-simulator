@@ -224,13 +224,14 @@ function show_machine()
 }
 
 /*
- * 		Reset dei valori delle textbox
+ * 		reset dei valori delle textbox
  */
 function reset_values()
 {
 	document.getElementById("input_textbox").value = "";
 	document.getElementById("clear_textbox").value = "";
 	document.getElementById("cypher_textbox").value = "";
+	decrypted_message_client = "";
 }
 
 /*

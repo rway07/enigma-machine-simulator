@@ -95,26 +95,26 @@ enigma.prototype.encrypt = function(key)
 {
 	var index = this.switches[key_to_number(key)];
 	var step_char;
+	var step = 0;
 	
 	for (var i = 0; i < 3; i++)
 	{
 		index = (index + this.rotor_letter[i]) % 26;
 		step_char = this.rotor[i][index];
-		//index = String.charCodeAt(step_char) - 65;
 		index = step_char.charCodeAt(0) - 65;
 	}
 
 	step_char = this.reflector[index];
-	//index = String.charCodeAt(step_char) - 65;
-	index = step_char.charCodeAt(0) - 65;
-
+	index = (step_char.charCodeAt(0) - 65);
+		
 	for (var i = 2; i >=0; i--)
 	{
-		index = (index + this.rotor_letter[i]) % 26;
+		step = this.rotor_letter[i];
 		step_char = this.rotor_inv[i][index];
-		//index = String.charCodeAt(step_char) - 65;
-		index = step_char.charCodeAt(0) - 65;
+		index = (step_char.charCodeAt(0) - 65) - step;
+		index = ((index) < 0) ? (26 + index) : index;
 	}
-
+	step_char = this.input[index];
+	
 	return step_char;
 }

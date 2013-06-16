@@ -121,7 +121,7 @@ function get_phase_data(parent, phase)
        			create_phase_link(phase);
        	}
   	}
-	xmlhttp.open("GET","php/phase.php?p=" + phase, true);
+	xmlhttp.open("GET","php/phase.php?p=" + phase + "&timeid=" + (Math.random()*100000), true);
 	xmlhttp.send();
 }
 

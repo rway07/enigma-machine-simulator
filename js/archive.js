@@ -3,6 +3,21 @@
  * 		Gestisce il recupero e la visualizzazione dei messaggi inviati al server
  */
 
+
+function wrap_text(text)
+{
+	var data = text.split(" ");
+	var buffer = "";
+	for (var i = 0; i < data.length; i++)
+	{
+		if (data[i].length > 10) 
+			data[i] = truncate_text(data[i]);
+		
+		buffer = buffer + data[i] + " ";
+	}
+	
+	return buffer;
+}
 /*
  * 		Aggiunge uno spazio ogni 20 caratteri al testo passato per parametro
  */
@@ -11,23 +26,23 @@ function truncate_text(text)
 	var len = text.length;
 	var buffer = "";
 	var start = 0;
-	var end = 20;
+	var end = 10;
 	var step = len;
 	
-	if (len > 20)
+	if (len > 10)
 	{
 		while ((end <= len) && (step > 0))
 		{
 			buffer = buffer + text.substring(start, end) + " ";
 			start = end;
-			step = step - 20;
-			if (step <= 20)
+			step = step - 10;
+			if (step <= 10)
 			{
 				end = end + step;	
 			}
 			else
 			{
-				end = end + 20;
+				end = end + 10;
 			}
 		}
 	}
@@ -65,7 +80,7 @@ function create_table(parent, data)
 			{
 				var string = data[data_index];
 				if (string.length > 20)
-					string = truncate_text(string);
+					string = wrap_text(string);
 				
 				elements[j].appendChild(document.createTextNode(string));
 				rows[i].appendChild(elements[j]);

@@ -12,7 +12,6 @@ class enigma
 	private $rotor_conf = array(
 		array("E","K","M","F","L","G","D","Q","V","Z","N","T","O","W","Y","H","X","U","S","P","A","I","B","R","C","J"),
 		array("A","J","D","K","S","I","R","U","X","B","L","H","W","T","M","C","Q","G","Z","N","P","Y","F","V","O","E"),
-		array("A","J","D","K","S","I","R","U","X","B","L","H","W","T","M","C","Q","G","Z","N","P","Y","F","V","O","E"),
 		array("B","D","F","H","J","L","C","P","R","T","X","V","Z","N","Y","E","I","W","G","A","K","M","U","S","Q","O"),
 		array("E","S","O","V","P","Z","J","A","Y","Q","U","I","R","H","X","L","N","F","T","G","K","D","C","M","W","B"),
 		array("V","Z","B","R","G","I","T","Y","U","P","S","D","N","H","L","X","A","W","M","J","Q","O","F","E","C","K")	
@@ -69,12 +68,12 @@ class enigma
 		{
 			//$index = $this->switches[$key];
 			$index = ord($key) - 65;
-			
 			$step_char;
+			$step = 0;
 			
 			for ($i = 0; $i < 3; $i++)
 			{
-				$index = ($index + $this->rotor_letter[$i]) % 25;
+				$index = ($index + $this->rotor_letter[$i]) % 26;
 				$step_char = $this->rotor[$i][$index];
 				$index = ord($step_char) - 65;
 			}
@@ -84,10 +83,12 @@ class enigma
 			
 			for ($i = 2; $i >= 0; $i--)
 			{
-				$index = ($index + $this->rotor_letter[$i]) % 25;
+				$step = $this->rotor_letter[$i];
 				$step_char = $this->rotor_inv[$i][$index];
-				$index = ord($step_char) - 65;
+				$index = ((ord($step_char) - 65) - step);
+				$index = ($index < 0) ? (26 + $index) : index;
 			}
+			$step_char = $this->input[$index];
 			
 			return $step_char;
 		}
