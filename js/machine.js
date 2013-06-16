@@ -213,6 +213,7 @@ function locate_machine()
 	machine.setAttribute("style", "margin-left: " + current_margin + "px");
 }
 
+
 /*
  * 		Distrugge il contenuto di content e genera il layout riguardante la macchina
  */
@@ -220,7 +221,9 @@ function show_machine()
 {
 	destroy_content();
 	create_main_layout();
-	update_status_bar("Use mouse's pointer or textarea on the left to compose your message!");
+	var conf = "Current configuration: Rotors : " + machine.get_rotors_conf() + "- Letter: " 
+				+ machine.get_rotors_letter_conf() + "- Plugs: " + machine.get_plugs_conf();
+	update_status_bar("Use mouse's pointer or textarea on the left to compose your message! " + conf);
 }
 
 /*
@@ -240,7 +243,7 @@ function reset_values()
 function send_message()
 {
 	var clear_text = document.getElementById("clear_textbox").value;
-	
+		
 	if (clear_text.length > 0)
 	{
 		var crypted_text = document.getElementById("cypher_textbox").value;
@@ -254,8 +257,9 @@ function send_message()
 			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+			{
+				update_status_bar("Message sent!!");
 			}
 		}
 
@@ -272,7 +276,6 @@ function send_message()
  */
 function key_to_number(key)
 {
-	//return String.charCodeAt(key) - 65;	
 	return (key.charCodeAt(0) - 65);
 }
 

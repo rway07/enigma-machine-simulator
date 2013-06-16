@@ -4,6 +4,7 @@
 function enigma()
 {
 	this.rotor = new Array(3);
+	this.rotor_number = new Array(3);
 	this.rotor_inv = new Array(3);
 	this.rotor_letter = new Array(3);
 	this.rotor_conf = new Array(5);
@@ -28,6 +29,7 @@ function enigma()
 	for (var i = 0; i < 3; i++)
 	{
 		this.rotor[i] = this.rotor_conf[i];
+		this.rotor_number[i] = i;
 		this.rotor_inv[i] = this.rotor_conf_inv[i];
 		this.rotor_letter[i] = 0;	
 	}
@@ -38,12 +40,54 @@ function enigma()
 	} 
 }
 
+
+enigma.prototype.get_rotors_conf = function()
+{
+	var text = "";
+	
+	for (var i = 0; i < 3; i++)
+	{
+		text = text + this.rotor_number[i] + " ";
+	}	
+	
+	return text;
+}
+
+enigma.prototype.get_rotors_letter_conf = function()
+{
+	var text = "";
+	
+	for (var i = 0; i < 3; i++)
+	{
+		text = text + this.input[this.rotor_letter[i]] + " ";
+	}
+	
+	return text;
+}
+
+enigma.prototype.get_plugs_conf = function()
+{
+	var text = "";
+	
+	for (var i = 0; i < 26; i++)
+	{
+		if (this.switches[i] != i)
+			text = text + this.input[i] + "<>" + this.input[this.switches[i]] + " ";
+	}
+	
+	if (text == "") 
+		text = "N/C";
+		
+	return text;
+}
+
 /*
  * 		Impostazione del rotore nell'alloggiamento indicato
  */
 enigma.prototype.set_rotor = function(place, rotor)
 {
 	var index = get_number(rotor) - 1;
+	this.rotor_number[place] = index;
 	this.rotor[place] = this.rotor_conf[index];
 	this.rotor_inv[place] = this.rotor_conf_inv[index];
 }

@@ -73,25 +73,38 @@ function create_table(parent, data)
 	var elements = new Array(rows_number * 5);
 	var j = 0;
 	var data_index = 1;
+	var flag = false;
 	
 	for (var i = 0; i < rows_number; i++)
 	{
+		flag = false;
 		rows[i] = document.createElement("tr");
 		for (var k = 0; k < 5; k++)
 		{
-			elements[j] = document.createElement("td");
-			
+			//elements[j] = document.createElement("td");
 			if (i == 0)
 			{
+				elements[j] = document.createElement("th");
 				elements[j].appendChild(document.createTextNode(title[k]));
 				rows[i].appendChild(elements[j]);
 			} 
 			else
 			{
 				var string = data[data_index];
+				
+				if (k == 3)
+				{
+					if (data[data_index] != data[data_index + 1]) 
+						flag = true;
+				}
+				
 				if (string.length > 20)
 					string = wrap_text(string);
 				
+				elements[j] = document.createElement("td");
+				if (flag == true) 
+					elements[j].setAttribute("class","red_td");
+					
 				elements[j].appendChild(document.createTextNode(string));
 				rows[i].appendChild(elements[j]);
 				data_index++;

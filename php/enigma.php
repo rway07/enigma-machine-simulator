@@ -139,7 +139,14 @@ function decrypt_text($text)
 
 	for ($i = 0; $i < strlen($text); $i++)
 	{
-		$buffer = $buffer . $machine->get_encrypted_key($text[$i]);	
+		if ($text[$i] == " ")
+		{
+			$buffer = $buffer . " ";
+		} 
+		else 
+		{
+			$buffer = $buffer . $machine->get_encrypted_key($text[$i]);	
+		}
 	}
 	
 	return $buffer;

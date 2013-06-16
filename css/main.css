@@ -92,6 +92,14 @@ table{
 }
 
 td{
+	color: green;
+	border: 1px solid black;
+	white-space: pre-wrap;
+	white-space: pre-line;
+}
+
+.red_td{
+	color: red;
 	border: 1px solid black;
 	white-space: pre-wrap;
 	white-space: pre-line;
