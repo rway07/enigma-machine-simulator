@@ -136,6 +136,23 @@ enigma.prototype.precalculate_keys = function()
 	{
 		key = this.input[i];
 		this.crypt_table[i] = this.encrypt(key);	
+	}
+	
+	for (var i = 0; i < 26; i++)
+	{
+		if (this.switches[i] != i)
+		{
+			var j = this.switches[i];
+			var first_base = this.input[i];
+			var first_coded = this.crypt_table[i];
+			var second_base = this.input[j];
+			var second_coded = this.crypt_table[j];
+			
+			this.crypt_table[i] = second_coded;
+			this.crypt_table[j] = first_coded;
+			this.crypt_table[key_to_number(first_coded)] = second_base;
+			this.crypt_table[key_to_number(second_coded)] = first_base;
+		}
 	}	
 }
 
@@ -144,7 +161,8 @@ enigma.prototype.precalculate_keys = function()
  */
 enigma.prototype.encrypt = function(key)
 {
-	var index = this.switches[key_to_number(key)];
+	//var index = this.switches[key_to_number(key)];
+	var index = key_to_number(key);
 	var step_char;
 	var step = 0;
 	

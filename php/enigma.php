@@ -60,13 +60,14 @@ class enigma
 
 		public function get_encrypted_key($key)
 		{
-			$index = ord($key) - 65; 
+			$index = get_key_index($key); 
 			return $this->crypt_table[$index];
 		}
 
 		public function encrypt($key)
 		{
-			$index = $this->switches[ord($key) - 65];
+			//$index = $this->switches[get_key_index($key)];
+			$index = get_key_index($key);
 			$step_char;
 			$step = 0;
 			
@@ -74,17 +75,17 @@ class enigma
 			{
 				$index = ($index + $this->rotor_letter[$i]) % 26;
 				$step_char = $this->rotor[$i][$index];
-				$index = ord($step_char) - 65;
+				$index = get_key_index($step_char);
 			}
 			
 			$step_char = $this->reflector[$index];
-			$index = ord($step_char) - 65;
+			$index = get_key_index($step_char);
 			
 			for ($i = 2; $i >= 0; $i--)
 			{
 				$step = $this->rotor_letter[$i];
 				$step_char = $this->rotor_inv[$i][$index];
-				$index = ((ord($step_char) - 65) - $step);
+				$index = (get_key_index($step_char) - $step);
 				$index = ($index < 0) ? (26 + $index) : $index;
 			}
 			$step_char = $this->input[$index];
@@ -99,10 +100,32 @@ class enigma
 				$key = $this->input[$i];
 				$this->crypt_table[$i] = $this->encrypt($key);
 			}
+			
+			for ($i = 0; $i < 26; $i++)
+			{
+				if ($this->switches[$i] != $i)
+				{
+					$j = $this->switches[$i];
+					$first_base = $this->input[$i];
+					$first_coded = $this->crypt_table[$i];
+					$second_base = $this->input[$j];
+					$second_coded = $this->crypt_table[$j];
+					
+					$this->crypt_table[$i] = $second_coded;
+					$this->crypt_table[$j] = $first_coded;
+					$this->crypt_table[get_key_index($first_coded)] = $second_base;
+					$this->crypt_table[get_key_index($second_coded)] = $first_base;
+				}
+			}
 		}
 }
 
 $machine = new enigma();
+
+function get_key_index($key)
+{
+	return (ord($key) - 65);
+}
 
 function setup_machine()
 {
@@ -125,10 +148,10 @@ function setup_machine()
 	for ($i = 0; $i < 10; $i++)
 	{
 		$temp = $info['steckerverbindungen_' . ($i+1)];
-		$key_source = intval($temp[0]);
-		$key_dest = intval($temp[1]);		
+		$key_source = get_key_index($temp[0]);
+		$key_dest = get_key_index($temp[1]);	
 		$machine->set_plug($key_source, $key_dest);
-		$machine->set_plug($key_dest, $key_source);
+		//$machine->set_plug($key_dest, $key_source);
 	}
 	
 	$machine->precalculate_keys();	
