@@ -308,7 +308,7 @@ function remove_rotor(parent_number, rotor)
 	parent.removeChild(rotor);
 	new_rotor.id = current_rotor.id;
 	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);");
-	document.getElementById("rotor_" + parent_number + "_container").appendChild(new_rotor); 
+	document.getElementById("rotor_container_" + parent_number).appendChild(new_rotor); 
 }
 
 /*
