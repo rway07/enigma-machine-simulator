@@ -5,63 +5,36 @@
 
 // Variabili globali
 // Oggetto rappresentante la macchina Enigma
-var machine = null;		
+var machine = null;
 // Fase corrente di configurazione
 var phase = 1;
 
 /*
  * 		Aggiorna la status bar con il testo passato per parametro
  */
-function update_status_bar(new_text)
-{
+function update_status_bar(new_text) {
 	var status_bar = document.getElementById("status_bar");
-	
+
 	child = document.getElementById("status_text");
-	if (child != null) status_bar.removeChild(child);
-	
+	if (child !== null) {
+		status_bar.removeChild(child);
+	}
+
 	var element = document.createElement("h5");
 	element.id = "status_text";
 	element.className = "status_bar_text";
-	
+
 	element.appendChild(document.createTextNode(new_text));
 	status_bar.appendChild(element);
 }
 
 /*
- * 		Riconosce la pressione del tasto sinistro del mouse
- */
-function detect_left_button(e) 
-{
-    e = e || window.event;
-    var button = e.which || e.button;
-    return button == 1;
-}
-
-/*
- * 		Restituisce l'indice corrispondente ad un determinato tasto
- */
-function get_index(key)
-{
-	return key.charCodeAt() - 65;
-}
-
-/*
- * 		Restituisce il numero corrispondente ad un carattere
- */
-function get_number(key)
-{
-	return parseInt(key, 10);
-}
-
-/*
  * 		Crea i link per il passaggio alle varie fasi di configurazione
  */
-function create_phase_link(phase)
-{
+function create_phase_link(phase) {
 	var phase_link = document.createElement("a");
 	phase_link.setAttribute("href", "#");
-	switch (phase)
-	{
+	switch (phase) {
 		case 1:
 			phase_link.id = "phase_2_link";
 			phase_link.setAttribute("onclick", "create_phase_2_layout();");
@@ -77,67 +50,65 @@ function create_phase_link(phase)
 			phase_link.setAttribute("onclick", "use_machine();");
 			phase_link.appendChild(document.createTextNode("use machine!!"));
 			break;
+		default:
+			phase_link.id = "phase_error_link";
+			phase_link.setAttribute("onclick", "use_machine();");
+			phase_link.appendChild(document.createTextNode("Error! Use machine with default configuration!!"));
+			break;
 	}
-	
-	document.getElementById("istructions_div").appendChild(phase_link); 
+
+	document.getElementById("istructions_div").appendChild(phase_link);
 }
 
 /*
  * 		Ottieni i dati di configurazione riguardanti la fase indicata
  */
-function get_phase_data(parent, phase)
-{
+function get_phase_data(parent, phase) {
 	var xmlhttp;
 	var data;
+
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	xmlhttp.onreadystatechange = function() {
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			data = xmlhttp.responseText;
+			switch (phase) {
+				case 1:
+					text = document.createTextNode("Today rotors configuration: " + data);
+					break;
+				case 2:
+					text = document.createTextNode("Today rotors letter configuration: " + data);
+					break;
+				case 3:
+					text = document.createTextNode("Today plugs configuration: " + data);
+					break;
+				default:
+					text = document.createTextNode("Error retrieving data!!");
+					break;
+			}
+			parent.appendChild(text);
+			parent.appendChild(document.createElement("br"));
+			if (phase != 1) {
+				create_phase_link(phase);
+			}
+		}
+	}
 	
-	if (window.XMLHttpRequest)
-  	{
-  		xmlhttp=new XMLHttpRequest();
-  	}
-	else
-  	{
-  		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-  	}
-	xmlhttp.onreadystatechange=function()
-  	{
-  		if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    	{
-    		data = xmlhttp.responseText;
-    		switch (phase)
-    		{
-    			case 1:
-    				text = document.createTextNode("Today rotors configuration: " + data);
-    				break;
-    			case 2:
-    				text = document.createTextNode("Today rotors letter configuration: " + data);
-    				break;
-    			case 3:
-    				text = document.createTextNode("Today plugs configuration: " + data);
-    				break;
-    		}
-       		parent.appendChild(text);
-       		parent.appendChild(document.createElement("br"));
-       		if (phase != 1)
-       			create_phase_link(phase);
-       	}
-  	}
-	xmlhttp.open("GET","php/phase.php?p=" + phase + "&timeid=" + (Math.random()*100000), true);
+	xmlhttp.open("GET", "php/phase.php?p=" + phase + "&timeid=" + (Math.random() * 100000), true);
 	xmlhttp.send();
 }
 
 /*
  * 		Riposiziona gli elementi della pagina a seconda della dimensione della finestra
  */
-function locate_elements()
-{
-	if (document.getElementById("machine"))
-	{
+function locate_elements() {
+	if (document.getElementById("machine")) {
 		locate_machine();
-	} 
-	else if (document.getElementById("istructions_div"))
-	{
-		switch (phase)
-		{
+	} else if (document.getElementById("istructions_div")) {
+		switch (phase) {
 			case 1:
 				locate_phase_1_elements();
 				break;
@@ -147,6 +118,8 @@ function locate_elements()
 			case 3:
 				locate_phase_3_elements();
 				break;
+			default:
+				break;
 		}
 	}
 }
@@ -154,11 +127,9 @@ function locate_elements()
 /*
  * 	Distrugge tutti gli elementi all'interno di content
  */
-function destroy_content()
-{
+function destroy_content() {
 	var content = document.getElementById('content');
-	if (content != null)
-	{
+	if (content !== null) {
 		var parent = content.parentNode;
 		parent.removeChild(content);
 	}
@@ -167,31 +138,27 @@ function destroy_content()
 /*
  * 	Genera il div principale
  */
-function create_content()
-{
+function create_content() {
 	var container = document.getElementById('container');
 	var content = document.createElement('div');
-	content.id = "content";	
-	
+	content.id = "content";
+
 	container.appendChild(content);
-	
+
 	return content;
 }
 
 /*
  * 		Gestore dell'evento onLoad
  */
-window.onload = function()
-{
+window.onload = function() {
 	machine = new enigma();
 	machine.precalculate_keys();
 	show_machine();
 }
-
 /*
  * 		Gestore dell'evento onResize
  */
-window.onresize = function()
-{
+window.onresize = function() {
 	locate_elements();
 }

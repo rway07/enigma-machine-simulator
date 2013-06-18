@@ -18,7 +18,6 @@ div#configuration_div{
 /*
  * 		Sezione spine
  */
-
 div#plugs{
 	width: 400px;
 	height: 160px;
@@ -148,7 +147,6 @@ div#rotors_hole_div{
 	float: left;
 	width: 100%;
 	height: 200px;
-	/*margin-top: 15px;*/
 }
 
 div#rotors_hole{

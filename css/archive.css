@@ -1,0 +1,21 @@
+table{
+	text-align: center;
+	font-family: "Lucida Grande", monospace;
+	border: 1px solid black;
+	width: 100%;
+	table-layout: fixed;
+}
+
+td{
+	color: green;
+	border: 1px solid black;
+	white-space: pre-wrap;
+	white-space: pre-line;
+}
+
+.red_td{
+	color: red;
+	border: 1px solid black;
+	white-space: pre-wrap;
+	white-space: pre-line;
+}
