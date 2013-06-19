@@ -167,7 +167,6 @@ function create_rotors_conf_layout(parent) {
 function show_configuration() {
 	destroy_content();
 	create_configuration_layout();
-	//document.onscroll = update_holes_coords();
 	locate_phase_1_elements();
 	update_status_bar("Place the rotors in the holes at the center of the page, following the order reported in the istructions, if you want...");
 }
@@ -195,6 +194,7 @@ function create_configuration_layout() {
 	create_rotors_conf_layout(conf_div);
 
 	reset_phase_1_var();
+	content.onscroll = update_holes_coords;
 }
 
 /*
@@ -218,7 +218,7 @@ function locate_phase_1_elements() {
 
 	rotors_hole.setAttribute("style", "margin-left: " + margin_hole + "px");
 	rotors_container.setAttribute("style", "margin-left: " + margin_container + "px");
-	//update_holes_coords();
+	update_holes_coords();
 }
 
 /*
@@ -231,7 +231,7 @@ function phase_1_done() {
 }
 
 /*
- * 		Controlla se la fase 1 Ã¨ stata completata
+ * 		Controlla se la fase 1 è stata completata
  */
 function check_phase_1_done() {
 	for (var i = 0; i < 3; i++) {
@@ -371,8 +371,6 @@ function stop() {
 function move(e) {
 	mouse_x = document.all ? window.event.clientX : e.pageX;
 	mouse_y = document.all ? window.event.clientY : e.pageY;
-
-	update_holes_coords();
 
 	if (current_rotor !== null) {
 		if (mouse_x <= 220) {
