@@ -2,7 +2,6 @@
  * 		archive.js
  * 		Gestisce il recupero e la visualizzazione dei messaggi inviati al server
  */
-
 /*
  * 		Distrugge il contenuto della pagina e genera il layout per la visualizzazione dei messaggi
  */
@@ -94,7 +93,6 @@ function create_table(parent, data) {
 		flag = false;
 		rows[i] = document.createElement("tr");
 		for (var k = 0; k < 5; k++) {
-			//elements[j] = document.createElement("td");
 			if (i === 0) {
 				elements[j] = document.createElement("th");
 				elements[j].appendChild(document.createTextNode(title[k]));
@@ -145,7 +143,7 @@ function get_messages(parent) {
 			var elements = data.split("_");
 			create_table(parent, elements);
 		}
-	}
+	};
 	xmlhttp.open("GET", "php/archive.php?timeid=" + (Math.random() * 100000), true);
 	xmlhttp.send();
 }

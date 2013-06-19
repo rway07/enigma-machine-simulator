@@ -112,6 +112,7 @@ function create_rotors_hole_layout(parent) {
 	for (var i = 0; i < 3; i++) {
 		rotor_hole[i] = document.createElement("div");
 		rotor_hole[i].id = "rotor_hole_" + (i + 1);
+		rotor_hole[i].className = "rotor_hole";
 		rotors_hole.appendChild(rotor_hole[i]);
 	}
 }
@@ -131,9 +132,11 @@ function create_rotors_container_layout(parent) {
 		j = i + 1;
 		rotor_cont[i] = document.createElement("div");
 		rotor_cont[i].id = "rotor_container_" + j;
+		rotor_cont[i].className = "rotor_container";
 		rotors_container.appendChild(rotor_cont[i]);
 		rotor[i] = document.createElement("div");
 		rotor[i].id = "rotor_" + j;
+		rotor[i].className = "rotor";
 		rotor[i].setAttribute("onmousedown", "move_rotor(event, this);");
 		rotor_cont[i].appendChild(rotor[i]);
 	}
@@ -267,6 +270,7 @@ function place_rotor(rotor, place) {
 
 	parent.removeChild(rotor);
 	new_rotor.id = rotor.id;
+	new_rotor.className = rotor.className;
 	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
 	document.getElementById("rotor_hole_" + place).appendChild(new_rotor);
 }
@@ -274,13 +278,16 @@ function place_rotor(rotor, place) {
 /*
  * 		Rimuove il rotore dall'alloggiamento indicato
  */
-function remove_rotor(parent_number, rotor) {
+//function remove_rotor(parent_number, rotor) {
+function remove_rotor(rotor) {
 	var parent = rotor.parentNode;
 	var new_rotor = document.createElement("div");
+	var container_number = get_last_char(rotor.id);
 	parent.removeChild(rotor);
 	new_rotor.id = current_rotor.id;
+	new_rotor.className = current_rotor.className;
 	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);");
-	document.getElementById("rotor_container_" + parent_number).appendChild(new_rotor);
+	document.getElementById("rotor_container_" + container_number).appendChild(new_rotor);
 }
 
 /*
@@ -336,13 +343,13 @@ function stop() {
 			hole_mouse_out(document.getElementById("rotor_hole_3"));
 		} else {
 			if (current_rotor_hole >= 0) {
-				remove_rotor(current_rotor_hole + 1, current_rotor);
+				remove_rotor(current_rotor);
 				holes[current_rotor_hole].set_rotor(0);
 			} else {
 				var new_rotor = document.createElement("div");
-
 				parent.removeChild(current_rotor);
 				new_rotor.id = current_rotor.id;
+				new_rotor.className = current_rotor.className;
 				new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
 				parent.appendChild(new_rotor);
 

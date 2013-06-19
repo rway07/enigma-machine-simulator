@@ -1,5 +1,5 @@
 <?php
-	include "enigma.php";
+	require "enigma.php";
 	
 	setup_machine();
 	
@@ -20,9 +20,8 @@
 	
 	$decrypted_text_server = decrypt_text($crypted_text);
 		
-	$data = mysql_query("INSERT INTO $database_name.$table_name 
-			(`ID`, `date`, `clear_message`, `crypted_message`, `decrypted_message_server`, `decrypted_message_client`) 
-			VALUES ('$id', '$timestamp', '$clear_text', '$crypted_text', '$decrypted_text_server', '$decrypted_text_client');") or die(mysql_error());
+	$data = mysql_query(
+	"INSERT INTO $database_name.$table_name (`ID`, `date`, `clear_message`, `crypted_message`, `decrypted_message_server`, 		`decrypted_message_client`) VALUES ('$id', '$timestamp', '$clear_text', '$crypted_text', '$decrypted_text_server', 			'$decrypted_text_client');") or die(mysql_error());
 				
 	mysql_close($conn);
 ?>

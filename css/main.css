@@ -1,3 +1,7 @@
+/*
+ * 		main.css
+ * 		Foglio di stile per la pagina principale dell'applicazione
+ */
 html,body{
 	margin: 0;
 	padding:0;
@@ -35,8 +39,7 @@ div#status_bar{
 	color: white;
 }
 
-div#center
-{
+div#center{
 	position: relative;
 	width: 200px;
 	height: 100%;

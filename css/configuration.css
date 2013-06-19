@@ -1,4 +1,10 @@
-
+/*
+ * 		configuration.css
+ * 		Stile degli elementi riguardanti la configurazione della macchina Enigma
+ */
+/*
+ * 		Sezioni principali della pagina
+ */
 div#istructions_div{
 	position: relative;
 	float: left;
@@ -14,9 +20,8 @@ div#configuration_div{
 	width: 100%;
 	height: 400px;
 }
-
 /*
- * 		Sezione spine
+ * 		Elementi di configurazione delle spine
  */
 div#plugs{
 	width: 400px;
@@ -41,9 +46,8 @@ div#plugs{
 	position: relative;
 	float: left;	
 }
-
 /*
- *		Sezione configurazione lettere rotori
+ *		Elementi di configurazione lettere dei rotori
  */
 div#rotors_letter_base{
 	position: relative;
@@ -53,83 +57,35 @@ div#rotors_letter_base{
 	background: url(../images/rotors_letter_base.png);
 }
 
-div#rotor_letter_up_1{
+.section{
 	position: relative;
 	float: left;
-	margin-left: 90px;
-	margin-top: 20px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_up.png);
-	
-}
-
-div#rotor_letter_up_2{
-	position: relative;
-	float: left;
-	margin-top: 20px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_up.png);
-}
-
-div#rotor_letter_up_3{
-	position: relative;
-	float: left;
-	margin-top: 20px;
-	margin-right: 167.5px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_up.png);
-}
-
-div#rotor_letter_down_1{
-	position: relative;
-	float: left;
-	margin-left: 90px;
-	margin-top: 10px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_down.png);
-}
-
-div#rotor_letter_down_2{
-	position: relative;
-	float: left;
-	margin-top: 10px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_down.png);
-}
-
-div#rotor_letter_down_3{
-	position: relative;
-	float: left;
-	margin-top: 10px;
-	height: 25px;
-	width: 47.5px;
-	background: url(../images/arrows/letter_down.png);
-}
-
-div#rotor_letter_1{
-	position: relative;
-	float: left;
-	margin-left: 90px;
+	padding-left: 90px;
+	width: 400px;
 	height: 50px;
-	width: 47.5px;
 }
 
-div#rotor_letter_2{
+.arrow_up{
 	position: relative;
 	float: left;
-	height: 50px;
+	margin-top: 20px;
+	height: 25px;
 	width: 47.5px;
+	background: url(../images/arrows/letter_up.png);
 }
 
-div#rotor_letter_3{
+.arrow_down{
 	position: relative;
 	float: left;
-	margin-right: 167.5px;
+	margin-top: 10px;
+	height: 25px;
+	width: 47.5px;
+	background: url(../images/arrows/letter_down.png);
+}
+
+.letter{
+	position: relative;
+	float: left;
 	height: 50px;
 	width: 47.5px;
 }
@@ -138,9 +94,8 @@ div#rotor_letter_3{
 	text-align: center;
 	font-family: "Lucida Grande", monospace;
 }
-
 /*
- * 		Sezione alloggiamento rotori
+ * 		Elementi di configurazione dei rotori
  */
 div#rotors_hole_div{
 	position: relative;
@@ -151,39 +106,20 @@ div#rotors_hole_div{
 
 div#rotors_hole{
 	position: relative;
-	width: 400px;
-	height: 150px;
+	width: 310px;
+	height: 125px;
+	padding-left: 90px;
+	padding-top: 25px;
 	background: url(../images/rotors_hole.png);
 }
 
-div#rotor_hole_1{
+.rotor_hole{
 	position: relative;
 	float: left;
 	width: 47.5px;
-	height: 100px;
-	margin-left: 90px;
-	margin-top: 25px;
+	height: 100px;	
 }
 
-div#rotor_hole_2{
-	position: relative;
-	float: left;
-	width: 47.5px;
-	height: 100px;
-	margin-top: 25px;
-}
-
-div#rotor_hole_3{
-	position: relative;
-	float: left;
-	width: 47.5px;
-	height: 100px;
-	margin-top: 25px;
-}
-
-/*
- * 		Sezione contenitore rotori
- */
 div#rotors_container_div{
 	position: relative;
 	float: left;
@@ -201,75 +137,27 @@ div#rotors_container
 	border: 1px solid red;
 }
 
-div#rotor_container_1{
-	position: relative;
-	float: left;
-	width: 40px;
-	height: 100px;
-	margin-left: 10px;
-	border: 1px dotted black;
-}
-
 div#rotor_1{
-	position: relative;
-	width: 40px;
-	height: 100px;
 	background: url(../images/rotors/rotor_1.png);
-	z-index: 2;
-}
-
-div#rotor_container_2{
-	position: relative;
-	float: left;
-	width: 40px;
-	height: 100px;
-	margin-left: 10px;
-	border: 1px dotted black;
 }
 
 div#rotor_2{
-	position: relative;
-	width: 40px;
-	height: 100px;
 	background: url(../images/rotors/rotor_2.png);
-	z-index: 2;
-}
-
-div#rotor_container_3{
-	position: relative;
-	float: left;
-	width: 40px;
-	height: 100px;
-	margin-left: 10px;
-	border: 1px dotted black;
 }
 
 div#rotor_3{
-	position: relative;
-	width: 40px;
-	height: 100px;
 	background: url(../images/rotors/rotor_3.png);
-	z-index: 2;
-}
-
-div#rotor_container_4{
-	position: relative;
-	float: left;
-	width: 40px;
-	height: 100px;
-	margin-left: 10px;
-	border: 1px dotted black;
 }
 
 div#rotor_4{
-	position: relative;
-	width: 40px;
-	height: 100px;
 	background: url(../images/rotors/rotor_4.png);
-	z-index: 2;
 }
 
-div#rotor_container_5{
+div#rotor_5{
+	background: url(../images/rotors/rotor_5.png);
+}
+
+.rotor_container{
 	position: relative;
 	float: left;
 	width: 40px;
@@ -278,10 +166,9 @@ div#rotor_container_5{
 	border: 1px dotted black;
 }
 
-div#rotor_5{
+.rotor{
 	position: relative;
 	width: 40px;
 	height: 100px;
-	background: url(../images/rotors/rotor_5.png);
 	z-index: 2;
 }

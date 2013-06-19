@@ -30,7 +30,17 @@ function create_rotors_letter_conf_layout(parent) {
 	var rotors_base = document.createElement("div");
 	rotors_base.id = "rotors_letter_base";
 	parent.appendChild(rotors_base);
-
+	
+	var section = new Array(3);
+	
+	for (var i = 0; i < 3; i++)
+	{
+		section[i] = document.createElement("div");
+		section[i].id = "section_" + i;
+		section[i].className = "section";
+		rotors_base.appendChild(section[i]);
+	}
+	
 	var arrow_up = new Array(3);
 	var arrow_down = new Array(3);
 	var num = new Array(3);
@@ -39,16 +49,18 @@ function create_rotors_letter_conf_layout(parent) {
 	for (var i = 0; i < 3; i++) {
 		arrow_up[i] = document.createElement("div");
 		arrow_up[i].id = "rotor_letter_up_" + (i + 1);
+		arrow_up[i].className = "arrow_up";
 		arrow_up[i].setAttribute("onclick", "arrow_up_handler(" + i + ")");
 		arrow_up[i].setAttribute("onmousedown", "arrow_up_press(" + (i + 1) + ")");
 		arrow_up[i].setAttribute("onmouseup", "arrow_up_release(" + (i + 1) + ")");
-		rotors_base.appendChild(arrow_up[i]);
+		section[0].appendChild(arrow_up[i]);
 	}
 
 	for ( i = 0; i < 3; i++) {
 		num[i] = document.createElement("div");
 		num[i].id = "rotor_letter_" + (i + 1);
-		rotors_base.appendChild(num[i]);
+		num[i].className = "letter";
+		section[1].appendChild(num[i]);
 		text[i] = document.createElement("h2");
 		text[i].id = "text_" + (i + 1);
 		text[i].setAttribute("class", "letter_text");
@@ -60,10 +72,11 @@ function create_rotors_letter_conf_layout(parent) {
 	for ( i = 0; i < 3; i++) {
 		arrow_down[i] = document.createElement("div");
 		arrow_down[i].id = "rotor_letter_down_" + (i + 1);
+		arrow_down[i].className = "arrow_down";
 		arrow_down[i].setAttribute("onclick", "arrow_down_handler(" + i + ")");
 		arrow_down[i].setAttribute("onmousedown", "arrow_down_press(" + (i + 1) + ")");
 		arrow_down[i].setAttribute("onmouseup", "arrow_down_release(" + (i + 1) + ")");
-		rotors_base.appendChild(arrow_down[i]);
+		section[2].appendChild(arrow_down[i]);
 	}
 }
 

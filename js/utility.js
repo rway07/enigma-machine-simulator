@@ -13,6 +13,14 @@ function detect_left_button(e) {
 }
 
 /*
+ * 		Ottiene l'ultimo carattere di una stringa
+ */
+function get_last_char(string)
+{
+	return string.charAt(string.length - 1);	
+}
+
+/*
  * 		Dato un carattere restituisce un numero
  */
 function key_to_number(key) {

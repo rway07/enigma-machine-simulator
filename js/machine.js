@@ -1,3 +1,7 @@
+/*
+ * 		machine.js
+ * 		Gestisce la pagina per l'utilizzo della macchina Enigma
+ */
 var decrypted_message_client = "";
 
 /*
@@ -6,7 +10,7 @@ var decrypted_message_client = "";
 function show_machine() {
 	destroy_content();
 	create_main_layout();
-	var conf = "Current configuration: Rotors : " + machine.get_rotors_conf() + "- Letter: " + machine.get_rotors_letter_conf() + "- Plugs: " + machine.get_plugs_conf();
+	var conf = "Current configuration: Rotors : " + machine.get_rotors_conf() + "- Letter: " + machine.get_rotors_letter_conf() + "- Plugs: " + 		machine.get_plugs_conf();
 	update_status_bar("Use mouse's pointer or textarea on the left to compose your message! " + conf);
 }
 
@@ -153,10 +157,14 @@ function create_screen() {
 	var cypher_textbox = document.createElement('textarea');
 	var reset_button = document.createElement("button");
 	var send_button = document.createElement("button");
-
+	
 	input_div.id = "screen_input";
+	input_div.className = "textbox_area";
 	clear_div.id = "screen_clear";
+	clear_div.className = "textbox_area";
 	cypher_div.id = "screen_cypher";
+	cypher_div.className = "textbox_area";
+	
 	input_textbox.setAttribute("rows", 2);
 	input_textbox.setAttribute("id", "input_textbox");
 	input_textbox.setAttribute("cols", 16);
@@ -175,7 +183,7 @@ function create_screen() {
 	screen_div.appendChild(input_div);
 	screen_div.appendChild(clear_div);
 	screen_div.appendChild(cypher_div);
-
+	
 	var text = document.createTextNode("input here: ");
 	input_div.appendChild(text);
 	input_div.appendChild(input_textbox);
@@ -222,7 +230,7 @@ function send_message() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				update_status_bar("Message sent!!");
 			}
-		}
+		};
 
 		xmlhttp.open("POST", "php/message.php", true);
 		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
