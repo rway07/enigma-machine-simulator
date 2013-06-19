@@ -177,8 +177,6 @@ function show_configuration() {
  */
 function create_configuration_layout() {
 	var content = create_content();
-	content.onmousemove = move;
-	content.onmouseup = stop;
 	var istr_div = document.createElement('div');
 	var conf_div = document.createElement('div');
 	var title = document.createElement('h2');
@@ -278,7 +276,6 @@ function place_rotor(rotor, place) {
 /*
  * 		Rimuove il rotore dall'alloggiamento indicato
  */
-//function remove_rotor(parent_number, rotor) {
 function remove_rotor(rotor) {
 	var parent = rotor.parentNode;
 	var new_rotor = document.createElement("div");
@@ -360,8 +357,9 @@ function stop() {
 			hole_mouse_out(document.getElementById("rotor_hole_3"));
 		}
 
-		document.body.onmousemove = null;
-		document.body.onmouseup = null;
+		var content = document.getElementById("content");
+		content.onmousemove = null;
+		content.onmouseup = null;
 		current_rotor = null;
 		check_phase_2();
 	}
@@ -437,10 +435,14 @@ function move_rotor(e, rotor) {
 			}
 		}
 
+		mouse_x = document.all ? window.event.clientX : e.pageX;
+		mouse_y = document.all ? window.event.clientY : e.pageY; 
 		rotor_x = mouse_x - current_rotor.offsetLeft;
 		rotor_y = mouse_y - current_rotor.offsetTop;
 
-		document.body.onmousemove = move;
-		document.body.onmouseup = stop;
+		
+		var content = document.getElementById("content");
+		content.onmousemove = move;
+		content.onmouseup = stop;
 	}
 }
