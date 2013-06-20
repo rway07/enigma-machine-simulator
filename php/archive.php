@@ -1,12 +1,15 @@
 <?php
-/**
- *		archive.php 
- */
+	/*
+ 	 *		archive.php 
+	 * 		Gestisce il recupero dei messaggi inviati tramite la macchina Enigma
+ 	 */
     $database_name = "enigma";
+    $table_name = "messages";
+	
     $conn = mysql_connect("localhost", "root", "") or die(mysql_error());
     mysql_select_db($database_name) or die(mysql_error());
 
-    $data = mysql_query("SELECT * FROM messages") or die(mysql_error());
+    $data = mysql_query("SELECT * FROM $database_name.$table_name") or die(mysql_error());
     $rows = mysql_num_rows($data);
 
     echo $rows . "_";

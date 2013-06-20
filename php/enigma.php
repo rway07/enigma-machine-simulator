@@ -1,5 +1,8 @@
 <?php
-
+	/*
+	 * 		enigma.php
+	 * 		Implementazione dell'algoritmo della macchina Enigma
+	 */
 class enigma
 {
 	private $rotor = array();
@@ -66,7 +69,6 @@ class enigma
 
 		public function encrypt($key)
 		{
-			//$index = $this->switches[get_key_index($key)];
 			$index = get_key_index($key);
 			$step_char;
 			$step = 0;
@@ -151,7 +153,6 @@ function setup_machine()
 		$key_source = get_key_index($temp[0]);
 		$key_dest = get_key_index($temp[1]);	
 		$machine->set_plug($key_source, $key_dest);
-		//$machine->set_plug($key_dest, $key_source);
 	}
 	
 	$machine->precalculate_keys();	

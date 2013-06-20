@@ -130,15 +130,15 @@ function create_rotors_container_layout(parent) {
 
 	for (var i = 0; i < 5; i++) {
 		j = i + 1;
-		rotor_cont[i] = document.createElement("div");
-		rotor_cont[i].id = "rotor_container_" + j;
-		rotor_cont[i].className = "rotor_container";
-		rotors_container.appendChild(rotor_cont[i]);
 		rotor[i] = document.createElement("div");
 		rotor[i].id = "rotor_" + j;
 		rotor[i].className = "rotor";
 		rotor[i].setAttribute("onmousedown", "move_rotor(event, this);");
+		rotor_cont[i] = document.createElement("div");
+		rotor_cont[i].id = "rotor_container_" + j;
+		rotor_cont[i].className = "rotor_container";
 		rotor_cont[i].appendChild(rotor[i]);
+		rotors_container.appendChild(rotor_cont[i]);
 	}
 }
 
@@ -260,16 +260,24 @@ function check_phase_2() {
 }
 
 /*
+ * 		Crea un nuovo rotore a partire da un altro oggetto
+ */
+function create_new_rotor(parent, current_rotor)
+{
+	var new_rotor = document.createElement("div");
+	parent.removeChild(current_rotor);
+	new_rotor.id = current_rotor.id;
+	new_rotor.className = current_rotor.className;
+	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
+	return new_rotor;	
+}
+
+/*
  * 		Posiziona il rotore nell'alloggiamento indicato
  */
 function place_rotor(rotor, place) {
 	var parent = rotor.parentNode;
-	var new_rotor = document.createElement("div");
-
-	parent.removeChild(rotor);
-	new_rotor.id = rotor.id;
-	new_rotor.className = rotor.className;
-	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
+	var new_rotor = create_new_rotor(parent, rotor);
 	document.getElementById("rotor_hole_" + place).appendChild(new_rotor);
 }
 
@@ -278,12 +286,8 @@ function place_rotor(rotor, place) {
  */
 function remove_rotor(rotor) {
 	var parent = rotor.parentNode;
-	var new_rotor = document.createElement("div");
 	var container_number = get_last_char(rotor.id);
-	parent.removeChild(rotor);
-	new_rotor.id = current_rotor.id;
-	new_rotor.className = current_rotor.className;
-	new_rotor.setAttribute("onmousedown", "move_rotor(event, this);");
+	var new_rotor = create_new_rotor(parent, rotor);
 	document.getElementById("rotor_container_" + container_number).appendChild(new_rotor);
 }
 
@@ -343,15 +347,9 @@ function stop() {
 				remove_rotor(current_rotor);
 				holes[current_rotor_hole].set_rotor(0);
 			} else {
-				var new_rotor = document.createElement("div");
-				parent.removeChild(current_rotor);
-				new_rotor.id = current_rotor.id;
-				new_rotor.className = current_rotor.className;
-				new_rotor.setAttribute("onmousedown", "move_rotor(event, this);")
+				var new_rotor = create_new_rotor(parent, current_rotor);
 				parent.appendChild(new_rotor);
-
 			}
-
 			hole_mouse_out(document.getElementById("rotor_hole_1"));
 			hole_mouse_out(document.getElementById("rotor_hole_2"));
 			hole_mouse_out(document.getElementById("rotor_hole_3"));
@@ -438,7 +436,6 @@ function move_rotor(e, rotor) {
 		rotor_x = mouse_x - current_rotor.offsetLeft;
 		rotor_y = mouse_y - current_rotor.offsetTop;
 
-		
 		var content = document.getElementById("content");
 		content.onmousemove = move;
 		content.onmouseup = stop;

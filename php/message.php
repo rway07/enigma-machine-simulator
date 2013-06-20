@@ -1,4 +1,8 @@
 <?php
+	/*
+	 * 		message.php
+	 * 		Gestisce l'invio dei messaggi della macchina Enigma
+	 */
 	require "enigma.php";
 	
 	setup_machine();
