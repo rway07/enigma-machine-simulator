@@ -11,15 +11,17 @@
 	}
 		
 	$database_name = "enigma";
+	$table_name = "configuration";
 	$conn = mysql_connect("localhost", "root","") or die(mysql_error());
 	mysql_select_db($database_name) or die(mysql_error());
 	
+	date_default_timezone_set('Europe/Rome');
 	$day = date('d');
 	
 	switch ($phase)
 	{
 		case 1:
-			$data = mysql_query("SELECT walzenlage_1, walzenlage_2, walzenlage_3 FROM configuration WHERE ID='$day'") or die(mysql_error());	
+			$data = mysql_query("SELECT walzenlage_1, walzenlage_2, walzenlage_3 FROM $database_name.$table_name WHERE ID='$day'") or die(mysql_error());	
 			while($info = mysql_fetch_array($data)) 
  			{
  				for ($i = 1; $i < 3; $i++)
@@ -30,7 +32,7 @@
 			}
 			break;
 		case 2:
-			$data = mysql_query("SELECT ringstellung_1, ringstellung_2, ringstellung_3 FROM configuration WHERE ID='$day'") or die(mysql_error());
+			$data = mysql_query("SELECT ringstellung_1, ringstellung_2, ringstellung_3 FROM $database_name.$table_name WHERE ID='$day'") or die(mysql_error());
 			while($info = mysql_fetch_array($data)) 
  			{
  				for ($i = 1; $i < 3; $i++)
@@ -44,7 +46,7 @@
 			$data = mysql_query("SELECT steckerverbindungen_1, steckerverbindungen_2, steckerverbindungen_3,
 										steckerverbindungen_4, steckerverbindungen_5, steckerverbindungen_6,
 										steckerverbindungen_7, steckerverbindungen_8, steckerverbindungen_9, 
-										steckerverbindungen_10 FROM configuration WHERE ID='$day'") or die(mysql_error());
+										steckerverbindungen_10 FROM $database_name.$table_name WHERE ID='$day'") or die(mysql_error());
 			
 			while($info = mysql_fetch_array($data))
 			{
