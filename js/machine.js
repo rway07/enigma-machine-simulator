@@ -20,16 +20,16 @@ function show_machine() {
 function create_main_layout() {
 	var content = create_content();
 	var board = document.createElement('div');
-	var screen_div = document.createElement('div');
+	var panel_div = document.createElement('div');
 	content.id = "content";
 	board.id = "board";
-	screen_div.id = "screen";
+	panel_div.id = "panel";
 
 	content.appendChild(board);
-	content.appendChild(screen_div);
+	content.appendChild(panel_div);
 
 	create_machine_layout();
-	create_screen();
+	create_panel();
 	locate_machine();
 
 	decrypted_message_client = "";
@@ -147,8 +147,8 @@ function create_keys(parent, key, i) {
 /*
  * 		Crea la sezione contenente le textbox e i bottoni
  */
-function create_screen() {
-	var screen_div = document.getElementById('screen');
+function create_panel() {
+	var panel_div = document.getElementById('panel');
 	var input_div = document.createElement('div');
 	var clear_div = document.createElement('div');
 	var cypher_div = document.createElement('div');
@@ -158,11 +158,11 @@ function create_screen() {
 	var reset_button = document.createElement("button");
 	var send_button = document.createElement("button");
 	
-	input_div.id = "screen_input";
+	input_div.id = "panel_input";
 	input_div.className = "textbox_area";
-	clear_div.id = "screen_clear";
+	clear_div.id = "panel_clear";
 	clear_div.className = "textbox_area";
-	cypher_div.id = "screen_cypher";
+	cypher_div.id = "panel_cypher";
 	cypher_div.className = "textbox_area";
 	
 	input_textbox.setAttribute("rows", 2);
@@ -180,9 +180,9 @@ function create_screen() {
 	cypher_textbox.setAttribute("cols", 16);
 	cypher_textbox.setAttribute("disabled", "disabled");
 
-	screen_div.appendChild(input_div);
-	screen_div.appendChild(clear_div);
-	screen_div.appendChild(cypher_div);
+	panel_div.appendChild(input_div);
+	panel_div.appendChild(clear_div);
+	panel_div.appendChild(cypher_div);
 	
 	var text = document.createTextNode("input here: ");
 	input_div.appendChild(text);
@@ -205,8 +205,8 @@ function create_screen() {
 	reset_button.setAttribute("onclick", "reset_values()");
 	reset_button.appendChild(document.createTextNode("reset!"));
 
-	screen_div.appendChild(reset_button);
-	screen_div.appendChild(send_button);
+	panel_div.appendChild(reset_button);
+	panel_div.appendChild(send_button);
 }
 
 /*
